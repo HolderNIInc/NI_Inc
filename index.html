@@ -1,4 +1,4 @@
-DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -70,15 +70,14 @@ h1, .tagline {
 }
 
 #mensajeBienvenida {
-  font-size: 1em;
+  font-size: clamp(14px, 4vw, 18px);
   color: #fff;
   text-align: center;
   margin-top: 25px;
-  padding: 0 15px;
+  padding: 0 5vw;
   font-family: 'Courier New', monospace;
   text-shadow: 0 0 3px #bb86fc;
-  white-space: nowrap;
-  overflow: hidden;
+  overflow-wrap: break-word;
   border-right: 2px solid #bb86fc;
   animation: blink-caret 0.8s step-end infinite;
   opacity: 0;
