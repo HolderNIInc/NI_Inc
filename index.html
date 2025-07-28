@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NI Inc</title>
+  <link rel="icon" href="images/IconPage.jpg" type="image/x-icon">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url("images/Fondo.jpg") no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      opacity: 0;
+      animation: fadeInBody 2s ease-in forwards;
+    }
+
+    @keyframes fadeInBody {
+      to { opacity: 1; }
+    }
+
+    header {
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 60px 40px 20px;
+      text-align: center;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      animation: floatUp 2s ease-out forwards;
+    }
+
+    @keyframes floatUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    h1 {
+      font-size: 4em;
+      margin: 0;
+      letter-spacing: 3px;
+      text-shadow: 0 0 10px #bb86fc, 0 0 20px #bb86fc;
+    }
+
+    .tagline {
+      font-size: 1.5em;
+      color: #bb86fc;
+      margin-top: 20px;
+      text-shadow: 0 0 5px #bb86fc;
+    }
+
+h1, .tagline {
+  opacity: 0;
+}
+
+@keyframes fadeSlideDown {
+  from { transform: translateY(-30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fadeZoomIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+#mensajeBienvenida {
+  font-size: 1em;
+  color: #fff;
+  text-align: center;
+  margin-top: 25px;
+  padding: 0 15px;
+  font-family: 'Courier New', monospace;
+  text-shadow: 0 0 3px #bb86fc;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid #bb86fc;
+  animation: blink-caret 0.8s step-end infinite;
+  opacity: 0;
+}
+
+@keyframes blink-caret {
+  50% { border-color: transparent; }
+}
+
+    .menu-label {
+      font-size: 1.4em;
+      color: navy;
+      margin-top: 30px;
+      text-shadow: 0 0 2px #000;
+      animation: fadeInLabel 2s ease-out forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeInLabel {
+      to { opacity: 1; }
+    }
+
+    .menu-buttons {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      animation: slideUp 2s ease-out forwards;
+      opacity: 0;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .menu-buttons {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column; /* << Esta línea es clave */
+  align-items: center;
+  animation: slideUp 2s ease-out forwards;
+  opacity: 0;
+}
+
+.menu-buttons a {
+  margin-bottom: 15px; /* Espacio entre cada botón */
+}
+
+    .info-button {
+      font-size: 1em;
+      text-decoration: none;
+      color: white;
+      background-color: rgba(58, 128, 244, 0.8);
+      border: none;
+      padding: 15px 30px;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #3a80f4;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .info-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #3a80f4;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: rgba(0,0,0,0.6);
+      font-size: 0.9em;
+      color: #ccc;
+      animation: fadeInFooter 2.5s ease-in forwards;
+    }
+
+    @keyframes fadeInFooter {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    #loader {
+  position: fixed;
+  inset: 0;
+  background: #0f0f0f;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.5s ease;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #888;
+  border-top: 5px solid #00c3ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 10px;
+}
+
+.loading-text {
+  font-family: 'Segoe UI', sans-serif;
+  color: #ccc;
+  font-size: 1.2rem;
+  animation: fadeInUp 2s ease-in-out;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+  </style>
+  
+</head>
+<body>
+  <div id="loader">
+  <div class="spinner"></div>
+  <p class="loading-text">Cargando NI Inc...</p>
+</div>
+
+<header>
+  <h1>Noobs Interactive Incorporation</h1>
+  <p class="tagline">Creando juegos divertidos para todo el público.</p>
+  <p id="mensajeBienvenida"></p>
+  <p class="menu-label">MENU</p>
+  <div class="menu-buttons">
+  <div class="menu-buttons">
+  <a class="info-button" href="informacion.html">Información</a>
+  <a class="info-button" href="tienda.html">Tienda de NI Inc</a>
+</div>
+</header>
+
+<footer>
+  &copy; 2025 Noobs Interactive Incorporation — Todos los derechos reservados
+</footer>
+
+
+<script>
+  window.addEventListener("load", () => {
+    const loader = document.getElementById("loader");
+    const originalTitle = document.title;
+    const titulo = document.querySelector("h1");
+    const subtitulo = document.querySelector(".tagline");
+    const mensaje = document.getElementById("mensajeBienvenida");
+    const texto = "Bienvenido a la página de NI Inc, por favor elige el botón de información para poder iniciar.";
+
+    // Cambia el título mientras carga
+    document.title = "Cargando...";
+
+    // Espera 5 segundos antes de iniciar salida
+    setTimeout(() => {
+      loader.style.opacity = 0;
+      setTimeout(() => {
+        loader.style.display = "none";
+        document.title = originalTitle;
+
+        // Muestra título y subtítulo con animaciones
+        titulo.style.opacity = "1";
+        titulo.style.animation = "fadeSlideDown 1.5s ease-out forwards";
+        subtitulo.style.opacity = "1";
+        subtitulo.style.animation = "fadeZoomIn 2s ease-out forwards";
+
+        // Muestra mensaje de bienvenida con efecto máquina
+        mensaje.style.opacity = "1";
+        let i = 0;
+        const escribir = () => {
+          if (i < texto.length) {
+            mensaje.textContent += texto.charAt(i);
+            i++;
+            setTimeout(escribir, 45);
+          }
+        };
+        escribir();
+      }, 500);
+    }, 5000);
+  });
+</script>
+
+</body>
+
+<audio id="audioFondo" autoplay loop>
+  <source src="audios/Lofi.mp3" type="audio/mpeg">
+  Tu navegador no soporta audio HTML5.
+</audio>
+
+</html>
