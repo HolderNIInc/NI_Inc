@@ -55,14 +55,26 @@
       text-shadow: 0 0 5px #bb86fc;
     }
 
-    #mensajeBienvenida {
-      font-size: 1em;
-      color: #bb86fc;
-      text-align: center;
-      max-width: 800px;
-      margin-top: 30px;
-      text-shadow: 0 0 5px #bb86fc;
+
+  #mensajeBienvenida {
+    font-size: 1em;
+    color: #fff;
+    text-align: center;
+    margin-top: 25px;
+    padding: 0 15px;
+    font-family: 'Courier New', monospace;
+    text-shadow: 0 0 3px #bb86fc;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 2px solid #bb86fc;
+    animation: blink-caret 0.8s step-end infinite;
+  }
+
+  @keyframes blink-caret {
+    50% {
+      border-color: transparent;
     }
+  }
 
     .menu-label {
       font-size: 1.4em;
@@ -121,10 +133,58 @@
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
+    #loader {
+  position: fixed;
+  inset: 0;
+  background: #0f0f0f;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.5s ease;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #888;
+  border-top: 5px solid #00c3ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 10px;
+}
+
+.loading-text {
+  font-family: 'Segoe UI', sans-serif;
+  color: #ccc;
+  font-size: 1.2rem;
+  animation: fadeInUp 2s ease-in-out;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
   </style>
   
 </head>
 <body>
+  <div id="loader">
+  <div class="spinner"></div>
+  <p class="loading-text">Cargando NI Inc...</p>
+</div>
 
 <header>
   <h1>Noobs Interactive Incorporation</h1>
@@ -140,20 +200,24 @@
   &copy; 2025 Noobs Interactive Incorporation — Todos los derechos reservados
 </footer>
 
+
 <script>
-  const mensaje = "Bienvenido a la página de NI Inc, por favor elige el botón de información para poder iniciar.";
-  const contenedor = document.getElementById("mensajeBienvenida");
-  let i = 0;
+  window.addEventListener("load", () => {
+    const loader = document.getElementById("loader");
+    const originalTitle = document.title;
 
-  function escribirMensaje() {
-    if (i < mensaje.length) {
-      contenedor.textContent += mensaje.charAt(i);
-      i++;
-      setTimeout(escribirMensaje, 45);
-    }
-  }
+    // Cambia el título al iniciar la carga
+    document.title = "Cargando...";
 
-  escribirMensaje();
+    // Espera 5 segundos antes de iniciar salida
+    setTimeout(() => {
+      loader.style.opacity = 0;
+      setTimeout(() => {
+        loader.style.display = "none";
+        document.title = originalTitle; // Restaura el título original
+      }, 500);
+    }, 5000);
+  });
 </script>
 
 </body>
