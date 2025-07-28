@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Información — NI Inc</title>
+  <link rel="icon" href="images/IconPage.jpg" type="image/x-icon">
+  
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url("images/Fondo.jpg") no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      opacity: 0;
+      animation: fadeIn 1.5s ease forwards;
+      padding: 60px;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    .panel {
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 40px;
+      border-radius: 20px;
+      max-width: 800px;
+      margin: auto;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      animation: slideIn 1.2s ease-out;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateY(60px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    h2 {
+      text-align: center;
+      color: #bb86fc;
+      text-shadow: 0 0 5px #bb86fc;
+      margin-bottom: 30px;
+    }
+
+    p {
+      line-height: 1.6;
+      font-size: 1.1em;
+      margin-bottom: 20px;
+    }
+
+    a {
+      background-color: #bb86fc;
+      color: white;
+      padding: 12px 24px;
+      text-decoration: none;
+      border-radius: 30px;
+      font-weight: bold;
+      box-shadow: 0 0 8px #bb86fc;
+      transition: background 0.3s ease;
+      display: inline-block;
+      margin-top: 40px;
+    }
+
+    a:hover {
+      background-color: #9f70d6;
+    }
+
+    .experiencias {
+      margin: 60px auto 40px;
+      padding: 20px;
+      background-color: rgba(0,0,0,0.5);
+      max-width: 900px;
+      border-radius: 20px;
+      box-shadow: 0 0 15px #3a80f4;
+      animation: fadeInExperiencias 2s ease-in forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeInExperiencias {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .experiencias h2 {
+      text-align: center;
+      font-size: 2em;
+      color: #bb86fc;
+      margin-bottom: 20px;
+      text-shadow: 0 0 5px #bb86fc;
+    }
+
+    .experiencia-card {
+      background-color: rgba(255,255,255,0.1);
+      padding: 20px;
+      margin: 15px 0;
+      border-radius: 15px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      color: #fff;
+    }
+
+    .experiencia-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 10px #bb86fc;
+    }
+
+    .experiencia-card h3 {
+      font-size: 1.4em;
+      margin-bottom: 10px;
+      color: #3a80f4;
+    }
+
+    .experiencia-card img {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 12px;
+    }
+
+    .experiencia-card button {
+      background-color: #3a80f4;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 25px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin-top: 10px;
+      box-shadow: 0 0 8px #3a80f4;
+    }
+
+    .experiencia-card button:hover {
+      background-color: #2e65c8;
+    }
+  </style>
+</head>
+<body>
+
+<div class="panel">
+  <h2>Introduccion</h2>
+</div>
+
+<section class="experiencias">
+  <h2>Juegos de NI Inc</h2>
+
+  <div class="experiencia-card">
+  <img src="images/Obby Clasico.jpeg" alt="Obby Clásico">
+  <div style="display: flex; align-items: center; justify-content: space-between;">
+    <h3>Obby Clásico</h3>
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <img src="images/roblox-igame-icon.jpeg" alt="Icon" style="height: 24px;">
+      <span style="font-size: 1em; color: #bb86fc; font-weight: bold;">Roblox</span>
+    </div>
+  </div>
+  <p>Explora un obby con diferentes dificultades al estilo clásico.</p>
+  <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+    <button onclick="iniciarJuego('https://www.roblox.com/share?code=_1nt39snlpuckig0np4enp5ww8uziktl0r4p97wnatvr8k24rvz&type=ExperienceInvite')">Jugar</button>
+    <button onclick="verEnRoblox()">Ver en Roblox</button>
+  </div>
+
+  <div class="experiencia-card">
+  <img src="images/MinecraftServer.jpg" alt="Icon">
+  <div style="display: flex; align-items: center; justify-content: space-between;">
+    <h3>NI Inc Game | Minecraft Server</h3>
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <img src="images/MinecraftIcon.jpeg" alt="Minecraft" style="height: 24px;">
+      <span style="font-size: 1em; color: #bb86fc; font-weight: bold;">Minecraft</span>
+    </div>
+  </div>
+  <p>Juega con otras personas en un mundo normal. NOTA: Descargare el mundo cuando el servidor se quede sin espacio y lo publicare en el servidor de discord de NI Inc por si lo quieren descargar. Y reiniciare el mundo del servidor por otro.</p>
+  <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+    <button onclick="iniciarMinecraft()">Jugar</button>
+  </div>
+</div>
+</div>
+</section>
+
+<script>
+  const textos = [
+    "Esta pagina es un proyecto en construccion, algunas cosas pueden cambiar y otras pueden desaparecer",
+    "Aqui puedes encontrar las experiencias (Juegos) en desarrollo de NI Inc."
+
+  ];
+
+  const panel = document.querySelector(".panel");
+
+  function escribirTexto(texto, contenedor, delay) {
+    let i = 0;
+    const intervalo = setInterval(() => {
+      if (i < texto.length) {
+        contenedor.textContent += texto.charAt(i);
+        i++;
+      } else {
+        clearInterval(intervalo);
+      }
+    }, delay);
+  }
+
+  textos.forEach((texto, index) => {
+    const p = document.createElement("p");
+    panel.appendChild(p);
+    setTimeout(() => {
+      escribirTexto(texto, p, 40);
+    }, 1400 * index);
+  });
+
+  // Botón de regreso
+  setTimeout(() => {
+    const divBtn = document.createElement("div");
+    divBtn.style.textAlign = "center";
+    const boton = document.createElement("a");
+    boton.href = "index.html";
+    boton.textContent = "← Volver a la página principal";
+    divBtn.appendChild(boton);
+    panel.appendChild(divBtn);
+  }, textos.length * 1400 + 600);
+
+  // Función para iniciar juego
+  function iniciarJuego(url) {
+    alert("Iniciando Roblox, para abrir el juego");
+    setTimeout(() => {
+      window.location.href = url;
+    }, 1200);
+  }
+
+  function verEnRoblox() {
+  window.open("https://www.roblox.com/es/games/84664001255353", "_blank");
+}
+
+function iniciarMinecraft() {
+  const enlace = "IP: NIIncGameJava.aternos.me";
+  alert(enlace);
+  navigator.clipboard.writeText(enlace).then(() => {
+    console.log("Enlace copiado al portapapeles");
+  }).catch(err => {
+    console.error("Error al copiar:", err);
+  });
+}
+</script>
+
+</body>
+</html>
