@@ -201,6 +201,103 @@ h1, .tagline {
     transform: translateY(0);
   }
 }
+
+.social-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.social-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.social-icon:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 18px rgba(255, 255, 255, 0.5);
+}
+
+.discord-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px #7289da;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.discord-icon:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px #7289da;
+}
+
+.discord-button {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #7289da;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-top: 10px;
+}
+
+.discord-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px #7289da;
+}
+
+.github-hosting {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 30px;
+  padding: 10px 0;
+  background-color: rgba(0, 0, 0, 0.6); /* Fondo gris translúcido igual al footer */
+  opacity: 0;
+  animation: fadeGithub 2s ease-out forwards;
+  animation-delay: 5s;
+}
+
+.github-hosting span {
+  font-family: 'Arial', sans-serif;
+  font-size: 14px;
+  color: white;
+  text-shadow:
+    0 0 6px #0ff,
+    0 0 12px #0ff,
+    0 0 18px #0ff;
+}
+
+.github-hosting:hover span {
+  text-shadow:
+    0 0 6px #ff0,
+    0 0 12px #ff0,
+    0 0 18px #ff0;
+  transition: text-shadow 0.3s ease-in-out;
+}
+
+
+.github-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+@keyframes fadeGithub {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
   </style>
   
 </head>
@@ -219,13 +316,30 @@ h1, .tagline {
   <div class="menu-buttons">
   <a class="info-button" href="informacion.html">Información</a>
   <a class="info-button" href="tienda.html">Tienda de NI Inc</a>
+  <div class="social-buttons">
+  <a href="https://discord.gg/invite/KS8QzeCaz7" target="_blank">
+    <img src="images/Discord Icon.png" alt="Discord" class="social-icon">
+  </a>
+  <a href="https://www.roblox.com/es/users/2819343128" target="_blank">
+    <img src="images/roblox-igame-icon.jpeg" alt="Roblox" class="social-icon">
+  </a>
+  <a href="https://www.youtube.com/channel/UCY5Ip-uT72BVOEG__FQp5TA" target="_blank">
+    <img src="images/YouTube Icon.png" alt="YouTube" class="social-icon">
+  </a>
+</div>
 </div>
 </header>
+
+<div id="github-hosting" class="github-hosting">
+  <div style="display: flex; align-items: center; gap: 10px;">
+    <img src="images/GitHubIcon.jpeg" alt="GitHub" class="github-icon">
+    <span>Hosteado en GitHub</span>
+  </div>
+</div>
 
 <footer>
   &copy; 2025 Noobs Interactive Incorporation — Todos los derechos reservados
 </footer>
-
 
 <script>
   window.addEventListener("load", () => {
@@ -234,7 +348,7 @@ h1, .tagline {
     const titulo = document.querySelector("h1");
     const subtitulo = document.querySelector(".tagline");
     const mensaje = document.getElementById("mensajeBienvenida");
-    const texto = "Bienvenido a la página de NI Inc, por favor elige el botón de información para poder iniciar.";
+    const texto = "Bienvenido a la página de NI Inc, por favor elige cualquier boton del Menu para acceder a su contenido.";
 
     // Cambia el título mientras carga
     document.title = "Cargando...";
