@@ -19,33 +19,55 @@
       text-shadow: 0 0 5px #ae00ff;
       margin-top: 60px;
     }
+
+    /* Botón hamburguesa animado */
     .menu-toggle {
       position: fixed;
       top: 15px;
       left: 15px;
-      background-color: #00c3ff;
-      color: #000;
-      border: none;
-      padding: 10px 14px;
-      font-size: 20px;
-      border-radius: 8px;
+      width: 30px;
+      height: 30px;
       cursor: pointer;
-      z-index: 1000;
-      box-shadow: 0 0 8px #00c3ff;
+      z-index: 1001;
     }
+    .menu-toggle span {
+      display: block;
+      height: 4px;
+      background: #00c3ff;
+      margin: 6px 0;
+      border-radius: 2px;
+      transition: 0.4s ease;
+    }
+    .menu-toggle.open span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    .menu-toggle.open span:nth-child(2) {
+      opacity: 0;
+    }
+    .menu-toggle.open span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    /* Menú animado */
     .menu-categorias {
       position: fixed;
       top: 60px;
-      left: 15px;
+      left: -250px;
+      width: 200px;
       background: rgba(0, 0, 0, 0.85);
-      padding: 10px;
+      padding: 15px;
       border-radius: 10px;
-      display: none;
+      display: flex;
       flex-direction: column;
       gap: 10px;
       z-index: 999;
       box-shadow: 0 0 10px #00c3ff;
+      transition: left 0.4s ease;
     }
+    .menu-categorias.open {
+      left: 15px;
+    }
+
     .menu-categorias button {
       background-color: #00c3ff;
       color: #000;
@@ -59,6 +81,7 @@
     .menu-categorias button:hover {
       background-color: #00a0cc;
     }
+
     .volver-btn {
       display: flex;
       align-items: center;
@@ -77,6 +100,7 @@
     .volver-btn:hover {
       background-color: #cc2a2a;
     }
+
     .store-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -213,7 +237,11 @@
   </style>
 </head>
 <body>
-  <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+  <div class="menu-toggle" id="menuToggle">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
   <div class="menu-categorias" id="menuCategorias">
     <button onclick="mostrarSeccion('camisas')">Camisas clásicas</button>
     <button onclick="mostrarSeccion('pantalones')">Pantalones clásicas</button>
@@ -222,55 +250,27 @@
   <div id="instruccion">Presiona el ícono ☰ y elige una categoría para ver los productos</div>
   <h1>Tienda de NI Inc</h1>
   <div id="camisas" class="store-grid section">
-    <div class="item-card horizontal">
-      <div class="item-preview">
-        <img src="images/Producto1.webp" alt="Producto1" class="item-image">
-      </div>
-      <div class="item-info">
-        <div class="item-label new">Nuevo</div>
-        <div class="item-title">Camisa de un pelotocino</div>
-        <div class="item-description">Camisa dinámica de Roblox pero con guantes.</div>
-        <div class="robux-info">
-          <img src="images/robuxicon.png" alt="Robux Icon" class="robux-icon">
-          <span class="robux-amount">5 robux</span>
-        </div>
-        <a class="buy-button" href="https://www.roblox.com/catalog/14977456983" target="_blank">Obtener</a>
-      </div>
-    </div>
+    <!-- Tarjetas de camisas -->
   </div>
   <div id="pantalones" class="store-grid section">
-    <div class="item-card horizontal">
-<div class="item-preview">
-        <img src="images/Pantalon1.webp" alt="Pantalón1" class="item-image">
-      </div>
-      <div class="item-info">
-        <div class="item-label limited">Limitado</div>
-        <div class="item-title">Pantalón negro clásico</div>
-        <div class="item-description">Ideal para cualquier avatar Roblox.</div>
-        <div class="robux-info">
-          <img src="images/robuxicon.png" alt="Robux Icon" class="robux-icon">
-          <span class="robux-amount">7 robux</span>
-        </div>
-        <a class="buy-button" href="https://www.roblox.com/catalog/14977456984" target="_blank">Obtener</a>
-      </div>
-    </div>
+    <!-- Tarjetas de pantalones -->
   </div>
-
   <video autoplay muted loop id="videoFondo">
     <source src="videos/Fondo2.mp4" type="video/mp4">
-    Tu navegador no soporta video HTML5.
   </video>
-
-  <audio id="audioFondo" autoplay loop>
+  <audio autoplay loop>
     <source src="audios/Doukashiteru.mp3" type="audio/mpeg">
     Tu navegador no soporta audio HTML5.
   </audio>
 
   <script>
-    function toggleMenu() {
-      const menu = document.getElementById('menuCategorias');
-      menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
-    }
+    const menuToggle = document.getElementById('menuToggle');
+    const menuCategorias = document.getElementById('menuCategorias');
+
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('open');
+      menuCategorias.classList.toggle('open');
+    });
 
     function mostrarSeccion(id) {
       const secciones = document.querySelectorAll('.section');
@@ -279,7 +279,8 @@
       if (activa) {
         activa.style.display = 'grid';
         activa.scrollIntoView({ behavior: 'smooth' });
-        toggleMenu();
+        menuToggle.classList.remove('open');
+        menuCategorias.classList.remove('open');
       }
     }
 
