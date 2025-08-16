@@ -59,6 +59,24 @@
     .menu-categorias button:hover {
       background-color: #00a0cc;
     }
+    .volver-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 10px;
+      background-color: #ff3b3b;
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .volver-btn:hover {
+      background-color: #cc2a2a;
+    }
     .store-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -199,6 +217,7 @@
   <div class="menu-categorias" id="menuCategorias">
     <button onclick="mostrarSeccion('camisas')">Camisas clásicas</button>
     <button onclick="mostrarSeccion('pantalones')">Pantalones clásicas</button>
+    <button class="volver-btn" onclick="location.href='index.html'">🏡 Regresar al MENU</button>
   </div>
   <div id="instruccion">Presiona el ícono ☰ y elige una categoría para ver los productos</div>
   <h1>Tienda de NI Inc</h1>
@@ -221,7 +240,7 @@
   </div>
   <div id="pantalones" class="store-grid section">
     <div class="item-card horizontal">
-      <div class="item-preview">
+<div class="item-preview">
         <img src="images/Pantalon1.webp" alt="Pantalón1" class="item-image">
       </div>
       <div class="item-info">
@@ -274,4 +293,4 @@
     };
   </script>
 </body>
-    </html>
+</html>
