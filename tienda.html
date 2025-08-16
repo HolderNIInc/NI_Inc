@@ -19,8 +19,6 @@
       text-shadow: 0 0 5px #ae00ff;
       margin-top: 60px;
     }
-
-    /* Botón hamburguesa animado */
     .menu-toggle {
       position: fixed;
       top: 15px;
@@ -47,8 +45,6 @@
     .menu-toggle.open span:nth-child(3) {
       transform: rotate(-45deg) translate(5px, -5px);
     }
-
-    /* Menú animado */
     .menu-categorias {
       position: fixed;
       top: 60px;
@@ -67,7 +63,6 @@
     .menu-categorias.open {
       left: 15px;
     }
-
     .menu-categorias button {
       background-color: #00c3ff;
       color: #000;
@@ -81,7 +76,6 @@
     .menu-categorias button:hover {
       background-color: #00a0cc;
     }
-
     .volver-btn {
       display: flex;
       align-items: center;
@@ -100,7 +94,6 @@
     .volver-btn:hover {
       background-color: #cc2a2a;
     }
-
     .store-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -249,18 +242,59 @@
   </div>
   <div id="instruccion">Presiona el ícono ☰ y elige una categoría para ver los productos</div>
   <h1>Tienda de NI Inc</h1>
-  <div id="camisas" class="store-grid section">
-    <!-- Tarjetas de camisas -->
+
+
+
+  
+  <!-- Reemplaza el contenido de <div id="camisas"> y <div id="pantalones"> con lo siguiente: -->
+
+
+  
+
+<div id="camisas" class="store-grid section">
+  <!-- Camisa 1 -->
+  <div class="item-card horizontal">
+    <div class="item-preview"><img src="images/Producto1.webp" alt="Camisa 1" class="item-image"></div>
+    <div class="item-info">
+      <div class="item-label new">Nuevo</div>
+      <div class="item-title">Camisa de un pelotocino</div>
+      <div class="item-description">Camisa dinámica de Roblox pero con guantes.</div>
+      <div class="robux-info"><img src="images/robuxicon.png" class="robux-icon"><span class="robux-amount">5 robux</span></div>
+      <a class="buy-button" href="https://www.roblox.com/catalog/14977456983" target="_blank">Obtener</a>
+    </div>
   </div>
-  <div id="pantalones" class="store-grid section">
-    <!-- Tarjetas de pantalones -->
+  <!-- Camisas 2–6 -->
+  <div class="item-card horizontal"><div class="item-preview"><img src="images/Camisa2.webp" alt="Camisa 2" class="item-image"></div><div class="item-info"><div class="item-label new">Nuevo</div><div class="item-title">Camisa neón azul</div><div class="item-description">Estilo futurista con brillo eléctrico.</div><div class="robux-info"><img src="images/robuxicon.png" class="robux-icon"><span class="robux-amount">6 robux</span></div><a class="buy-button" href="#" target="_blank">Obtener</a></div></div>
+  <div class="item-card horizontal"><div class="item-preview"><img src="images/Camisa3.webp" alt="Camisa 3" class="item-image"></div><div class="item-info"><div class="item-label limited">Limitado</div><div class="item-title">Camisa púrpura glitch</div><div class="item-description">Diseño distorsionado con efecto visual.</div><div class="robux-info"><img src="images/robuxicon.png" class="robux-icon"><span class="robux-amount">8 robux</span></div><a class="buy-button" href="#" target="_blank">Obtener</a></div></div>
+  <div class="item-card horizontal"><div class="item-preview"><img src="images/Camisa4.webp" alt="Camisa 4" class="item-image"></div><div class="item-info"><div class="item-label new">Nuevo</div><div class="item-title">Camisa pixelada retro</div><div class="item-description">Inspirada en videojuegos clásicos.</div><div class="robux-info"><img src="images/robuxicon.png" class="robux-icon"><span class="robux-amount">4 robux</span></div><a class="buy-button" href="#" target="_blank">Obtener</a></div></div>
+  <div class="item-card horizontal"><div class="item-preview"><img src="images/Camisa5.webp" alt="Camisa 5" class="item-image"></div><div class="item-info"><div class="item-label limited">Limitado</div><div class="item-title">Camisa fuego digital</div><div class="item-description">Llamas animadas en estilo cyber.</div><div class="robux-info"><img src="images/robuxicon.png" class="robux-icon"><span class="robux-amount">10 robux</span></div><a class="buy-button" href="#" target="_blank">Obtener</a></div></div>
+</div>
+
+<div id="pantalones" class="store-grid section">
+  <!-- Pantalón 1 -->
+  <div class="item-card horizontal">
+    <div class="item-preview"><img src="images/Pantalon1.webp" alt="Pantalón 1" class="item-image"></div>
+    <div class="item-info">
+      <div class="item-label limited">Limitado</div>
+      <div class="item-title">Pantalón negro clásico</div>
+      <div class="item-description">Ideal para cualquier avatar Roblox.</div>
+      <div class="robux-info"><img src="images/robuxicon.png" class="robux-icon"><span class="robux-amount">7 robux</span></div>
+      <a class="buy-button" href="https://www.roblox.com/catalog/14977456984" target="_blank">Obtener</a>
+    </div>
   </div>
+  <!-- Pantalones 2–6 -->
+  <div class="item-card horizontal"><div class="item-preview"><img src="images/Pantalon2.webp" alt="Pantalón 2" class="item-image"></div><div class="item-info"><div class="item-label new">Nuevo</div><div class="item-title">Pantalón neón verde</div><div class="item-description">Brilla en la oscuridad con estilo.</div><div class="robux-info"><img src="images/robuxicon.png" class="robux-icon"><span class="robux-amount">6 robux</span></div><a class="buy-button" href="#" target="_blank">Obtener</a></div></div>
+  <div class="item-card horizontal"><div class="item-preview"><img src="images/Pantalon3.webp" alt="Pantalón 3" class="item-image"></div><div class="item-info"><div class="item-label limited">Limitado</div><div class="item-title">Pantalón glitch púrpura</div><div class="item-description">Efecto visual distorsionado.</div><div class="robux-info"><img src="images/robuxicon.png" class="robux-icon"><span class="robux-amount">9 robux</span></div><a class="buy-button" href="#" target="_blank">Obtener</a></div></div>
+  <div class="item-card horizontal"><div class="item-preview"><img src="images/Pantalon4.webp" alt="Pantalón 4" class="item-image"></div><div class="item-info"><div class="item-label new">Nuevo</div><div class="item-title">Pantalón retro pixel</div><div class="item-description">Diseño inspirado en 8 bits.</div><div class="robux-info"><img src="images/robuxicon.png" class="robux-icon"><span class="robux-amount">5 robux</span></div><a class="buy-button" href="#" target="_blank">Obtener</a></div></div>
+  <div class="item-card horizontal"><div class="item-preview"><img src="images/Pantalon5.webp" alt="Pantalón 5" class="item-image"></div><div class="item-info"><div class="item-label limited">Limitado</div><div class="item-title">Pantalón fuego digital</div><div class="item-description">Llamas animadas en estilo cyber.</div><div class="robux-info"><img src="images/robuxicon.png" class="robux-icon"><span class="robux-amount">11 robux</span></div><a class="buy-button" href="#" target="_blank">Obtener</a></div></div>
+</div>
+
   <video autoplay muted loop id="videoFondo">
     <source src="videos/Fondo2.mp4" type="video/mp4">
   </video>
+
   <audio autoplay loop>
     <source src="audios/Doukashiteru.mp3" type="audio/mpeg">
-    Tu navegador no soporta audio HTML5.
   </audio>
 
   <script>
@@ -294,4 +328,4 @@
     };
   </script>
 </body>
-</html>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </html>
