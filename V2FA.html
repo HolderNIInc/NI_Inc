@@ -14,7 +14,6 @@
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: radial-gradient(circle at top, #0f0f0f, #000000);
       color: white;
       display: flex;
       flex-direction: column;
@@ -24,6 +23,19 @@
       text-align: center;
       padding: 20px;
       animation: fadeIn 1s ease;
+      position: relative;
+      z-index: 1;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: url("images/Fondo.jpg") no-repeat center center fixed;
+      background-size: cover;
+      z-index: -2;
     }
 
     h1 {
@@ -67,6 +79,16 @@
       margin-bottom: 20px;
     }
 
+    footer {
+      position: fixed;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+      font-size: 0.9em;
+      color: #888;
+      z-index: 2;
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
@@ -83,23 +105,60 @@
         width: 100%;
       }
     }
+
+    @keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+    }
   </style>
 </head>
 <body>
 
+  <div id="loader" style="
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: #0f0f0f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  flex-direction: column;
+  color: #00c3ff;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 1.2em;
+  text-align: center;
+">
+  <div class="spinner" style="
+    width: 50px;
+    height: 50px;
+    border: 6px solid #00c3ff;
+    border-top: 6px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+  "></div>
+  Cargando contenido...
+  </div>
   <h1>Verificación de seguridad</h1>
-  <p>¿Eres humano? Solo necesitamos comprobarlo antes de darte acceso a las descargas.</p>
+  <p>Debemos asegurarnos de que no eres un robot. Esta verificación nos ayuda a proteger el sistema y garantizar que solo usuarios reales accedan al contenido.</p>
 
   <form id="captchaForm">
     <div class="h-captcha" data-sitekey="0a5044fa-296e-4556-99b6-f7fefc6cd23c" data-callback="onVerified"></div>
     <button type="submit" class="btn" id="continuarBtn" disabled>Continuar</button>
   </form>
 
-<footer style="position: fixed; bottom: 10px; width: 100%; text-align: center; font-size: 0.9em; color: #888;">
+  <footer style="position: fixed; bottom: 10px; width: 100%; text-align: center; font-size: 0.9em; color: white; z-index: 2;">
   🔒 Esta página está protegida con <strong>hCaptcha</strong> para garantizar que solo usuarios reales accedan al contenido.  
   Tu interacción ayuda a mantener la seguridad y estabilidad del sistema.
-</footer>
-  
+  </footer>
+
+  <audio autoplay loop>
+    <source src="audios/Lofi.mp3" type="audio/mpeg">
+    Tu navegador no soporta audio HTML5.
+  </audio>
+
   <script>
     function onVerified(token) {
       const btn = document.getElementById("continuarBtn");
@@ -114,28 +173,27 @@
   </script>
 
   <script>
-  fetch("https://vpnapi.io/api/?key=TU_API_KEY")
-    .then(response => response.json())
-    .then(data => {
-      if (data.security && data.security.vpn === true) {
-        alert("Acceso denegado: se detectó uso de VPN.");
-        window.location.href = "https://www.google.com";
-      }
-    })
-    .catch(error => {
-      console.warn("No se pudo verificar VPN:", error);
-    });
+    fetch("https://vpnapi.io/api/?key=TU_API_KEY")
+      .then(response => response.json())
+      .then(data => {
+        if (data.security && data.security.vpn === true) {
+          alert("Acceso denegado: se detectó uso de VPN.");
+          window.location.href = "https://www.google.com";
+        }
+      })
+      .catch(error => {
+        console.warn("No se pudo verificar VPN:", error);
+      });
   </script>
 
-<video autoplay loop playsinline style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2;" id="bgVideo">
-  <source src="videos/Fondo2.mp4" type="video/mp4">
-  Tu navegador no soporta video HTML5.
-</video>
+  <script>
+  window.addEventListener("load", function() {
+    const loader = document.getElementById("loader");
+    loader.style.opacity = "0";
+    loader.style.transition = "opacity 0.5s ease";
+    setTimeout(() => loader.style.display = "none", 500);
+  });
+  </script>
 
-<audio autoplay loop>
-  <source src="audio/Doukashiteru.mp3" type="audio/mpeg">
-  Tu navegador no soporta audio HTML5.
-</audio>
-  
 </body>
 </html>
