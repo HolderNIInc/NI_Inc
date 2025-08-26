@@ -195,5 +195,45 @@
   });
   </script>
 
+  <script>
+  function onVerified(token) {
+    const btn = document.getElementById("continuarBtn");
+    btn.disabled = false;
+    btn.classList.add("active");
+
+    // Crear contador visual
+    const countdown = document.createElement("div");
+    countdown.id = "countdown";
+    countdown.style.marginTop = "15px";
+    countdown.style.fontSize = "1em";
+    countdown.style.color = "#00c3ff";
+    countdown.textContent = "Tiempo restante: 10 segundos";
+    btn.parentNode.appendChild(countdown);
+
+    // Iniciar cuenta regresiva
+    let seconds = 10;
+    const interval = setInterval(() => {
+      seconds--;
+      countdown.textContent = `Tiempo restante: ${seconds} segundos`;
+      if (seconds <= 0) {
+        clearInterval(interval);
+        location.reload(); // Recargar la página
+      }
+    }, 1000);
+  }
+
+  document.getElementById("captchaForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    window.location.href = "descarga.html";
+  });
+      </script>
+
+  <script>
+  if (location.protocol !== 'https:') {
+    alert("Advertencia: estás accediendo sin una conexión segura (HTTP). Se recomienda usar HTTPS.");
+    location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+  }
+  </script>
+
 </body>
 </html>
