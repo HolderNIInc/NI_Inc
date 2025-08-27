@@ -139,10 +139,9 @@
     animation: spin 1s linear infinite;
     margin-bottom: 20px;
   "></div>
-  Cargando contenido...
+  Cargando sistema...
   </div>
   <h1>Verificación de seguridad</h1>
-  <p>Debemos asegurarnos de que no eres un robot. Esta verificación nos ayuda a proteger el sistema y garantizar que solo usuarios reales accedan al contenido.</p>
 
   <form id="captchaForm">
     <div class="h-captcha" data-sitekey="0a5044fa-296e-4556-99b6-f7fefc6cd23c" data-callback="onVerified"></div>
@@ -150,8 +149,7 @@
   </form>
 
   <footer style="position: fixed; bottom: 10px; width: 100%; text-align: center; font-size: 0.9em; color: white; z-index: 2;">
-  🔒 Esta página está protegida con <strong>hCaptcha</strong> para garantizar que solo usuarios reales accedan al contenido.  
-  Tu interacción ayuda a mantener la seguridad y estabilidad del sistema.
+  🔒 Esta página está protegida con <strong>hCaptcha</strong>
   </footer>
 
   <audio autoplay loop>
@@ -236,4 +234,68 @@
   </script>
 
 </body>
+
+<script>
+  async function verificarRedYVelocidad() {
+    const contenedor = document.createElement("div");
+    contenedor.style.position = "fixed";
+    contenedor.style.top = "20px";
+    contenedor.style.right = "20px";
+    contenedor.style.padding = "14px 20px";
+    contenedor.style.borderRadius = "10px";
+    contenedor.style.fontWeight = "bold";
+    contenedor.style.fontSize = "0.95em";
+    contenedor.style.zIndex = "9999";
+    contenedor.style.boxShadow = "0 0 12px #00c3ff";
+    contenedor.style.background = "#0f0f0f";
+    contenedor.style.color = "#00c3ff";
+    contenedor.style.border = "2px solid #00c3ff";
+    contenedor.textContent = "🔍 Verificando red y velocidad...";
+    document.body.appendChild(contenedor);
+
+    // Detectar tipo de red
+    const red = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    const tipo = red ? red.effectiveType || red.type : "desconocido";
+
+    // Medir velocidad de descarga
+    const url = "https://upload.wikimedia.org/wikipedia/commons/3/3a/Bloemen_van_adderwortel_%28Persicaria_bistorta%2C_synoniem%2C_Polygonum_bistorta%29_06-06-2021._%28d.j.b%29.jpg";
+    const tamaño = 7300000; // bytes
+
+    const inicio = new Date().getTime();
+    const img = new Image();
+    img.onload = function () {
+      const fin = new Date().getTime();
+      const duracion = (fin - inicio) / 1000;
+      const bits = tamaño * 8;
+      const mbps = ((bits / duracion) / 1024 / 1024).toFixed(2);
+
+      let mensaje = `📶 Tipo de red: ${tipo.toUpperCase()}\n⚡ Velocidad estimada: ${mbps} Mbps`;
+
+      if (mbps < 1) {
+        mensaje += `\n⚠️ Conexión lenta detectada. Evita redes públicas abiertas.`;
+      } else if (tipo.includes("cellular")) {
+        mensaje += `\n📱 Estás en red móvil. Se recomienda usar Wi-Fi segura.`;
+      } else {
+        mensaje += `\n✅ Red aceptable para verificación y descargas.`;
+      }
+
+      contenedor.textContent = mensaje;
+      setTimeout(() => {
+        contenedor.style.opacity = "0";
+        contenedor.style.transition = "opacity 0.5s ease";
+        setTimeout(() => contenedor.remove(), 500);
+      }, 8000);
+    };
+
+    img.onerror = function () {
+      contenedor.textContent = "❌ No se pudo medir la velocidad. Verifica tu conexión.";
+      setTimeout(() => contenedor.remove(), 5000);
+    };
+
+    img.src = url + "?cache=" + Math.random();
+  }
+
+  window.addEventListener("load", verificarRedYVelocidad);
+</script>
+  
 </html>
