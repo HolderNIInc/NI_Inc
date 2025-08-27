@@ -250,7 +250,7 @@
     contenedor.style.background = "#0f0f0f";
     contenedor.style.color = "#00c3ff";
     contenedor.style.border = "2px solid #00c3ff";
-    contenedor.textContent = "🔍 Verificando red y velocidad...";
+    contenedor.textContent = "Checando conexion...";
     document.body.appendChild(contenedor);
 
     // Detectar tipo de red
@@ -276,7 +276,7 @@
       } else if (tipo.includes("cellular")) {
         mensaje += `\n📱 Estás en red móvil. Se recomienda usar Wi-Fi segura.`;
       } else {
-        mensaje += `\n✅ Red aceptable para verificación y descargas.`;
+        mensaje += `\n✅ Red aceptable.`;
       }
 
       contenedor.textContent = mensaje;
