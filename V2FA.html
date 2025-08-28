@@ -236,28 +236,47 @@
 </body>
 
 <script>
-  async function verificarRedYVelocidad() {
-    const contenedor = document.createElement("div");
-    contenedor.style.position = "fixed";
-    contenedor.style.top = "20px";
-    contenedor.style.right = "20px";
-    contenedor.style.padding = "14px 20px";
-    contenedor.style.borderRadius = "10px";
-    contenedor.style.fontWeight = "bold";
-    contenedor.style.fontSize = "0.95em";
-    contenedor.style.zIndex = "9999";
-    contenedor.style.boxShadow = "0 0 12px #00c3ff";
-    contenedor.style.background = "#0f0f0f";
-    contenedor.style.color = "#00c3ff";
-    contenedor.style.border = "2px solid #00c3ff";
-    contenedor.textContent = "Checando conexion...";
-    document.body.appendChild(contenedor);
+  function mostrarEstadoRed(tipo, mbps = null) {
+    const existente = document.getElementById("estadoRed");
+    if (existente) existente.remove();
 
-    // Detectar tipo de red
-    const red = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-    const tipo = red ? red.effectiveType || red.type : "desconocido";
+    const estado = document.createElement("div");
+    estado.id = "estadoRed";
+    estado.style.position = "fixed";
+    estado.style.top = "20px";
+    estado.style.right = "20px";
+    estado.style.padding = "14px 20px";
+    estado.style.borderRadius = "10px";
+    estado.style.fontWeight = "bold";
+    estado.style.fontSize = "0.95em";
+    estado.style.zIndex = "9999";
+    estado.style.boxShadow = "0 0 12px #00c3ff";
+    estado.style.background = "#0f0f0f";
+    estado.style.color = "#00c3ff";
+    estado.style.border = "2px solid #00c3ff";
+    estado.style.whiteSpace = "pre-line";
 
-    // Medir velocidad de descarga
+    let mensaje = `📶 Tipo de red: ${tipo.toUpperCase()}`;
+    if (mbps !== null) {
+      mensaje += `\n⚡ Velocidad estimada: ${mbps} Mbps`;
+      if (mbps < 1) {
+        mensaje += `\n⚠️ Conexión lenta. Evita redes públicas abiertas.`;
+      } else if (tipo.includes("cellular")) {
+        mensaje += `\n📱 Red móvil detectada. Se recomienda Wi-Fi segura.`;
+      } else {
+        mensaje += `\n✅ Red aceptable para verificación.`;
+      }
+    } else {
+      mensaje += `\n🔍 Verificando velocidad...`;
+    }
+
+    estado.textContent = mensaje;
+    document.body.appendChild(estado);
+  }
+
+  async function medirVelocidad(tipo) {
+    mostrarEstadoRed(tipo);
+
     const url = "https://upload.wikimedia.org/wikipedia/commons/3/3a/Bloemen_van_adderwortel_%28Persicaria_bistorta%2C_synoniem%2C_Polygonum_bistorta%29_06-06-2021._%28d.j.b%29.jpg";
     const tamaño = 7300000; // bytes
 
@@ -268,34 +287,28 @@
       const duracion = (fin - inicio) / 1000;
       const bits = tamaño * 8;
       const mbps = ((bits / duracion) / 1024 / 1024).toFixed(2);
-
-      let mensaje = `📶 Tipo de red: ${tipo.toUpperCase()}\n⚡ Velocidad estimada: ${mbps} Mbps`;
-
-      if (mbps < 1) {
-        mensaje += `\n⚠️ Conexión lenta detectada. Evita redes públicas abiertas.`;
-      } else if (tipo.includes("cellular")) {
-        mensaje += `\n📱 Estás en red móvil. Se recomienda usar Wi-Fi segura.`;
-      } else {
-        mensaje += `\n✅ Red aceptable.`;
-      }
-
-      contenedor.textContent = mensaje;
-      setTimeout(() => {
-        contenedor.style.opacity = "0";
-        contenedor.style.transition = "opacity 0.5s ease";
-        setTimeout(() => contenedor.remove(), 500);
-      }, 8000);
+      mostrarEstadoRed(tipo, mbps);
     };
-
     img.onerror = function () {
-      contenedor.textContent = "❌ No se pudo medir la velocidad. Verifica tu conexión.";
-      setTimeout(() => contenedor.remove(), 5000);
+      mostrarEstadoRed(tipo, 0);
     };
-
     img.src = url + "?cache=" + Math.random();
   }
 
-  window.addEventListener("load", verificarRedYVelocidad);
-</script>
+  function iniciarVerificacionRed() {
+    const red = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    const tipo = red ? red.effectiveType || red.type : "desconocido";
+    medirVelocidad(tipo);
+
+    if (red) {
+      red.addEventListener("change", () => {
+        const nuevoTipo = red.effectiveType || "desconocido";
+        medirVelocidad(nuevoTipo);
+      });
+    }
+  }
+
+  window.addEventListener("load", iniciarVerificacionRed);
+      </script>
   
 </html>
