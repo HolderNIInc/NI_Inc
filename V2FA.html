@@ -237,8 +237,8 @@
 
 <script>
 let seguridadActiva = false;
-let tipo = "auto"; // Puedes forzar "wifi" o "movil" si lo prefieres
-let origen = "https://www.google.com/images/branding/googlelogo/2x/googlelogo_light_color_92x30dp.png"; // Archivo ligero para medir velocidad
+let tipo = "auto";
+let origen = "https://www.google.com/images/branding/googlelogo/2x/googlelogo_light_color_92x30dp.png"; // Imagen ligera
 
 function medirVelocidad(tipo, origen) {
   return new Promise(resolve => {
@@ -252,57 +252,104 @@ function medirVelocidad(tipo, origen) {
       const mbps = (tamaño / tiempo) / 1000000;
       resolve(mbps);
     };
-    img.onerror = () => resolve(0.01); // Si falla, asumimos red débil
+    img.onerror = () => resolve(0.01);
   });
+}
+
+function mostrarEstadoRed(tipo, mbps, origen = "auto") {
+  const existente = document.getElementById("estadoRed");
+  if (existente) existente.remove();
+
+  const estado = document.createElement("div");
+  estado.id = "estadoRed";
+  estado.style.position = "fixed";
+  estado.style.top = "20px";
+  estado.style.right = "20px";
+  estado.style.padding = "14px 20px";
+  estado.style.borderRadius = "10px";
+  estado.style.fontWeight = "bold";
+  estado.style.fontSize = "0.95em";
+  estado.style.zIndex = "9999";
+  estado.style.boxShadow = "0 0 12px #00c3ff";
+  estado.style.background = "#0f0f0f";
+  estado.style.color = "#00c3ff";
+  estado.style.border = "2px solid #00c3ff";
+  estado.style.whiteSpace = "pre-line";
+
+  let mensaje = `📶 Red: ${tipo.toUpperCase()}\n⚡ Velocidad: ${mbps.toFixed(2)} Mbps`;
+
+  if (mbps < 10) {
+    mensaje += `\n⚠️ Red inestable. Seguridad reforzada.`;
+  } else {
+    mensaje += `\n✅ Red estable. Puedes continuar.`;
+  }
+
+  estado.textContent = mensaje;
+  document.body.appendChild(estado);
+
+  setTimeout(() => {
+    estado.style.opacity = "0";
+    estado.style.transition = "opacity 0.5s ease";
+    setTimeout(() => estado.remove(), 6000);
+  }, 8000);
+}
+
+function activarSeguridadVisual() {
+  if (document.getElementById("loaderExtra")) return;
+
+  const loaderExtra = document.createElement("div");
+  loaderExtra.id = "loaderExtra";
+  loaderExtra.style.position = "fixed";
+  loaderExtra.style.top = "0";
+  loaderExtra.style.left = "0";
+  loaderExtra.style.width = "100%";
+  loaderExtra.style.height = "100%";
+  loaderExtra.style.background = "#000000e0";
+  loaderExtra.style.display = "flex";
+  loaderExtra.style.alignItems = "center";
+  loaderExtra.style.justifyContent = "center";
+  loaderExtra.style.zIndex = "99999";
+  loaderExtra.style.color = "#00c3ff";
+  loaderExtra.style.fontSize = "1.2em";
+  loaderExtra.style.fontFamily = "Segoe UI, sans-serif";
+  loaderExtra.innerHTML = `<div style="text-align:center;">
+    <div style="width:50px;height:50px;border:6px solid #00c3ff;border-top:6px solid transparent;border-radius:50%;animation:spin 1s linear infinite;margin:auto;"></div>
+    <p>Red inestable. Reforzando seguridad...</p>
+  </div>`;
+  document.body.appendChild(loaderExtra);
+
+  const audio = document.querySelector("audio");
+  if (audio) audio.pause();
+}
+
+function desactivarSeguridadVisual() {
+  const loaderExtra = document.getElementById("loaderExtra");
+  if (loaderExtra) loaderExtra.remove();
+
+  const audio = document.querySelector("audio");
+  if (audio) audio.play();
 }
 
 function verificarEstabilidadRed() {
-  medirVelocidad(tipo, origen).then(mbps => {
-    if (mbps < 1 && !seguridadActiva) {
+  const red = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  const tipoRed = red ? red.effectiveType || red.type : "desconocido";
+
+  medirVelocidad(tipoRed, origen).then(mbps => {
+    mostrarEstadoRed(tipoRed, mbps);
+
+    if (mbps < 10 && !seguridadActiva) {
       seguridadActiva = true;
-
-      // Mostrar loader visual
-      const loaderExtra = document.createElement("div");
-      loaderExtra.id = "loaderExtra";
-      loaderExtra.style.position = "fixed";
-      loaderExtra.style.top = "0";
-      loaderExtra.style.left = "0";
-      loaderExtra.style.width = "100%";
-      loaderExtra.style.height = "100%";
-      loaderExtra.style.background = "#000000e0";
-      loaderExtra.style.display = "flex";
-      loaderExtra.style.alignItems = "center";
-      loaderExtra.style.justifyContent = "center";
-      loaderExtra.style.zIndex = "99999";
-      loaderExtra.style.color = "#00c3ff";
-      loaderExtra.style.fontSize = "1.2em";
-      loaderExtra.style.fontFamily = "Segoe UI, sans-serif";
-      loaderExtra.innerHTML = `<div style="text-align:center;">
-        <div style="width:50px;height:50px;border:6px solid #00c3ff;border-top:6px solid transparent;border-radius:50%;animation:spin 1s linear infinite;margin:auto;"></div>
-        <p>Red inestable. Reforzando seguridad...</p>
-      </div>`;
-      document.body.appendChild(loaderExtra);
-
-      // Pausar audio
-      const audio = document.querySelector("audio");
-      if (audio) audio.pause();
+      activarSeguridadVisual();
     }
 
-    if (mbps >= 1 && seguridadActiva) {
+    if (mbps >= 10 && seguridadActiva) {
       seguridadActiva = false;
-
-      // Eliminar loader
-      const loaderExtra = document.getElementById("loaderExtra");
-      if (loaderExtra) loaderExtra.remove();
-
-      // Reanudar audio
-      const audio = document.querySelector("audio");
-      if (audio) audio.play();
+      desactivarSeguridadVisual();
     }
   });
 }
 
-// Ejecutar verificación cada 5 segundos
+// Ejecutar cada 5 segundos
 setInterval(verificarEstabilidadRed, 5000);
 
 // Animación CSS
@@ -313,6 +360,6 @@ estiloAnimacion.innerHTML = `
   100% { transform: rotate(360deg); }
 }`;
 document.head.appendChild(estiloAnimacion);
-       </script>
+      </script>
   
 </html>
