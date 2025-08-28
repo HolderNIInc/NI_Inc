@@ -236,79 +236,83 @@
 </body>
 
 <script>
-  function mostrarEstadoRed(tipo, mbps = null) {
-    const existente = document.getElementById("estadoRed");
-    if (existente) existente.remove();
+let seguridadActiva = false;
+let tipo = "auto"; // Puedes forzar "wifi" o "movil" si lo prefieres
+let origen = "https://www.google.com/images/branding/googlelogo/2x/googlelogo_light_color_92x30dp.png"; // Archivo ligero para medir velocidad
 
-    const estado = document.createElement("div");
-    estado.id = "estadoRed";
-    estado.style.position = "fixed";
-    estado.style.top = "20px";
-    estado.style.right = "20px";
-    estado.style.padding = "14px 20px";
-    estado.style.borderRadius = "10px";
-    estado.style.fontWeight = "bold";
-    estado.style.fontSize = "0.95em";
-    estado.style.zIndex = "9999";
-    estado.style.boxShadow = "0 0 12px #00c3ff";
-    estado.style.background = "#0f0f0f";
-    estado.style.color = "#00c3ff";
-    estado.style.border = "2px solid #00c3ff";
-    estado.style.whiteSpace = "pre-line";
-
-    let mensaje = `📶 Tipo de red: ${tipo.toUpperCase()}`;
-    if (mbps !== null) {
-      mensaje += `\n⚡ Velocidad estimada: ${mbps} Mbps`;
-      if (mbps < 1) {
-        mensaje += `\n⚠️ Conexión lenta. Evita redes públicas abiertas.`;
-      } else if (tipo.includes("cellular")) {
-        mensaje += `\n📱 Red móvil detectada. Se recomienda Wi-Fi segura.`;
-      } else {
-        mensaje += `\n✅ Red aceptable para verificación.`;
-      }
-    } else {
-      mensaje += `\n🔍 Verificando velocidad...`;
-    }
-
-    estado.textContent = mensaje;
-    document.body.appendChild(estado);
-  }
-
-  async function medirVelocidad(tipo) {
-    mostrarEstadoRed(tipo);
-
-    const url = "https://upload.wikimedia.org/wikipedia/commons/3/3a/Bloemen_van_adderwortel_%28Persicaria_bistorta%2C_synoniem%2C_Polygonum_bistorta%29_06-06-2021._%28d.j.b%29.jpg";
-    const tamaño = 7300000; // bytes
-
-    const inicio = new Date().getTime();
+function medirVelocidad(tipo, origen) {
+  return new Promise(resolve => {
+    const inicio = performance.now();
     const img = new Image();
-    img.onload = function () {
-      const fin = new Date().getTime();
-      const duracion = (fin - inicio) / 1000;
-      const bits = tamaño * 8;
-      const mbps = ((bits / duracion) / 1024 / 1024).toFixed(2);
-      mostrarEstadoRed(tipo, mbps);
+    img.src = origen + "?t=" + inicio;
+    img.onload = () => {
+      const fin = performance.now();
+      const tiempo = (fin - inicio) / 1000;
+      const tamaño = 70 * 8; // 70 KB en bits
+      const mbps = (tamaño / tiempo) / 1000000;
+      resolve(mbps);
     };
-    img.onerror = function () {
-      mostrarEstadoRed(tipo, 0);
-    };
-    img.src = url + "?cache=" + Math.random();
-  }
+    img.onerror = () => resolve(0.01); // Si falla, asumimos red débil
+  });
+}
 
-  function iniciarVerificacionRed() {
-    const red = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-    const tipo = red ? red.effectiveType || red.type : "desconocido";
-    medirVelocidad(tipo);
+function verificarEstabilidadRed() {
+  medirVelocidad(tipo, origen).then(mbps => {
+    if (mbps < 1 && !seguridadActiva) {
+      seguridadActiva = true;
 
-    if (red) {
-      red.addEventListener("change", () => {
-        const nuevoTipo = red.effectiveType || "desconocido";
-        medirVelocidad(nuevoTipo);
-      });
+      // Mostrar loader visual
+      const loaderExtra = document.createElement("div");
+      loaderExtra.id = "loaderExtra";
+      loaderExtra.style.position = "fixed";
+      loaderExtra.style.top = "0";
+      loaderExtra.style.left = "0";
+      loaderExtra.style.width = "100%";
+      loaderExtra.style.height = "100%";
+      loaderExtra.style.background = "#000000e0";
+      loaderExtra.style.display = "flex";
+      loaderExtra.style.alignItems = "center";
+      loaderExtra.style.justifyContent = "center";
+      loaderExtra.style.zIndex = "99999";
+      loaderExtra.style.color = "#00c3ff";
+      loaderExtra.style.fontSize = "1.2em";
+      loaderExtra.style.fontFamily = "Segoe UI, sans-serif";
+      loaderExtra.innerHTML = `<div style="text-align:center;">
+        <div style="width:50px;height:50px;border:6px solid #00c3ff;border-top:6px solid transparent;border-radius:50%;animation:spin 1s linear infinite;margin:auto;"></div>
+        <p>Red inestable. Reforzando seguridad...</p>
+      </div>`;
+      document.body.appendChild(loaderExtra);
+
+      // Pausar audio
+      const audio = document.querySelector("audio");
+      if (audio) audio.pause();
     }
-  }
 
-  window.addEventListener("load", iniciarVerificacionRed);
-      </script>
+    if (mbps >= 1 && seguridadActiva) {
+      seguridadActiva = false;
+
+      // Eliminar loader
+      const loaderExtra = document.getElementById("loaderExtra");
+      if (loaderExtra) loaderExtra.remove();
+
+      // Reanudar audio
+      const audio = document.querySelector("audio");
+      if (audio) audio.play();
+    }
+  });
+}
+
+// Ejecutar verificación cada 5 segundos
+setInterval(verificarEstabilidadRed, 5000);
+
+// Animación CSS
+const estiloAnimacion = document.createElement("style");
+estiloAnimacion.innerHTML = `
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}`;
+document.head.appendChild(estiloAnimacion);
+       </script>
   
 </html>
