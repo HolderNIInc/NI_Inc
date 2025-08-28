@@ -7,194 +7,117 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0; padding: 0;
-    }
-
+    * { box-sizing: border-box; }
     body {
-      font-family: Arial, sans-serif;
-      background: #f3f4f6;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      min-height: 100vh; text-align: center; padding: 20px; animation: fadeIn 1s ease; position: relative; z-index: 1;
     }
-
-    .container {
-      background: #fff;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      text-align: center;
-      max-width: 400px;
-      width: 100%;
-      display: none; /* Oculto hasta que el sistema esté listo */
+    body::before {
+      content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: url("images/Fondo.jpg") no-repeat center center fixed; background-size: cover; z-index: -2;
     }
-
-    h1 {
-      font-size: 1.5rem;
-      margin-bottom: 15px;
+    h1 { color: #00c3ff; text-shadow: 0 0 8px #00c3ff; font-size: 2.2em; margin-bottom: 15px; }
+    .btn {
+      padding: 12px 24px; background: #00c3ff; color: black; border: none; border-radius: 6px; font-weight: bold;
+      cursor: not-allowed; font-size: 1em; transition: background 0.3s ease, transform 0.3s ease; opacity: 0.5;
     }
-
-    #status {
-      margin: 15px 0;
-      font-size: 0.95rem;
-      color: #555;
+    .btn.active { cursor: pointer; opacity: 1; }
+    .btn.active:hover { background: #00a0cc; transform: scale(1.05); }
+    .h-captcha { margin-bottom: 20px; }
+    footer { position: fixed; bottom: 10px; width: 100%; text-align: center; font-size: 0.9em; color: #888; z-index: 2; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @media screen and (max-width: 480px) {
+      h1 { font-size: 1.8em; } .btn { width: 100%; }
     }
-
-    button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      cursor: pointer;
-      background: #ccc;
-      color: #fff;
-      transition: background 0.3s ease;
-    }
-
-    button.active {
-      background: #2563eb;
-    }
-
-    button:disabled {
-      cursor: not-allowed;
-      opacity: 0.7;
-    }
-
-    /* --- Preloader --- */
-    #preloader {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      flex-direction: column;
-      text-align: center;
-    }
-
-    .loader {
-      font-size: 1.5em;
-      color: #333;
-      font-family: Arial, sans-serif;
-    }
-
-    .error {
-      color: red;
-      margin-top: 15px;
-      font-size: 1rem;
-    }
-
-    .retry {
-      margin-top: 10px;
-      padding: 8px 16px;
-      background: #2563eb;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
-  <!-- Preloader -->
-  <div id="preloader">
-    <div class="loader">Cargando sistema...</div>
-    <div class="error" id="errorMsg" style="display:none;">
-      ❌ No se detecta conexión a internet.
-    </div>
-    <button class="retry" id="retryBtn" style="display:none;">Reintentar</button>
+
+  <!-- Loader inicial -->
+  <div id="loader" style="
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: #0f0f0f; display: flex; align-items: center; justify-content: center;
+    z-index: 9999; flex-direction: column; color: #00c3ff; font-family: 'Segoe UI', sans-serif; font-size: 1.2em; text-align: center;">
+    <div class="spinner" style="
+      width: 50px; height: 50px; border: 6px solid #00c3ff; border-top: 6px solid transparent; border-radius: 50%;
+      animation: spin 1s linear infinite; margin-bottom: 20px;"></div>
+    Cargando sistema...
   </div>
 
-  <div class="container" id="mainContent">
-    <h1>Verificación requerida</h1>
-    <div class="h-captcha" data-sitekey="tu-sitekey"></div>
-    <p id="status">Completa el CAPTCHA para continuar.</p>
-    <button id="continuar" disabled>Continuar</button>
-  </div>
+  <h1>Verificación de seguridad</h1>
 
+  <form id="captchaForm">
+    <div class="h-captcha" data-sitekey="0a5044fa-296e-4556-99b6-f7fefc6cd23c" data-callback="onVerified"></div>
+    <button type="submit" class="btn" id="continuarBtn" disabled>Continuar</button>
+    <div id="netStatusHint" style="margin-top:10px; font-size:0.95em; color:#00c3ff;"></div>
+    <div id="countdown" style="margin-top:10px; font-size:1em; color:#00c3ff;"></div>
+  </form>
+
+  <footer>
+    🔒 Esta página está protegida con <strong>hCaptcha</strong>
+  </footer>
+
+  <audio autoplay loop>
+    <source src="audios/Lofi.mp3" type="audio/mpeg">
+    Tu navegador no soporta audio HTML5.
+  </audio>
+
+  <!-- Lógica principal -->
   <script>
-    const btn = document.getElementById("continuar");
-    const hint = document.getElementById("status");
-    const mainContent = document.getElementById("mainContent");
-    const preloader = document.getElementById("preloader");
-    const errorMsg = document.getElementById("errorMsg");
-    const retryBtn = document.getElementById("retryBtn");
-
-    let captchaOK = false;
-    let captchaCargado = false;
-    let tiempoCumplido = false;
-    let internetOK = false;
-
-    // --- 1. Timer de 1 segundo mínimo ---
-    setTimeout(() => {
-      tiempoCumplido = true;
-      intentarMostrarSistema();
-    }, 1000);
-
-    // --- 2. Verificar internet ---
-    async function verificarInternet() {
-      try {
-        await fetch("https://www.gstatic.com/generate_204", { method: "GET", cache: "no-store" });
-        internetOK = true;
-      } catch (e) {
-        internetOK = false;
-      }
-      intentarMostrarSistema();
-    }
-    verificarInternet();
-
-    // --- 3. Detectar cuando el captcha ya está cargado ---
-    window.onload = () => {
-      captchaCargado = true;
-      intentarMostrarSistema();
-    };
-
-    // --- Mostrar sistema solo si se cumplen las 3 condiciones ---
-    function intentarMostrarSistema() {
-      if (tiempoCumplido && captchaCargado && internetOK) {
-        preloader.style.display = "none";
-        mainContent.style.display = "block";
-      } else if (tiempoCumplido && !internetOK) {
-        document.querySelector(".loader").style.display = "none";
-        errorMsg.style.display = "block";
-        retryBtn.style.display = "inline-block";
-      }
+    // HTTPS obligatorio
+    if (location.protocol !== 'https:') {
+      alert("Advertencia: estás accediendo sin una conexión segura (HTTP). Se recomienda usar HTTPS.");
+      location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
     }
 
-    // --- Botón reintentar ---
-    retryBtn.addEventListener("click", () => {
-      document.querySelector(".loader").style.display = "block";
-      errorMsg.style.display = "none";
-      retryBtn.style.display = "none";
-      verificarInternet();
+    // Loader inicial
+    window.addEventListener("load", function() {
+      const loader = document.getElementById("loader");
+      loader.style.opacity = "0";
+      loader.style.transition = "opacity 0.5s ease";
+      setTimeout(() => loader.style.display = "none", 500);
     });
 
-    // --- Cuando se resuelve el captcha ---
-    function onCaptchaSuccess() {
-      captchaOK = true;
-      intentarHabilitarContinuar();
-    }
+    let captchaOK = false;
+    let countdownInterval = null;
+    const btn = document.getElementById("continuarBtn");
+    const hint = document.getElementById("netStatusHint");
+    const countdownEl = document.getElementById("countdown");
 
-    // --- Habilitar botón solo con captcha ---
-    function intentarHabilitarContinuar() {
-      if (!captchaOK) {
-        btn.disabled = true;
-        btn.classList.remove("active");
-        hint.textContent = "Completa el CAPTCHA para continuar.";
-        return;
-      }
+    // Callback de hCaptcha
+    function onVerified(token) {
+      captchaOK = true;
       btn.disabled = false;
       btn.classList.add("active");
-      hint.textContent = "✅ CAPTCHA completado. Puedes continuar.";
+      hint.textContent = "✅ CAPTCHA verificado. Puedes continuar.";
+      iniciarCountdown();
+    }
+    window.onVerified = onVerified;
+
+    function iniciarCountdown() {
+      if (countdownInterval) return;
+      let seconds = 10;
+      countdownEl.textContent = `Tiempo restante: ${seconds} segundos`;
+      countdownInterval = setInterval(() => {
+        seconds--;
+        countdownEl.textContent = `Tiempo restante: ${seconds} segundos`;
+        if (seconds <= 0) {
+          clearInterval(countdownInterval);
+          countdownInterval = null;
+          location.reload();
+        }
+      }, 1000);
     }
 
-    btn.addEventListener("click", () => {
-      alert("Accediendo al sistema...");
+    // Submit
+    document.getElementById("captchaForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      if (btn.disabled) return;
+      window.location.href = "descarga.html";
     });
   </script>
 </body>
