@@ -7,149 +7,58 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
       color: white;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      text-align: center;
-      padding: 20px;
-      animation: fadeIn 1s ease;
-      position: relative;
-      z-index: 1;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      min-height: 100vh; text-align: center; padding: 20px; animation: fadeIn 1s ease; position: relative; z-index: 1;
     }
-
     body::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      background: url("images/Fondo.jpg") no-repeat center center fixed;
-      background-size: cover;
-      z-index: -2;
+      content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: url("images/Fondo.jpg") no-repeat center center fixed; background-size: cover; z-index: -2;
     }
-
-    h1 {
-      color: #00c3ff;
-      text-shadow: 0 0 8px #00c3ff;
-      font-size: 2.2em;
-      margin-bottom: 15px;
-    }
-
-    p {
-      font-size: 1.1em;
-      max-width: 500px;
-      margin-bottom: 30px;
-      line-height: 1.5em;
-    }
-
+    h1 { color: #00c3ff; text-shadow: 0 0 8px #00c3ff; font-size: 2.2em; margin-bottom: 15px; }
     .btn {
-      padding: 12px 24px;
-      background: #00c3ff;
-      color: black;
-      border: none;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: not-allowed;
-      font-size: 1em;
-      transition: background 0.3s ease, transform 0.3s ease;
-      opacity: 0.5;
+      padding: 12px 24px; background: #00c3ff; color: black; border: none; border-radius: 6px; font-weight: bold;
+      cursor: not-allowed; font-size: 1em; transition: background 0.3s ease, transform 0.3s ease; opacity: 0.5;
     }
-
-    .btn.active {
-      cursor: pointer;
-      opacity: 1;
-    }
-
-    .btn.active:hover {
-      background: #00a0cc;
-      transform: scale(1.05);
-    }
-
-    .h-captcha {
-      margin-bottom: 20px;
-    }
-
-    footer {
-      position: fixed;
-      bottom: 10px;
-      width: 100%;
-      text-align: center;
-      font-size: 0.9em;
-      color: #888;
-      z-index: 2;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
+    .btn.active { cursor: pointer; opacity: 1; }
+    .btn.active:hover { background: #00a0cc; transform: scale(1.05); }
+    .h-captcha { margin-bottom: 20px; }
+    footer { position: fixed; bottom: 10px; width: 100%; text-align: center; font-size: 0.9em; color: #888; z-index: 2; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     @media screen and (max-width: 480px) {
-      h1 {
-        font-size: 1.8em;
-      }
-      p {
-        font-size: 1em;
-      }
-      .btn {
-        width: 100%;
-      }
+      h1 { font-size: 1.8em; } .btn { width: 100%; }
     }
-
-    @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-    }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
 
+  <!-- Loader inicial -->
   <div id="loader" style="
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%;
-  height: 100%;
-  background: #0f0f0f;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  flex-direction: column;
-  color: #00c3ff;
-  font-family: 'Segoe UI', sans-serif;
-  font-size: 1.2em;
-  text-align: center;
-">
-  <div class="spinner" style="
-    width: 50px;
-    height: 50px;
-    border: 6px solid #00c3ff;
-    border-top: 6px solid transparent;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin-bottom: 20px;
-  "></div>
-  Cargando sistema...
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: #0f0f0f; display: flex; align-items: center; justify-content: center;
+    z-index: 9999; flex-direction: column; color: #00c3ff; font-family: 'Segoe UI', sans-serif; font-size: 1.2em; text-align: center;">
+    <div class="spinner" style="
+      width: 50px; height: 50px; border: 6px solid #00c3ff; border-top: 6px solid transparent; border-radius: 50%;
+      animation: spin 1s linear infinite; margin-bottom: 20px;"></div>
+    Cargando sistema...
   </div>
+
   <h1>Verificación de seguridad</h1>
 
   <form id="captchaForm">
     <div class="h-captcha" data-sitekey="0a5044fa-296e-4556-99b6-f7fefc6cd23c" data-callback="onVerified"></div>
     <button type="submit" class="btn" id="continuarBtn" disabled>Continuar</button>
+    <div id="netStatusHint" style="margin-top:10px; font-size:0.95em; color:#00c3ff;"></div>
+    <div id="countdown" style="margin-top:10px; font-size:1em; color:#00c3ff;"></div>
   </form>
 
-  <footer style="position: fixed; bottom: 10px; width: 100%; text-align: center; font-size: 0.9em; color: white; z-index: 2;">
-  🔒 Esta página está protegida con <strong>hCaptcha</strong>
+  <footer>
+    🔒 Esta página está protegida con <strong>hCaptcha</strong>
   </footer>
 
   <audio autoplay loop>
@@ -157,209 +66,210 @@
     Tu navegador no soporta audio HTML5.
   </audio>
 
+  <!-- Lógica principal -->
   <script>
-    function onVerified(token) {
-      const btn = document.getElementById("continuarBtn");
-      btn.disabled = false;
-      btn.classList.add("active");
+    // HTTPS obligatorio
+    if (location.protocol !== 'https:') {
+      alert("Advertencia: estás accediendo sin una conexión segura (HTTP). Se recomienda usar HTTPS.");
+      location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
     }
 
+    // Loader inicial
+    window.addEventListener("load", function() {
+      const loader = document.getElementById("loader");
+      loader.style.opacity = "0";
+      loader.style.transition = "opacity 0.5s ease";
+      setTimeout(() => loader.style.display = "none", 500);
+    });
+
+    // Constantes
+    const TEST_URL = "https://upload.wikimedia.org/wikipedia/commons/3/3a/Bloemenvanadderwortel%28Persicariabistorta%2Csynoniem%2CPolygonumbistorta%2906-06-2021.%28d.j.b%29.jpg";
+    const TAM_ESTIMADO = 7300000; // bytes
+    const UMBRAL_MBPS_OK = 8;   // 1 MB/s
+    const UMBRAL_MBPS_WARN = 0.8; // 0.1 MB/s
+
+    // Estados
+    let captchaOK = false;
+    let countdownInterval = null;
+    let ultimoMbps = 0;
+    let ultimoMBps = 0;
+
+    const btn = document.getElementById("continuarBtn");
+    const hint = document.getElementById("netStatusHint");
+    const countdownEl = document.getElementById("countdown");
+
+    // Callback de hCaptcha
+    function onVerified(token) {
+      captchaOK = true;
+      intentarHabilitarContinuar();
+    }
+    window.onVerified = onVerified;
+
+    function intentarHabilitarContinuar() {
+      if (!captchaOK) {
+        btn.disabled = true;
+        btn.classList.remove("active");
+        hint.textContent = "Completa el CAPTCHA para continuar.";
+        detenerCountdown();
+        return;
+      }
+
+      if (ultimoMBps >= 1) {
+        // >= 1 MB/s → estable
+        btn.disabled = false;
+        btn.classList.add("active");
+        hint.textContent = `✅ Red estable: ${ultimoMbps.toFixed(2)} Mbps (${ultimoMBps.toFixed(2)} MB/s). Puedes continuar.`;
+        iniciarCountdownSiNoIniciado();
+      } else if (ultimoMBps >= 0.1) {
+        // Entre 0.1 y 1 MB/s → advertencia
+        btn.disabled = false;
+        btn.classList.add("active");
+        hint.textContent = `⚠️ Velocidad baja: ${ultimoMbps.toFixed(2)} Mbps (${ultimoMBps.toFixed(2)} MB/s).\nPuedes continuar bajo tu propio riesgo.`;
+        iniciarCountdownSiNoIniciado();
+      } else {
+        // < 0.1 MB/s → bloqueado
+        btn.disabled = true;
+        btn.classList.remove("active");
+        hint.textContent = `❌ Red demasiado lenta: ${ultimoMbps.toFixed(2)} Mbps (${ultimoMBps.toFixed(2)} MB/s).\nSe requiere al menos 0.1 MB/s.`;
+        detenerCountdown();
+      }
+    }
+
+    function iniciarCountdownSiNoIniciado() {
+      if (countdownInterval) return;
+      let seconds = 10;
+      countdownEl.textContent = `Tiempo restante: ${seconds} segundos`;
+      countdownInterval = setInterval(() => {
+        seconds--;
+        countdownEl.textContent = `Tiempo restante: ${seconds} segundos`;
+        if (seconds <= 0) {
+          clearInterval(countdownInterval);
+          countdownInterval = null;
+          location.reload();
+        }
+      }, 1000);
+    }
+    function detenerCountdown() {
+      if (countdownInterval) {
+        clearInterval(countdownInterval);
+        countdownInterval = null;
+        countdownEl.textContent = "";
+      }
+    }
+
+    // Submit
     document.getElementById("captchaForm").addEventListener("submit", function(e) {
       e.preventDefault();
+      if (btn.disabled) return;
       window.location.href = "descarga.html";
     });
-  </script>
 
-  <script>
-    fetch("https://vpnapi.io/api/?key=TU_API_KEY")
-      .then(response => response.json())
-      .then(data => {
-        if (data.security && data.security.vpn === true) {
-          alert("Acceso denegado: se detectó uso de VPN.");
-          window.location.href = "https://www.google.com";
-        }
-      })
-      .catch(error => {
-        console.warn("No se pudo verificar VPN:", error);
-      });
-  </script>
+    // Badge visual
+    function mostrarBadge(tipoTexto, mbps, MBps) {
+      const existente = document.getElementById("estadoRed");
+      if (existente) existente.remove();
 
-  <script>
-  window.addEventListener("load", function() {
-    const loader = document.getElementById("loader");
-    loader.style.opacity = "0";
-    loader.style.transition = "opacity 0.5s ease";
-    setTimeout(() => loader.style.display = "none", 500);
-  });
-  </script>
+      const estado = document.createElement("div");
+      estado.id = "estadoRed";
+      estado.style.position = "fixed";
+      estado.style.top = "20px";
+      estado.style.right = "20px";
+      estado.style.padding = "12px 16px";
+      estado.style.borderRadius = "10px";
+      estado.style.fontWeight = "bold";
+      estado.style.fontSize = "0.95em";
+      estado.style.zIndex = "9999";
+      estado.style.boxShadow = "0 0 12px #00c3ff";
+      estado.style.background = "#0f0f0f";
+      estado.style.color = "#00c3ff";
+      estado.style.border = "2px solid #00c3ff";
+      estado.style.whiteSpace = "pre-line";
+      estado.style.pointerEvents = "none"; 
+      let estadoTxt = "";
+      if (MBps >= 1) estadoTxt = "✅ Estable";
+      else if (MBps >= 0.1) estadoTxt = "⚠️ Baja";
+      else estadoTxt = "❌ Muy lenta";
+      estado.textContent = `📶 Red: ${tipoTexto}\n⚡ Velocidad: ${mbps.toFixed(2)} Mbps (${MBps.toFixed(2)} MB/s)\n${estadoTxt}`;
+      document.body.appendChild(estado);
 
-  <script>
-  function onVerified(token) {
-    const btn = document.getElementById("continuarBtn");
-    btn.disabled = false;
-    btn.classList.add("active");
+      setTimeout(() => {
+        estado.style.opacity = "0";
+        estado.style.transition = "opacity 0.5s ease";
+        setTimeout(() => estado.remove(), 6000);
+      }, 8000);
+    }
 
-    // Crear contador visual
-    const countdown = document.createElement("div");
-    countdown.id = "countdown";
-    countdown.style.marginTop = "15px";
-    countdown.style.fontSize = "1em";
-    countdown.style.color = "#00c3ff";
-    countdown.textContent = "Tiempo restante: 10 segundos";
-    btn.parentNode.appendChild(countdown);
-
-    // Iniciar cuenta regresiva
-    let seconds = 10;
-    const interval = setInterval(() => {
-      seconds--;
-      countdown.textContent = `Tiempo restante: ${seconds} segundos`;
-      if (seconds <= 0) {
-        clearInterval(interval);
-        location.reload(); // Recargar la página
+    // Medición
+    async function medirUnaVez() {
+      const inicio = performance.now();
+      try {
+        const r = await fetch(TEST_URL + "?t=" + Math.random(), { cache: "no-store", mode: "cors" });
+        const buf = await r.arrayBuffer();
+        const fin = performance.now();
+        const bytes = buf.byteLength;
+        const secs = (fin - inicio) / 1000;
+        const bitsPorSec = (bytes * 8) / secs;
+        const mbps = bitsPorSec / 1e6;
+        const MBps = (bytes / secs) / (1024 * 1024);
+        return { mbps, MBps };
+      } catch (e) {
+        return new Promise(resolve => {
+          const t0 = performance.now();
+          const img = new Image();
+          img.onload = () => {
+            const t1 = performance.now();
+            const secs = (t1 - t0) / 1000;
+            const bitsPorSec = (TAM_ESTIMADO * 8) / secs;
+            const mbps = bitsPorSec / 1e6;
+            const MBps = (TAM_ESTIMADO / secs) / (1024 * 1024);
+            resolve({ mbps, MBps, fallback: true });
+          };
+          img.onerror = () => resolve({ mbps: 0, MBps: 0, fallback: true });
+          img.src = TEST_URL + "?t=" + Math.random();
+        });
       }
-    }, 1000);
-  }
+    }
 
-  document.getElementById("captchaForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-    window.location.href = "descarga.html";
-  });
-      </script>
+    async function medirEstable(N = 3) {
+      const lecturas = [];
+      for (let i = 0; i < N; i++) {
+        const { mbps, MBps } = await medirUnaVez();
+        lecturas.push({ mbps, MBps });
+      }
+      lecturas.sort((a, b) => a.mbps - b.mbps);
+      return lecturas[Math.floor(lecturas.length / 2)];
+    }
 
-  <script>
-  if (location.protocol !== 'https:') {
-    alert("Advertencia: estás accediendo sin una conexión segura (HTTP). Se recomienda usar HTTPS.");
-    location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
-  }
+    function tipoRedTexto() {
+      const c = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+      if (!c) return "desconocida";
+      const base = c.type || "";
+      const eff = c.effectiveType || "";
+      let detalle = eff ? eff.toUpperCase() : (base ? base.toUpperCase() : "DESCONOCIDA");
+      if (base && base.toLowerCase() === "wifi") detalle = "WIFI " + detalle;
+      if (base && base.toLowerCase() === "cellular") detalle = "CELULAR " + detalle;
+      return detalle;
+    }
+
+    async function evaluarRed() {
+      const { mbps, MBps } = await medirEstable(3);
+      ultimoMbps = mbps;
+      ultimoMBps = MBps;
+      const tipoTxt = tipoRedTexto();
+      mostrarBadge(tipoTxt, mbps, MBps);
+      intentarHabilitarContinuar();
+    }
+
+    function initMonitoreo() {
+      evaluarRed();
+      setInterval(() => evaluarRed(), 10000);
+      const c = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+      if (c && typeof c.addEventListener === "function") {
+        c.addEventListener("change", () => evaluarRed());
+      }
+    }
+
+    initMonitoreo();
   </script>
-
 </body>
-
-<script>
-let seguridadActiva = false;
-let tipo = "auto";
-let origen = "https://www.google.com/images/branding/googlelogo/2x/googlelogo_light_color_92x30dp.png"; // Imagen ligera
-
-function medirVelocidad(tipo, origen) {
-  return new Promise(resolve => {
-    const inicio = performance.now();
-    const img = new Image();
-    img.src = origen + "?t=" + inicio;
-    img.onload = () => {
-      const fin = performance.now();
-      const tiempo = (fin - inicio) / 1000;
-      const tamaño = 70 * 8; // 70 KB en bits
-      const mbps = (tamaño / tiempo) / 1000000;
-      resolve(mbps);
-    };
-    img.onerror = () => resolve(0.01);
-  });
-}
-
-function mostrarEstadoRed(tipo, mbps, origen = "auto") {
-  const existente = document.getElementById("estadoRed");
-  if (existente) existente.remove();
-
-  const estado = document.createElement("div");
-  estado.id = "estadoRed";
-  estado.style.position = "fixed";
-  estado.style.top = "20px";
-  estado.style.right = "20px";
-  estado.style.padding = "14px 20px";
-  estado.style.borderRadius = "10px";
-  estado.style.fontWeight = "bold";
-  estado.style.fontSize = "0.95em";
-  estado.style.zIndex = "9999";
-  estado.style.boxShadow = "0 0 12px #00c3ff";
-  estado.style.background = "#0f0f0f";
-  estado.style.color = "#00c3ff";
-  estado.style.border = "2px solid #00c3ff";
-  estado.style.whiteSpace = "pre-line";
-
-  let mensaje = `📶 Red: ${tipo.toUpperCase()}\n⚡ Velocidad: ${mbps.toFixed(2)} Mbps`;
-
-  if (mbps < 10) {
-    mensaje += `\n⚠️ Red inestable. Seguridad reforzada.`;
-  } else {
-    mensaje += `\n✅ Red estable. Puedes continuar.`;
-  }
-
-  estado.textContent = mensaje;
-  document.body.appendChild(estado);
-
-  setTimeout(() => {
-    estado.style.opacity = "0";
-    estado.style.transition = "opacity 0.5s ease";
-    setTimeout(() => estado.remove(), 6000);
-  }, 8000);
-}
-
-function activarSeguridadVisual() {
-  if (document.getElementById("loaderExtra")) return;
-
-  const loaderExtra = document.createElement("div");
-  loaderExtra.id = "loaderExtra";
-  loaderExtra.style.position = "fixed";
-  loaderExtra.style.top = "0";
-  loaderExtra.style.left = "0";
-  loaderExtra.style.width = "100%";
-  loaderExtra.style.height = "100%";
-  loaderExtra.style.background = "#000000e0";
-  loaderExtra.style.display = "flex";
-  loaderExtra.style.alignItems = "center";
-  loaderExtra.style.justifyContent = "center";
-  loaderExtra.style.zIndex = "99999";
-  loaderExtra.style.color = "#00c3ff";
-  loaderExtra.style.fontSize = "1.2em";
-  loaderExtra.style.fontFamily = "Segoe UI, sans-serif";
-  loaderExtra.innerHTML = `<div style="text-align:center;">
-    <div style="width:50px;height:50px;border:6px solid #00c3ff;border-top:6px solid transparent;border-radius:50%;animation:spin 1s linear infinite;margin:auto;"></div>
-    <p>Red inestable. Reforzando seguridad...</p>
-  </div>`;
-  document.body.appendChild(loaderExtra);
-
-  const audio = document.querySelector("audio");
-  if (audio) audio.pause();
-}
-
-function desactivarSeguridadVisual() {
-  const loaderExtra = document.getElementById("loaderExtra");
-  if (loaderExtra) loaderExtra.remove();
-
-  const audio = document.querySelector("audio");
-  if (audio) audio.play();
-}
-
-function verificarEstabilidadRed() {
-  const red = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-  const tipoRed = red ? red.effectiveType || red.type : "desconocido";
-
-  medirVelocidad(tipoRed, origen).then(mbps => {
-    mostrarEstadoRed(tipoRed, mbps);
-
-    if (mbps < 10 && !seguridadActiva) {
-      seguridadActiva = true;
-      activarSeguridadVisual();
-    }
-
-    if (mbps >= 10 && seguridadActiva) {
-      seguridadActiva = false;
-      desactivarSeguridadVisual();
-    }
-  });
-}
-
-// Ejecutar cada 5 segundos
-setInterval(verificarEstabilidadRed, 5000);
-
-// Animación CSS
-const estiloAnimacion = document.createElement("style");
-estiloAnimacion.innerHTML = `
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}`;
-document.head.appendChild(estiloAnimacion);
-      </script>
-  
-</html>
+  </html>
