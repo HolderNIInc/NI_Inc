@@ -298,6 +298,27 @@ h1, .tagline {
     transform: translateY(0);
   }
 }
+
+@keyframes aparecerBoton {
+  from { transform: scale(0.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes fadeInPanel {
+  0% { opacity: 0; transform: translateY(30px) scale(0.95); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes fadeOutPanel {
+  0% { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(30px) scale(0.95); }
+}
+
+@keyframes fadeInPopup {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
   </style>
   
 </head>
@@ -316,17 +337,6 @@ h1, .tagline {
   <div class="menu-buttons">
   <a class="info-button" href="informacion.html">Información</a>
   <a class="info-button" href="tienda.html">Tienda de NI Inc</a>
-  <div class="social-buttons">
-  <a href="https://discord.gg/invite/KS8QzeCaz7" target="_blank">
-    <img src="images/Discord Icon.png" alt="Discord" class="social-icon">
-  </a>
-  <a href="https://www.roblox.com/es/users/2819343128" target="_blank">
-    <img src="images/roblox-igame-icon.jpeg" alt="Roblox" class="social-icon">
-  </a>
-  <a href="https://www.youtube.com/channel/UCY5Ip-uT72BVOEG__FQp5TA" target="_blank">
-    <img src="images/YouTube Icon.png" alt="YouTube" class="social-icon">
-  </a>
-</div>
 </div>
 </header>
 
@@ -340,6 +350,85 @@ h1, .tagline {
 <footer>
   &copy; 2025 Noobs Interactive Incorporation — Todos los derechos reservados
 </footer>
+
+
+
+<!-- Botón flotante para desplegar redes -->
+<div id="toggleSocialPanel" style="
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: #00c3ff;
+  color: #000;
+  border: none;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  font-size: 1.5em;
+  font-weight: bold;
+  box-shadow: 0 0 12px #00c3ff;
+  cursor: pointer;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: aparecerBoton 1.5s ease-out forwards;
+  opacity: 0;
+">
+  ^
+</div>
+
+<!-- Panel de redes sociales con animación pro -->
+<div id="socialPanel" style="
+  position: fixed;
+  bottom: 90px;
+  left: 20px;
+  background: rgba(0,0,0,0.85);
+  border-radius: 16px;
+  padding: 18px 20px;
+  box-shadow: 0 0 16px #00c3ff;
+  z-index: 998;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  min-width: 220px;
+  animation: fadeInPanel 0.4s ease-out;
+  backdrop-filter: blur(6px);
+">
+  <div style="color:#00c3ff; font-weight:bold; margin-bottom:12px; font-size:1.1em; letter-spacing:1px;">
+     Redes Sociales
+  </div>
+
+<div id="discordCopyBtn" style="cursor: pointer;">
+  <img src="images/Discord Icon.png" alt="Discord" class="social-icon">
+</div>
+<div>
+    <a href="https://www.roblox.com/es/users/2819343128" target="_blank">
+      <img src="images/roblox-igame-icon.jpeg" alt="Roblox" class="social-icon">
+    </a>
+    <a href="https://www.youtube.com/channel/UCY5Ip-uT72BVOEG__FQp5TA" target="_blank">
+      <img src="images/YouTube Icon.png" alt="YouTube" class="social-icon">
+    </a>
+  </div>
+</div>
+
+<!-- Popup de confirmación Discord-->
+<div id="popupDiscord" style="
+  position: fixed;
+  bottom: 160px;
+  left: 20px;
+  background: #7289da;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 0.95em;
+  box-shadow: 0 0 12px #7289da;
+  z-index: 1000;
+  display: none;
+  animation: fadeInPopup 0.3s ease-out;
+">
+  ¡Link de Discord copiado!
+</div>
 
 <script>
   window.addEventListener("load", () => {
@@ -380,6 +469,45 @@ h1, .tagline {
       }, 500);
     }, 5000);
   });
+</script>
+
+
+<script> const toggleSocialPanel = document.getElementById("toggleSocialPanel");
+const socialPanel = document.getElementById("socialPanel");
+
+toggleSocialPanel.addEventListener("click", () => {
+  if (socialPanel.style.display === "none" || socialPanel.style.display === "") {
+    socialPanel.style.display = "flex";
+    socialPanel.style.animation = "fadeInPanel 0.5s ease-out forwards";
+  } else {
+    socialPanel.style.animation = "fadeOutPanel 0.4s ease-in forwards";
+    setTimeout(() => {
+      socialPanel.style.display = "none";
+    }, 400);
+  }
+}); 
+</script>
+
+
+<script> const discordCopyBtn = document.getElementById("discordCopyBtn");
+const popupDiscord = document.getElementById("popupDiscord");
+const discordLink = "https://discord.gg/invite/KS8QzeCaz7";
+
+discordCopyBtn.addEventListener("click", () => {
+  navigator.clipboard.writeText(discordLink).then(() => {
+    popupDiscord.style.display = "block";
+    popupDiscord.style.animation = "fadeInPopup 0.3s ease-out";
+
+    setTimeout(() => {
+      popupDiscord.style.opacity = "0";
+      popupDiscord.style.transition = "opacity 0.5s ease";
+      setTimeout(() => {
+        popupDiscord.style.display = "none";
+        popupDiscord.style.opacity = "1";
+      }, 500);
+    }, 2500);
+  });
+}); 
 </script>
 
 </body>
