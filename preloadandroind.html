@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>NI Inc | Cargando...</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      background: url('./Fondo.jpg') center center / cover no-repeat;
+      overflow: hidden;
+    }
+
+    .loader {
+      animation: spin 1.5s linear infinite;
+      border: 6px solid rgba(255,255,255,0.3);
+      border-top: 6px solid #00aaff;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      margin-bottom: 20px;
+    }
+
+    .info-line {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 16px;
+      opacity: 0;
+      animation: fadeIn 1s ease-out forwards;
+      animation-delay: 2s;
+    }
+
+    .info-line img {
+      width: 24px;
+      height: 24px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    .typewriter span {
+      border-right: 2px solid white;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .extra-info, .copyright-line {
+      font-size: 15px;
+      margin-top: 10px;
+      opacity: 0;
+      animation: fadeIn 1s ease-out forwards;
+      animation-delay: 2.6s;
+      text-align: center;
+    }
+
+    .extra-info strong {
+      color: #00ddff;
+    }
+
+.copyright-line {
+  font-size: 15px;
+  margin-top: 10px;
+  opacity: 0;
+  animation: fadeIn 1s ease-out forwards;
+  animation-delay: 3s;
+  text-align: center;
+  color: black; /* 👈 Aquí está el cambio */
+}
+
+  </style>
+</head>
+<body>
+  <div class="loader"></div>
+
+  <!-- VS Code -->
+  <div class="info-line typewriter">
+    <!--<img src="vscodeicon.jpg" alt="VS Code Icon">-->
+    <span id="vscodeText"></span>
+  </div>
+
+  <!-- GitHub -->
+  <div class="info-line typewriter">
+    <!--<img src="GitHubIcon.jpeg" alt="GitHub Icon">-->
+    <span id="githubText"></span>
+  </div>
+
+  <!-- App info -->
+  <div class="extra-info">
+    Aplicación para Android desarrollada por: <strong>Noobs Interactive Incorporation</strong>
+  </div>
+
+  <div class="copyright-line" style="color: black;">
+  © Todos los derechos reservados
+</div>
+
+  <script>
+  const vscodeMessage = "Creado con AndroidStudio";
+  const githubMessage = "Hosteado en GitHub";
+
+  const vscodeText = document.getElementById("vscodeText");
+  const githubText = document.getElementById("githubText");
+
+  let i = 0, j = 0;
+
+  function typeVSC() {
+    if (i <= vscodeMessage.length) {
+      vscodeText.textContent = vscodeMessage.slice(0, i);
+      i++;
+      setTimeout(typeVSC, 80);
+    } else {
+      setTimeout(typeGitHub, 300);
+    }
+  }
+
+  function typeGitHub() {
+    if (j <= githubMessage.length) {
+      githubText.textContent = githubMessage.slice(0, j);
+      j++;
+      setTimeout(typeGitHub, 80);
+    }
+  }
+
+  setTimeout(typeVSC, 2000);
+
+  // 🔁 Redirección automática después de 5 segundos
+  setTimeout(() => {
+    window.location.href = "https://holderniinc.github.io/NI_Inc/Menu.html";
+  }, 5000);
+</script>
+
+</body>
+</html>
