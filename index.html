@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Error 404 — NI Inc</title>
+  <link rel="icon" href="images/IconPage.jpg" type="image/x-icon">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url("images/Fondo.jpg") no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      animation: fadeInBody 1.5s ease-in forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeInBody {
+      to { opacity: 1; }
+    }
+
+    .error-container {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 0 20px #bb86fc;
+      animation: slideUp 1s ease-out;
+      max-width: 600px;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(60px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    h1 {
+      font-size: 4em;
+      margin: 0;
+      color: #bb86fc;
+      text-shadow: 0 0 10px #bb86fc;
+    }
+
+    p {
+      font-size: 1.2em;
+      margin-top: 20px;
+      line-height: 1.6;
+    }
+
+    .back-button {
+      margin-top: 30px;
+      background-color: #3a80f4;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 30px;
+      font-weight: bold;
+      font-size: 1em;
+      cursor: pointer;
+      box-shadow: 0 0 10px #3a80f4;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .back-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #3a80f4;
+    }
+
+    .glow {
+      animation: pulseGlow 2s infinite;
+    }
+
+    @keyframes pulseGlow {
+      0% { text-shadow: 0 0 10px #bb86fc; }
+      50% { text-shadow: 0 0 20px #bb86fc; }
+      100% { text-shadow: 0 0 10px #bb86fc; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="error-container">
+    <h1 class="glow">Error 404</h1>
+    <p>Este lugar se ha movido, fue eliminado o nunca existió.<br>Verifica la URL o regresa a la página principal.</p>
+    <button class="back-button" onclick="window.location.href='Menu.html'">← Volver a NI Inc</button>
+  </div>
+
+  <audio autoplay loop>
+    <source src="audios/Lofi.mp3" type="audio/mpeg">
+    Tu navegador no soporta audio HTML5.
+  </audio>
+
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NI Inc Game - MinecraftServer</title>
+  <link rel="icon" href="images/IconPage.jpg" type="image/x-icon">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url("images/panorama.png") no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 60px 20px;
+      animation: fadeInBody 1.5s ease-in forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeInBody {
+      to { opacity: 1; }
+    }
+
+    .server-panel {
+      background-color: rgba(0, 0, 0, 0.75);
+      padding: 40px;
+      border-radius: 20px;
+      max-width: 900px;
+      width: 100%;
+      box-shadow: 0 0 20px #3a80f4;
+      animation: slideUp 1s ease-out;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(60px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 3em;
+      color: #bb86fc;
+      text-shadow: 0 0 10px #bb86fc;
+      margin-bottom: 20px;
+    }
+
+    .server-image {
+      width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 0 12px #3a80f4;
+      margin-bottom: 30px;
+    }
+
+    p {
+      font-size: 1.2em;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    .copy-btn {
+      background-color: #3a80f4;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 30px;
+      font-weight: bold;
+      font-size: 1em;
+      cursor: pointer;
+      box-shadow: 0 0 10px #3a80f4;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .copy-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #3a80f4;
+    }
+
+    #popupCopiado {
+      position: fixed;
+      bottom: 160px;
+      left: 20px;
+      background: #3a80f4;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 0.95em;
+      box-shadow: 0 0 12px #3a80f4;
+      z-index: 1000;
+      display: none;
+      animation: fadeInPopup 0.3s ease-out;
+    }
+
+    @keyframes fadeInPopup {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .status {
+      font-size: 1.1em;
+      margin-bottom: 20px;
+      color: #00ffcc;
+      text-shadow: 0 0 8px #00ffcc;
+    }
+
+    .back-link {
+      margin-top: 40px;
+      text-align: center;
+    }
+
+    .back-link a {
+      background-color: #bb86fc;
+      color: white;
+      padding: 12px 24px;
+      text-decoration: none;
+      border-radius: 30px;
+      font-weight: bold;
+      box-shadow: 0 0 8px #bb86fc;
+      transition: background 0.3s ease;
+    }
+
+    .back-link a:hover {
+      background-color: #9f70d6;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="server-panel">
+  <div style="display: flex; flex-wrap: wrap; gap: 30px; align-items: center;">
+    <!-- Imagen cuadrada -->
+    <img src="images/MinecraftServer.jpg" alt="Servidor Minecraft" style="
+      width: 280px;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 16px;
+      box-shadow: 0 0 12px #3a80f4;
+    ">
+
+    <!-- Info del servidor -->
+    <div style="flex: 1; min-width: 250px;">
+      <h1 style="font-size: 2.5em; color: #bb86fc; text-shadow: 0 0 10px #bb86fc; margin-bottom: 10px;">
+        NI Inc Game
+      </h1>
+      <p style="font-size: 1.1em; line-height: 1.6; margin-bottom: 20px;">
+        Bienvenido al mundo de NI Inc en Minecraft. Explora, construye y juega con otros usuarios en un entorno libre. Cuando el servidor se quede sin espacio, el mundo será publicado en Discord para que lo descargues.
+      </p>
+      <p><strong>IP del servidor:</strong> <span id="ipTexto">NIIncGameJava.aternos.me</span></p>
+      <button class="copy-btn" onclick="copiarIP()">📋 Copiar IP</button>
+    </div>
+  </div>
+
+  <div class="back-link" style="margin-top: 40px;">
+    <a href="Menu.html">← Volver a la página principal</a>
+  </div>
+</div>
+
+  <div id="popupCopiado">¡IP copiada al portapapeles!</div>
+
+  <audio autoplay loop>
+    <source src="audios/Lofi.mp3" type="audio/mpeg">
+    Tu navegador no soporta audio HTML5.
+  </audio>
+
+  <script>
+    function copiarIP() {
+      const ip = document.getElementById("ipTexto").textContent;
+      navigator.clipboard.writeText(ip).then(() => {
+        const popup = document.getElementById("popupCopiado");
+        popup.style.display = "block";
+        popup.style.animation = "fadeInPopup 0.3s ease-out";
+
+        setTimeout(() => {
+          popup.style.opacity = "0";
+          popup.style.transition = "opacity 0.5s ease";
+          setTimeout(() => {
+            popup.style.display = "none";
+            popup.style.opacity = "1";
+          }, 500);
+        }, 2500);
+      });
+    }
+  </script>
+
+</body>
+</html>
