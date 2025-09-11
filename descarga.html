@@ -121,7 +121,7 @@
         
         <!-- Botón Windows con ícono y cuadro de info -->
         <div class="windows-download" id="windowsDownload">
-          <a href="https://www.dropbox.com/scl/fi/68yo2p4aglm2eajflianf/NI-Inc-Launcher-Setup-v1.0.0.exe?rlkey=ixi6i3hjgbc43dll7iwvj1etn&st=x77yid1x&dl=1" download>
+          <a href="https://www.dropbox.com/scl/fi/bpo6uw5b6e4oaiqgtfsyc/NI-Inc-Launcher.exe?rlkey=zoybt5eu9lpbghff5agpgwge6&st=rifjlsqz&dl=1" download>
             <img src="images/Download_for_windows_button.jpg" alt="Descargar para Windows" style="width:220px; height:auto;">
           </a>
           <img src="images/infoicon.png" alt="Información" class="info-icon" onclick="toggleInfoBox('infoBoxWindows', event)">
@@ -130,20 +130,26 @@
           </div>
         </div>
 
-        <!-- Botón Android con ícono y cuadro de info -->
-        <div class="android-download" id="androidDownload">
-          <a href="https://www.dropbox.com/scl/fi/u2d7vrs9feuuzf908ds2j/NI-Inc-Launcher.apk?rlkey=o58yofh139bcxcr938gw6yn6a&st=2dhhw7if&dl=1" download>
-            <img src="images/Download_for_android_button.jpg" alt="Descargar para Android" style="width:220px; height:auto;">
-          </a>
-          <img src="images/infoicon.png" alt="Información" class="info-icon" onclick="toggleInfoBox('infoBoxAndroid', event)">
-          <div id="infoBoxAndroid" class="info-box">
-  Esta versión está optimizada para Android 12 o superior. Para instalar la app <a href="https://youtu.be/Dl_OuYOCyEU?si=bxsjdlsQTDO4ngfE" target="_blank" style="color:#00c3ff; text-decoration: underline;">haga click</a> acá para ver el tutorial.<br><br>Compatible con la mayoría de dispositivos modernos.
-          </div>
-        </div>
+  
+<!-- Botón Android con ícono y cuadro de info -->
+<div class="android-download" id="androidDownload" style="text-align: center;">
+  <!-- Botón de descarga bloqueado -->
+  <a href="javascript:void(0)" style="pointer-events: none; opacity: 0.5; cursor: not-allowed;">
+    <img src="images/Download_for_android_button.jpg" alt="Descargar para Android" style="width:220px; height:auto;">
+  </a>
 
-      </div>
-    </div>
+  <!-- Ícono de información -->
+  <img src="images/infoicon.png" alt="Información" class="info-icon" onclick="toggleInfoBox('infoBoxAndroid', event)" style="margin-top: 10px; cursor: pointer;">
+
+  <!-- Cuadro de información oculto -->
+  <div id="infoBoxAndroid" class="info-box">
+    <div>Actualmente, no esta disponible.</div>
+    Esta versión está optimizada para Android 12 o superior. Para instalar la app 
+    <a href="https://youtu.be/Dl_OuYOCyEU?si=bxsjdlsQTDO4ngfE" target="_blank" style="color:#00c3ff; text-decoration: underline;">haga click</a> acá para ver el tutorial.<br><br>
+    Compatible con la mayoría de dispositivos modernos.
   </div>
+</div>
+
 
   <script>
     function toggleInfoBox(id, event) {
