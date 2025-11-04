@@ -1,0 +1,53 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>NI Inc Launcher</title>
+  <link rel="stylesheet" href="launcher.css">
+</head>
+<body>
+  <div id="header">NI Inc Launcher</div>
+
+  <div id="intro">
+    <img src="assets/logo.png" alt="NI Inc" style="height:80px;">
+    <p>Bienvenido al Launcher de NI Inc</p>
+  </div>
+
+  <div id="grid-container">
+    <h2>Aplicaciones disponibles</h2>
+    <div id="grid"></div>
+  </div>
+
+  <span class="tag">version: 1.0.0 [BETA]</span>
+
+  <div id="notification" style="display:none;">
+  <p id="notification-text"></p>
+</div>
+
+<button id="menu-toggle">☰ Menú</button>
+
+<div id="side-menu">
+  <ul>
+    <li id="config-btn">⚙️ Configuración</li>
+    <li id="links-btn">🔗 Links</li>
+    <li id="updates-btn">📝 Nota de actualizaciones</li>
+  </ul>
+</div>
+
+  <script src="launcher.js"></script>
+</body>
+<div id="clock"></div>
+<script>
+  function updateClock() {
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+    document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+  }
+
+  setInterval(updateClock, 1000);
+  updateClock();
+</script>
+</html>

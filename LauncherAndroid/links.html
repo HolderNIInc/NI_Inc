@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>NI Inc Launcher - Links</title>
+  <style>
+    body {
+      margin: 0;
+      background: url('assets/fondo.jpg') no-repeat center center;
+      background-size: cover;
+      font-family: 'Segoe UI', sans-serif;
+      color: #00ffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 80px;
+    }
+
+    #back-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background-color: #00ffff;
+      color: #000;
+      border: none;
+      padding: 10px 15px;
+      font-size: 1em;
+      cursor: pointer;
+      border-radius: 5px;
+      z-index: 1000;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    #version-label {
+      font-size: 0.9em;
+      opacity: 0.8;
+      margin-bottom: 30px;
+    }
+
+    .link-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .link-grid img {
+      width: 200px;
+      height: 200px;
+      object-fit: contain;
+      cursor: pointer;
+      border-radius: 15px;
+      transition: transform 0.2s ease;
+    }
+
+    .link-grid img:hover {
+      transform: scale(1.05);
+    }
+
+    #note {
+      margin-top: 40px;
+      font-size: 0.9em;
+      opacity: 0.7;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <button id="back-button" onclick="window.location.href='index.html'">🔙 Atrás</button>
+
+  <h1>NI Inc Launcher</h1>
+  <div id="version-label">Versión: 1.0.0</div>
+
+  <div class="link-grid">
+    <a href="https://discord.gg/bG2Dub2Eqk" target="_blank">
+      <img src="assets/Discord.png" alt="Discord">
+    </a>
+    <a href="https://bit.ly/NG766" target="_blank">
+      <img src="assets/Bit.ly.png" alt="Bitly">
+    </a>
+    <a href="https://www.roblox.com/communities/33176165" target="_blank">
+      <img src="assets/Roblox.jpg" alt="Roblox">
+    </a>
+  </div>
+
+  <div id="note">Esto puede cambiar pasando el tiempo</div>
+</body>
+<div id="clock"></div>
+<script>
+  function updateClock() {
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+    document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+  }
+
+  setInterval(updateClock, 1000);
+  updateClock();
+</script>
+</html>

@@ -1,0 +1,40 @@
+{
+  "name": "ni-inc-launcher",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --win",
+    "dist": "electron-builder --win"
+  },
+  "devDependencies": {
+    "electron": "^38.2.0",
+    "electron-builder": "^24.13.3"
+  },
+  "description": "Launcher Principal.",
+  "keywords": [
+    "launcher",
+    "electron",
+    "ni-inc",
+    "modular",
+    "windows"
+  ],
+  "author": "Noobs Interactive Incorporation",
+  "license": "ISC",
+  "build": {
+    "appId": "com.niinc.launcher",
+    "productName": "NI Inc Launcher",
+    "icon": "assets/app-icon.ico",
+    "win": {
+      "target": "nsis",
+      "icon": "assets/app-icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "NI Inc Launcher"
+    }
+  }
+}
