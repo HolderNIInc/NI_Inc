@@ -120,6 +120,10 @@
       animation: fadeIn 0.5s ease-out;
     }
 
+    #success {
+      background: #00ff88;
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
@@ -138,7 +142,9 @@
       <img src="images/niinc-icon.png" alt="NI INC APP" />
       <h2>NI INC APP</h2>
       <p>Ve todas las cosas que tenemos para que pruebes.</p>
-      <button class="download-btn" onclick="downloadApp()">Descargar</button>
+      <a href="https://www.dropbox.com/scl/fi/mj8sjacdxp7f0siiva7b6/NI-INC-App-BETA.apk?rlkey=twjlisjj3ts4q0d3caa5mtfnm&st=svotr220&dl=1" target="_blank" rel="noopener noreferrer">
+        <button class="download-btn" onclick="notifyDownload()">Descargar</button>
+      </a>
     </div>
   </div>
 
@@ -146,26 +152,33 @@
     Descargando NI INC APP... No cierres la aplicación para completar la descarga correctamente.
   </div>
 
+  <div class="notification" id="success">
+    ✅ Descarga completada. ¡Gracias por instalar NI INC APP!
+  </div>
+
   <audio id="clickSound" src="https://assets.mixkit.co/sfx/download/mixkit-select-click-1109.mp3" preload="auto"></audio>
 
   <script>
-    function downloadApp() {
+    function notifyDownload() {
       const sound = document.getElementById("clickSound");
       const notify = document.getElementById("notify");
+      const success = document.getElementById("success");
 
       sound.play();
       notify.style.display = "block";
 
       setTimeout(() => {
-        window.location.href = "https://www.dropbox.com/scl/fi/mj8sjacdxp7f0siiva7b6/NI-INC-App-BETA.apk?rlkey=twjlisjj3ts4q0d3caa5mtfnm&st=svotr220&dl=1"; // Reemplaza con tu link real
-      }, 1000);
-
-      setTimeout(() => {
         notify.style.display = "none";
       }, 6000);
+
+      setTimeout(() => {
+        success.style.display = "block";
+      }, 7000);
+
+      setTimeout(() => {
+        success.style.display = "none";
+      }, 11000);
     }
   </script>
 </body>
-
 </html>
-
