@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NI Inc Launcher</title>
+  <style>
+    body {
+      margin: 0;
+      background: url('fondo.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    .splash {
+      position: relative;
+      text-align: center;
+      padding: 40px 20px;
+      animation: fadeIn 1.5s ease-out;
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    .splash h1 {
+      font-size: 2.5em;
+      color: #00ffe7;
+      text-shadow: 0 0 10px #00ffe7;
+      margin-bottom: 10px;
+    }
+
+    .splash img {
+      width: 100px;
+      height: auto;
+      margin-top: 10px;
+      filter: drop-shadow(0 0 5px #00ffe7);
+    }
+
+    .version {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      background: #00ffe7;
+      color: #000;
+      padding: 5px 10px;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 0.9em;
+      box-shadow: 0 0 5px #00ffe7;
+    }
+
+    .grid {
+      display: flex;
+      justify-content: center;
+      padding: 30px;
+      gap: 30px;
+      flex-wrap: wrap;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .app {
+      width: 280px;
+      background: #222;
+      border-radius: 20px;
+      box-shadow: 0 0 10px #00ffe7;
+      text-align: center;
+      padding: 20px;
+      transition: transform 0.2s ease;
+      cursor: pointer;
+    }
+
+    .app:hover {
+      transform: scale(1.02);
+    }
+
+    .app img {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 10px;
+    }
+
+    .app h2 {
+      font-size: 1.2em;
+      margin: 10px 0 5px;
+      color: #00ffe7;
+    }
+
+    .app p {
+      font-size: 0.9em;
+      color: #ccc;
+      margin-bottom: 15px;
+    }
+
+    .download-btn {
+      background: #00ffe7;
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .download-btn:hover {
+      background: #00cfcf;
+    }
+
+    .notification {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #00ffe7;
+      color: #000;
+      padding: 15px 20px;
+      border-radius: 10px;
+      font-weight: bold;
+      box-shadow: 0 0 10px #00ffe7;
+      display: none;
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="splash">
+    <div class="version">v1.0 BETA</div>
+    <h1>NI Inc Launcher</h1>
+    <img src="logo.png" alt="Logo NI Inc" />
+  </div>
+
+  <div class="grid">
+    <div class="app">
+      <img src="niinc-icon.png" alt="NI INC APP" />
+      <h2>NI INC APP</h2>
+      <p>Ve todas las cosas que tenemos para que pruebes.</p>
+      <button class="download-btn" onclick="downloadApp()">Descargar</button>
+    </div>
+  </div>
+
+  <div class="notification" id="notify">
+    Descargando NI INC APP... No cierres la aplicación para completar la descarga correctamente.
+  </div>
+
+  <audio id="clickSound" src="https://assets.mixkit.co/sfx/download/mixkit-select-click-1109.mp3" preload="auto"></audio>
+
+  <script>
+    function downloadApp() {
+      const sound = document.getElementById("clickSound");
+      const notify = document.getElementById("notify");
+
+      sound.play();
+      notify.style.display = "block";
+
+      setTimeout(() => {
+        window.location.href = "https://example.com/niincapp.apk"; // Reemplaza con tu link real
+      }, 1000);
+
+      setTimeout(() => {
+        notify.style.display = "none";
+      }, 6000);
+    }
+  </script>
+</body>
+</html>
