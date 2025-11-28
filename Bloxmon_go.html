@@ -1,4 +1,8 @@
-<!DOCTYPE html>
+      font-weight: bold;
+      font-size: 1em;
+      cursor: pointer;
+      margin-top: 15px;
+      display: b<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -18,9 +22,8 @@
       min-height: 100vh;
     }
 
-    /* Panel con efecto iOS (frosted glass) */
     .game-panel {
-      background: rgba(0, 0, 0, 0.35); /* semi-transparente */
+      background: rgba(0, 0, 0, 0.35);
       backdrop-filter: blur(20px) saturate(180%);
       -webkit-backdrop-filter: blur(20px) saturate(180%);
       padding: 40px;
@@ -53,17 +56,9 @@
       margin-bottom: 15px;
     }
 
-    p {
-      font-size: 1.2em;
-      line-height: 1.6;
-      margin-bottom: 20px;
-    }
+    p { font-size: 1.2em; line-height: 1.6; margin-bottom: 20px; }
 
-    ul {
-      font-size: 1.1em;
-      margin: 20px 0;
-      padding-left: 20px;
-    }
+    ul { font-size: 1.1em; margin: 20px 0; padding-left: 20px; }
     ul li { margin-bottom: 10px; }
 
     .play-btn, .secondary-btn {
@@ -83,25 +78,16 @@
       border: none;
       box-shadow: 0 0 10px #3a80f4;
     }
-    .play-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 15px #3a80f4;
-    }
+    .play-btn:hover { transform: scale(1.05); box-shadow: 0 0 15px #3a80f4; }
 
     .secondary-btn {
       background-color: transparent;
       color: #bb86fc;
       border: 2px solid #bb86fc;
     }
-    .secondary-btn:hover {
-      background-color: #bb86fc;
-      color: white;
-    }
+    .secondary-btn:hover { background-color: #bb86fc; color: white; }
 
-    .back-link {
-      margin-top: 40px;
-      text-align: center;
-    }
+    .back-link { margin-top: 40px; text-align: center; }
     .back-link a {
       background-color: #bb86fc;
       color: white;
@@ -113,16 +99,36 @@
       transition: background 0.3s ease;
     }
     .back-link a:hover { background-color: #9f70d6; }
+
+    /* Aviso si el audio está bloqueado */
+    .notice {
+      position: fixed;
+      inset: 0;
+      display: none;
+      place-items: center;
+      background: rgba(0,0,0,0.6);
+      color: #bb86fc;
+      font-size: 1.6em;
+      text-shadow: 0 0 10px #bb86fc;
+      animation: pulse 1.5s infinite;
+      z-index: 9999;
+    }
+    @keyframes pulse {
+      0% { opacity: 0.4; }
+      50% { opacity: 1; }
+      100% { opacity: 0.4; }
+    }
   </style>
 </head>
 <body>
 
+  <!-- Aviso inicial -->
+  <div id="notice" class="notice">🔊 Refresca la página para que se escuche la música</div>
+
   <div class="game-panel">
     <div class="game-layout">
-      <!-- Imagen cuadrada del juego -->
       <img src="images/BloxmonGO.jpg" alt="Bloxmon GO" class="game-image">
 
-      <!-- Información del juego -->
       <div style="flex: 1; min-width: 250px;">
         <h1>Bloxmon GO</h1>
         <p><strong>Descripción:</strong> Bloxmon GO es un juego de Roblox inspirado en Pokémon GO, adaptado al universo de Roblox. Explora mapas abiertos, captura Bloxmons únicos y participa en batallas estratégicas con otros jugadores.</p>
@@ -134,11 +140,9 @@
           <li>🎉 Eventos especiales y recompensas</li>
         </ul>
 
-        <!-- Botones -->
         <button class="play-btn" onclick="window.open('https://www.roblox.com/share?code=_5gf40kgnxu20eb16pom76pwwiboxo5ecbk58hntl42kib4th3i&type=ExperienceInvite','_blank')">
           🎮 Jugar en Roblox
         </button>
-
         <button class="secondary-btn" onclick="window.open('https://www.roblox.com/share?code=_5gf40kgnxu20eb16pom76pwwiboxo5ecbk58hntl42kib4th3i&type=ExperienceInvite','_blank')">
           👀 Ver en Roblox
         </button>
@@ -150,39 +154,47 @@
     </div>
   </div>
 
-  <!-- Audio dinámico -->
-  <audio id="bg-audio" autoplay loop></audio>
+  <!-- Audio -->
+  <audio id="bg-audio" autoplay loop preload="auto"></audio>
 
   <script>
-    function setTheme() {
+    const DAY_START = 6 * 60 + 30;   // 6:30 AM
+    const NIGHT_START = 18 * 60 + 30; // 6:30 PM
+    const DAY_BG = "images/Diablox.jpg";
+    const NIGHT_BG = "images/Nocheblox.jpg";
+    const DAY_SONG = "audios/WALKIN_DAYS(2).mp3";
+    const NIGHT_SONG = "audios/LAVENDER_NIGHT.mp3";
+
+    function isDay() {
       const now = new Date();
-      const hours = now.getHours();
-      const minutes = now.getMinutes();
-      const body = document.body;
+      const total = now.getHours() * 60 + now.getMinutes();
+      return total >= DAY_START && total < NIGHT_START;
+    }
+
+    function setTheme() {
       const audio = document.getElementById("bg-audio");
+      const day = isDay();
 
-      // Convertimos la hora a minutos totales para comparar
-      const totalMinutes = hours * 60 + minutes;
+      // Fondo
+      document.body.style.backgroundImage = day ? `url('${DAY_BG}')` : `url('${NIGHT_BG}')`;
 
-      const morningStart = 6 * 60 + 30; // 6:30 AM
-      const eveningStart = 18 * 60 + 30; // 6:30 PM
-
-      if (totalMinutes >= morningStart && totalMinutes < eveningStart) {
-        // Día
-        body.style.backgroundImage = "url('images/Diablox.jpg')";
-        audio.src = "audio/WALKIN_DAYS(2).mp3";
-      } else {
-        // Noche
-        body.style.backgroundImage = "url('images/Nocheblox.jpg')";
-        audio.src = "audio/LAVENDER_NIGHT.mp3";
+      // Audio
+      const desiredSrc = day ? DAY_SONG : NIGHT_SONG;
+      if (!audio.src.endsWith(desiredSrc)) {
+        audio.src = desiredSrc;
+        audio.load();
+        audio.play().then(() => {
+          document.getElementById("notice").style.display = "none";
+        }).catch(() => {
+          document.getElementById("notice").style.display = "grid";
+        });
       }
     }
 
-    // Ejecutar al cargar
-    setTheme();
-
-    // Re-evaluar cada minuto
-    setInterval(setTheme, 60000);
+    window.addEventListener("load", () => {
+      setTheme();
+      setInterval(setTheme, 60000);
+    });
   </script>
 
 </body>
