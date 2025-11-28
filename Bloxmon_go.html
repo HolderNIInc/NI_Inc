@@ -1,1 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bloxmon GO — NI Inc</title>
+  <link rel="icon" href="images/IconPage.jpg" type="image/x-icon">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+      padding: 60px 20px;
+      transition: background 1s ease-in-out;
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: cover;
+      min-height: 100vh;
+    }
 
+    /* Panel con efecto iOS (frosted glass) */
+    .game-panel {
+      background: rgba(0, 0, 0, 0.35); /* semi-transparente */
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      padding: 40px;
+      border-radius: 20px;
+      max-width: 900px;
+      width: 100%;
+      box-shadow: 0 0 30px rgba(58,128,244,0.6);
+      margin: auto;
+    }
+
+    .game-layout {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .game-image {
+      width: 280px;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 16px;
+      box-shadow: 0 0 12px #3a80f4;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      color: #bb86fc;
+      text-shadow: 0 0 10px #bb86fc;
+      margin-bottom: 15px;
+    }
+
+    p {
+      font-size: 1.2em;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    ul {
+      font-size: 1.1em;
+      margin: 20px 0;
+      padding-left: 20px;
+    }
+    ul li { margin-bottom: 10px; }
+
+    .play-btn, .secondary-btn {
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-weight: bold;
+      font-size: 1em;
+      cursor: pointer;
+      margin-top: 15px;
+      display: block;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .play-btn {
+      background-color: #3a80f4;
+      color: white;
+      border: none;
+      box-shadow: 0 0 10px #3a80f4;
+    }
+    .play-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #3a80f4;
+    }
+
+    .secondary-btn {
+      background-color: transparent;
+      color: #bb86fc;
+      border: 2px solid #bb86fc;
+    }
+    .secondary-btn:hover {
+      background-color: #bb86fc;
+      color: white;
+    }
+
+    .back-link {
+      margin-top: 40px;
+      text-align: center;
+    }
+    .back-link a {
+      background-color: #bb86fc;
+      color: white;
+      padding: 12px 24px;
+      text-decoration: none;
+      border-radius: 30px;
+      font-weight: bold;
+      box-shadow: 0 0 8px #bb86fc;
+      transition: background 0.3s ease;
+    }
+    .back-link a:hover { background-color: #9f70d6; }
+  </style>
+</head>
+<body>
+
+  <div class="game-panel">
+    <div class="game-layout">
+      <!-- Imagen cuadrada del juego -->
+      <img src="images/BloxmonGO.jpg" alt="Bloxmon GO" class="game-image">
+
+      <!-- Información del juego -->
+      <div style="flex: 1; min-width: 250px;">
+        <h1>Bloxmon GO</h1>
+        <p><strong>Descripción:</strong> Bloxmon GO es un juego de Roblox inspirado en Pokémon GO, adaptado al universo de Roblox. Explora mapas abiertos, captura Bloxmons únicos y participa en batallas estratégicas con otros jugadores.</p>
+        <p><strong>Características principales:</strong></p>
+        <ul>
+          <li>🌍 Exploración de mundos abiertos</li>
+          <li>🔎 Captura y colección de Bloxmons</li>
+          <li>⚔️ Batallas multijugador</li>
+          <li>🎉 Eventos especiales y recompensas</li>
+        </ul>
+
+        <!-- Botones -->
+        <button class="play-btn" onclick="window.open('https://www.roblox.com/share?code=_5gf40kgnxu20eb16pom76pwwiboxo5ecbk58hntl42kib4th3i&type=ExperienceInvite','_blank')">
+          🎮 Jugar en Roblox
+        </button>
+
+        <button class="secondary-btn" onclick="window.open('https://www.roblox.com/share?code=_5gf40kgnxu20eb16pom76pwwiboxo5ecbk58hntl42kib4th3i&type=ExperienceInvite','_blank')">
+          👀 Ver en Roblox
+        </button>
+      </div>
+    </div>
+
+    <div class="back-link">
+      <a href="index.html">← Volver a la página principal</a>
+    </div>
+  </div>
+
+  <!-- Audio dinámico -->
+  <audio id="bg-audio" autoplay loop></audio>
+
+  <script>
+    function setTheme() {
+      const now = new Date();
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+      const body = document.body;
+      const audio = document.getElementById("bg-audio");
+
+      // Convertimos la hora a minutos totales para comparar
+      const totalMinutes = hours * 60 + minutes;
+
+      const morningStart = 6 * 60 + 30; // 6:30 AM
+      const eveningStart = 18 * 60 + 30; // 6:30 PM
+
+      if (totalMinutes >= morningStart && totalMinutes < eveningStart) {
+        // Día
+        body.style.backgroundImage = "url('images/diablox.jpg')";
+    
