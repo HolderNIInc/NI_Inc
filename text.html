@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cargando...</title>
+  <link rel="icon" href="images/IconPage.jpg" type="image/x-icon">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url("images/Fondo.jpg") no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Ocultar contenido hasta carga */
+    header, footer, #github-hosting, #toggleSocialPanel {
+      visibility: hidden;
+    }
+
+    body.loaded header,
+    body.loaded footer,
+    body.loaded #github-hosting,
+    body.loaded #toggleSocialPanel {
+      visibility: visible;
+    }
+
+    header {
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 60px 40px 20px;
+      text-align: center;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    h1 {
+      font-size: clamp(2.5em, 6vw, 4em);
+      margin: 0;
+      letter-spacing: 3px;
+      text-shadow: 0 0 10px #bb86fc, 0 0 20px #bb86fc;
+      opacity: 0;
+    }
+
+    .tagline {
+      font-size: 1.5em;
+      color: #bb86fc;
+      margin-top: 20px;
+      text-shadow: 0 0 5px #bb86fc;
+      opacity: 0;
+    }
+
+    @keyframes fadeSlideDown {
+      from { transform: translateY(-30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes fadeZoomIn {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    #mensajeBienvenida {
+      font-family: 'Courier New', monospace;
+      margin-top: 25px;
+      border-right: 2px solid #bb86fc;
+      animation: blink-caret 0.8s step-end infinite;
+      opacity: 0;
+    }
+
+    @keyframes blink-caret {
+      50% { border-color: transparent; }
+    }
+
+    .menu-label {
+      margin-top: 30px;
+      color: navy;
+      opacity: 0;
+      animation: fadeInLabel 1.5s ease forwards;
+    }
+
+    @keyframes fadeInLabel {
+      to { opacity: 1; }
+    }
+
+    .menu-buttons {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      opacity: 0;
+      animation: slideUp 1.5s ease forwards;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(40px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .menu-buttons a {
+      margin-bottom: 15px;
+    }
+
+    .info-button {
+      padding: 15px 30px;
+      border-radius: 30px;
+      background: rgba(58,128,244,.8);
+      color: #fff;
+      text-decoration: none;
+      box-shadow: 0 0 10px #3a80f4;
+    }
+
+    footer {
+      background: rgba(0,0,0,.6);
+      padding: 20px;
+      text-align: center;
+    }
+
+    /* Loader */
+    #loader {
+      position: fixed;
+      inset: 0;
+      background: #0f0f0f;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity .6s ease;
+    }
+
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid #888;
+      border-top: 5px solid #00c3ff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="loader">
+  <div class="spinner"></div>
+  <p>Cargando NI Inc...</p>
+</div>
+
+<header>
+  <h1>Noobs Interactive Incorporation</h1>
+  <p class="tagline">Creando juegos divertidos para todo el público.</p>
+  <p id="mensajeBienvenida"></p>
+  <p class="menu-label">MENU</p>
+  <div class="menu-buttons">
+    <a class="info-button" href="informacion.html">Información</a>
+    <a class="info-button" href="tienda.html">Tienda de NI Inc</a>
+  </div>
+</header>
+
+<div id="github-hosting" class="github-hosting">
+  <span>Hosteado en GitHub</span>
+</div>
+
+<footer>
+  &copy; 2025 Noobs Interactive Incorporation
+</footer>
+
+<audio id="audioFondo" autoplay loop>
+  <source src="audios/Poppy.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+document.title = "Cargando...";
+
+window.addEventListener("load", async () => {
+  const loader = document.getElementById("loader");
+  const titulo = document.querySelector("h1");
+  const subtitulo = document.querySelector(".tagline");
+  const mensaje = document.getElementById("mensajeBienvenida");
+  const audio = document.getElementById("audioFondo");
+
+  const texto = "Bienvenido a NI Inc, por favor elige cualquier botón del menú para acceder a su contenido.";
+
+  /* esperar imágenes */
+  const imgs = document.images;
+  await Promise.all([...imgs].map(img =>
+    img.complete ? Promise.resolve() : new Promise(r => { img.onload = img.onerror = r; })
+  ));
+
+  /* esperar audio */
+  if (audio) {
+    await new Promise(r => {
+      audio.oncanplaythrough = r;
+      audio.onerror = r;
+    });
+  }
+
+  loader.style.opacity = "0";
+
+  setTimeout(() => {
+    loader.style.display = "none";
+    document.body.classList.add("loaded");
+    document.title = "NI Inc";
+
+    titulo.style.opacity = 1;
+    titulo.style.animation = "fadeSlideDown 1.2s ease forwards";
+
+    subtitulo.style.opacity = 1;
+    subtitulo.style.animation = "fadeZoomIn 1.5s ease forwards";
+
+    mensaje.style.opacity = 1;
+    let i = 0;
+    mensaje.textContent = "";
+    const escribir = () => {
+      if (i < texto.length) {
+        mensaje.textContent += texto.charAt(i++);
+        setTimeout(escribir, 40);
+      }
+    };
+    escribir();
+  }, 500);
+});
+</script>
+
+</body>
+</html>
