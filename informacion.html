@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hacerca de NI Inc</title>
+  <title>Acerca de NI Inc</title>
   <link rel="icon" href="images/IconPage.jpg" type="image/x-icon">
-  
+
   <style>
     body {
       margin: 0;
@@ -13,23 +13,25 @@
       background: url("images/Fondo.jpg") no-repeat center center fixed;
       background-size: cover;
       color: white;
+      padding: 60px 20px;
       opacity: 0;
       animation: fadeIn 1.5s ease forwards;
-      padding: 60px;
     }
 
     @keyframes fadeIn {
       to { opacity: 1; }
     }
 
+    /* PANEL SUPERIOR */
     .panel {
       background-color: rgba(0, 0, 0, 0.6);
       padding: 40px;
       border-radius: 20px;
-      max-width: 800px;
+      max-width: 900px;
       margin: auto;
       box-shadow: 0 0 20px rgba(0,0,0,0.5);
       animation: slideIn 1.2s ease-out;
+      text-align: center;
     }
 
     @keyframes slideIn {
@@ -37,60 +39,58 @@
       to { transform: translateY(0); opacity: 1; }
     }
 
-    h2 {
-      text-align: center;
-      color: #bb86fc;
-      text-shadow: 0 0 5px #bb86fc;
-      margin-bottom: 30px;
-    }
-
-    p {
-      line-height: 1.6;
-      font-size: 1.1em;
-      margin-bottom: 20px;
-    }
-
-    a {
-      background-color: #bb86fc;
-      color: white;
-      padding: 12px 24px;
-      text-decoration: none;
-      border-radius: 30px;
-      font-weight: bold;
-      box-shadow: 0 0 8px #bb86fc;
-      transition: background 0.3s ease;
-      display: inline-block;
-      margin-top: 40px;
-    }
-
-    a:hover {
-      background-color: #9f70d6;
-    }
-
-    .experiencias {
-      margin: 60px auto 40px;
-      padding: 20px;
-      background-color: rgba(0,0,0,0.5);
+    /* ACORDEÓN */
+    .accordion {
       max-width: 1000px;
-      border-radius: 20px;
-      box-shadow: 0 0 15px #3a80f4;
-      animation: fadeInExperiencias 2s ease-in forwards;
-      opacity: 0;
+      margin: 50px auto;
     }
 
-    @keyframes fadeInExperiencias {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    .accordion-item {
+      background: rgba(0,0,0,0.6);
+      border-radius: 18px;
+      margin-bottom: 25px;
+      overflow: hidden;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
     }
 
-    .experiencias h2 {
-      text-align: center;
-      font-size: 2em;
+    .accordion-header {
+      padding: 22px 30px;
+      font-size: 1.6em;
+      cursor: pointer;
       color: #bb86fc;
-      margin-bottom: 30px;
-      text-shadow: 0 0 5px #bb86fc;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
     }
 
+    .accordion-header:hover {
+      background: rgba(187,134,252,0.12);
+    }
+
+    .accordion-header span {
+      transition: transform 0.3s ease;
+    }
+
+    .accordion-item.active .accordion-header span {
+      transform: rotate(180deg);
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.6s ease;
+    }
+
+    .accordion-item.active .accordion-content {
+      max-height: 3000px;
+    }
+
+    .accordion-inner {
+      padding: 30px;
+    }
+
+    /* CARDS */
     .cards-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -102,10 +102,6 @@
       padding: 20px;
       border-radius: 15px;
       transition: transform 0.3s, box-shadow 0.3s;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
     }
 
     .experiencia-card:hover {
@@ -120,15 +116,7 @@
     }
 
     .experiencia-card h3 {
-      font-size: 1.4em;
-      margin-bottom: 10px;
       color: #3a80f4;
-    }
-
-    .experiencia-card p {
-      flex-grow: 1;
-      font-size: 1em;
-      margin-bottom: 15px;
     }
 
     .experiencia-card button {
@@ -139,97 +127,98 @@
       border-radius: 25px;
       font-weight: bold;
       cursor: pointer;
-      transition: background 0.3s ease;
-      margin-top: auto;
       box-shadow: 0 0 8px #3a80f4;
     }
 
     .experiencia-card button:hover {
       background-color: #2e65c8;
     }
+
+    a {
+      background-color: #bb86fc;
+      color: white;
+      padding: 12px 26px;
+      text-decoration: none;
+      border-radius: 30px;
+      font-weight: bold;
+      box-shadow: 0 0 8px #bb86fc;
+      display: inline-block;
+      margin-top: 40px;
+    }
   </style>
 </head>
+
 <body>
 
 <div class="panel">
   <h2>Información</h2>
 </div>
 
-<section class="experiencias">
-  <h2>Juegos de NI Inc</h2>
+<div class="accordion">
 
-  <div class="cards-container">
-
-    <!-- Bloxmon GO -->
-    <div class="experiencia-card">
-      <img src="images/BloxmonGOIcon.png" alt="Bloxmon GO">
-      <h3>Bloxmon GO</h3>
-      <p>Juego inspirado en Pokémon GO, adaptado al universo de Roblox. Explora mapas, captura Bloxmons y participa en batallas estratégicas.</p>
-      <button onclick="iniciarBloxmon()">Ver info detallada</button>
+  <!-- JUEGOS -->
+  <div class="accordion-item">
+    <div class="accordion-header">
+      🎮 Juegos de NI Inc
+      <span>▼</span>
     </div>
-    
-    <!-- Minecraft Server -->
-    <div class="experiencia-card">
-      <img src="images/MinecraftServer.jpg" alt="Minecraft Server">
-      <h3>NI Inc Game | Minecraft Server</h3>
-      <p>Juega con otras personas en un mundo normal. Nota: cuando el servidor se quede sin espacio, se publicará el mundo en Discord y se reiniciará con otro nuevo.</p>
-      <button onclick="iniciarMinecraft()">Ver info detallada</button>
-    </div>
+    <div class="accordion-content">
+      <div class="accordion-inner">
 
+        <div class="cards-container">
+
+          <div class="experiencia-card">
+            <img src="images/BloxmonGOIcon.png" alt="Bloxmon GO">
+            <h3>Bloxmon GO</h3>
+            <p>Juego inspirado en Pokémon GO dentro del universo Roblox.</p>
+            <button onclick="iniciarBloxmon()">Ver info</button>
+          </div>
+
+          <div class="experiencia-card">
+            <img src="images/MinecraftServer.jpg" alt="Minecraft Server">
+            <h3>NI Inc Game | Minecraft</h3>
+            <p>Servidor multijugador con reinicios periódicos.</p>
+            <button onclick="iniciarMinecraft()">Ver info</button>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
   </div>
-</section>
+
+  <!-- ACERCA -->
+  <div class="accordion-item">
+    <div class="accordion-header">
+      ℹ️ Acerca de NI Inc
+      <span>▼</span>
+    </div>
+    <div class="accordion-content">
+      <div class="accordion-inner">
+        <p>
+          Noobs Interactive Incorporation (NI Inc) es un estudio independiente
+          dedicado a crear experiencias divertidas, accesibles y en evolución.
+        </p>
+        <p>
+          Los proyectos pueden cambiar con el tiempo.
+          Únete a nuestro Discord para novedades y reportes.
+        </p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div style="text-align:center">
+  <a href="Menu.html">← Volver al menú</a>
+</div>
 
 <script>
-  const textos = [
-    "Esta app es un proyecto en construcción, algunas cosas pueden cambiar y otras pueden desaparecer",
-    "Nota: Estimado usuario... Le informo que el apartado de información sufrira un cambio en cuanto al contenido, por favor reporta algun error en nuestro Discord. ¡Gracias!.",
-    
-  ];
-
-  const panel = document.querySelector(".panel");
-
-  function escribirTexto(texto, contenedor, delay) {
-    let i = 0;
-    const intervalo = setInterval(() => {
-      if (i < texto.length) {
-        contenedor.textContent += texto.charAt(i);
-        i++;
-      } else {
-        clearInterval(intervalo);
-      }
-    }, delay);
-  }
-
-  textos.forEach((texto, index) => {
-    const p = document.createElement("p");
-    panel.appendChild(p);
-    setTimeout(() => {
-      escribirTexto(texto, p, 40);
-    }, 1400 * index);
+  document.querySelectorAll(".accordion-header").forEach(header => {
+    header.addEventListener("click", () => {
+      header.parentElement.classList.toggle("active");
+    });
   });
-
-  // Botón de regreso
-  setTimeout(() => {
-    const divBtn = document.createElement("div");
-    divBtn.style.textAlign = "center";
-    const boton = document.createElement("a");
-    boton.href = "Menu.html";
-    boton.textContent = "← Volver al menú";
-    divBtn.appendChild(boton);
-    panel.appendChild(divBtn);
-  }, textos.length * 1400 + 600);
-
-  // Funciones de juegos
-  function iniciarJuego(url) {
-    alert("Iniciando Roblox, para abrir el juego");
-    setTimeout(() => {
-      window.location.href = url;
-    }, 1200);
-  }
-
-  function verEnRoblox() {
-    window.open("https://www.roblox.com/es/games/84664001255353", "_blank");
-  }
 
   function iniciarMinecraft() {
     window.location.href = "minecraft.html";
@@ -240,9 +229,8 @@
   }
 </script>
 
-<audio id="audioFondo" autoplay loop>
+<audio autoplay loop>
   <source src="audios/Poppy.mp3" type="audio/mpeg">
-  Tu navegador no soporta audio HTML5.
 </audio>
 
 </body>
