@@ -179,6 +179,37 @@
 <script>
 document.title = "Cargando...";
 
+// --- LOGICA DE NOTIFICACIÓN DE BIENVENIDA ---
+function lanzarNotificacion() {
+  const options = {
+    body: "¡Hola de nuevo! Gracias por visitar nuestra página oficial.",
+    icon: "images/IconPage.jpg",
+    vibrate: [200, 100, 200]
+  };
+  new Notification("Bienvenido a NI INC App", options);
+}
+
+function gestionarNotificaciones() {
+  if (!("Notification" in window)) return;
+
+  // Si ya tenemos permiso, la enviamos al entrar
+  if (Notification.permission === "granted") {
+    lanzarNotificacion();
+  }
+  // Si no hay permiso y no se ha denegado, esperamos al primer clic para pedirlo
+  else if (Notification.permission !== "denied") {
+    document.addEventListener('click', function pedirPermiso() {
+        Notification.requestPermission().then(permission => {
+            if (permission === "granted") {
+                lanzarNotificacion();
+            }
+        });
+        document.removeEventListener('click', pedirPermiso);
+    }, { once: true });
+  }
+}
+// -------------------------------------------
+
 window.addEventListener("load", async () => {
   const loader = document.getElementById("loader");
   const titulo = document.querySelector("h1");
@@ -208,6 +239,9 @@ window.addEventListener("load", async () => {
     loader.style.display = "none";
     document.body.classList.add("loaded");
     document.title = "NI Inc";
+    
+    // Lanzar la notificación de bienvenida
+    gestionarNotificaciones();
 
     titulo.style.opacity = 1;
     titulo.style.animation = "fadeSlideDown 1.2s ease forwards";
@@ -231,5 +265,4 @@ window.addEventListener("load", async () => {
 
 </body>
 </html>
-
 
