@@ -179,36 +179,37 @@
 <script>
 document.title = "Cargando...";
 
-// --- FUNCIONES DE NOTIFICACIÓN ---
-function solicitarYEnviarNotificacion() {
-  if (!("Notification" in window)) {
-    console.log("Este navegador no soporta notificaciones de escritorio");
-    return;
-  }
-
-  // Si ya tenemos permiso, enviamos directo
-  if (Notification.permission === "granted") {
-    enviarNotificacionBienvenida();
-  }
-  // Si no tenemos permiso y no ha sido denegado, lo pedimos
-  else if (Notification.permission !== "denied") {
-    Notification.requestPermission().then(permission => {
-      if (permission === "granted") {
-        enviarNotificacionBienvenida();
-      }
-    });
-  }
+// --- LOGICA DE NOTIFICACIONES ---
+function lanzarNotificacion() {
+  const options = {
+    body: "¡Hola de nuevo! Gracias por visitar nuestra página oficial.",
+    icon: "images/IconPage.jpg",
+    vibrate: [200, 100, 200]
+  };
+  new Notification("Bienvenido a NI INC App", options);
 }
 
-function enviarNotificacionBienvenida() {
-  const options = {
-    body: "Gracias por visitar nuestra página oficial.",
-    icon: "images/IconPage.jpg", // Asegúrate que esta imagen existe
-    vibrate: [200, 100, 200] // Vibración en móviles (si está soportado)
-  };
-  
-  // Enviamos la notificación al dispositivo
-  new Notification("Bienvenido a NI INC App", options);
+function gestionarNotificaciones() {
+  if (!("Notification" in window)) return;
+
+  // CASO 1: Ya tenemos permiso (Usuario recurrente)
+  // Lanzamos la notificación directamente.
+  if (Notification.permission === "granted") {
+    lanzarNotificacion();
+  }
+  // CASO 2: No tenemos permiso aún (Usuario nuevo)
+  // Esperamos al primer clic para pedirlo.
+  else if (Notification.permission !== "denied") {
+    document.addEventListener('click', function pedirPermiso() {
+        Notification.requestPermission().then(permission => {
+            if (permission === "granted") {
+                lanzarNotificacion();
+            }
+        });
+        // Removemos el evento para que no pida permiso a cada rato
+        document.removeEventListener('click', pedirPermiso);
+    }, { once: true });
+  }
 }
 // ---------------------------------
 
@@ -241,17 +242,10 @@ window.addEventListener("load", async () => {
     loader.style.display = "none";
     document.body.classList.add("loaded");
     document.title = "NI Inc";
-
-    // Intentar pedir permiso de notificación aquí
-    // Nota: Muchos navegadores bloquearán esto si no es un clic.
-    // Por eso agregamos un "fallback" más abajo.
     
-    // Agregamos un evento de un solo uso: Al primer clic en cualquier lugar, pedimos la notificación
-    document.addEventListener('click', function iniciarNotificaciones() {
-        solicitarYEnviarNotificacion();
-        // Removemos el evento para que no pida permiso cada vez que haces clic
-        document.removeEventListener('click', iniciarNotificaciones);
-    }, { once: true });
+    // Aquí llamamos a la función de notificación
+    // Se activará cada vez que se complete la carga (si hay permiso)
+    gestionarNotificaciones();
 
     titulo.style.opacity = 1;
     titulo.style.animation = "fadeSlideDown 1.2s ease forwards";
