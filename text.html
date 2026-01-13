@@ -73,6 +73,13 @@
       animation: blink-caret 0.8s step-end infinite;
       opacity: 0;
     }
+    
+    #versionDisplay {
+        font-size: 0.8em;
+        color: #888;
+        margin-top: 10px;
+        opacity: 0.6;
+    }
 
     @keyframes blink-caret {
       50% { border-color: transparent; }
@@ -161,6 +168,9 @@
   <h1>Noobs Interactive Incorporation</h1>
   <p class="tagline">Creando juegos divertidos para todo el público.</p>
   <p id="mensajeBienvenida"></p>
+  
+  <p id="versionDisplay"></p>
+
   <p class="menu-label">MENU</p>
   <div class="menu-buttons">
     <a class="info-button" href="informacion.html">Información</a>
@@ -179,40 +189,84 @@
 <script>
 document.title = "Cargando...";
 
-// --- LOGICA DE NOTIFICACIONES ---
-function lanzarNotificacion() {
+// --- CONFIGURACIÓN DE VERSIÓN ---
+const VERSION_ACTUAL = "1.0.0"; // CAMBIA ESTO CUANDO ACTUALICES TU CÓDIGO HTML
+document.getElementById("versionDisplay").innerText = "v" + VERSION_ACTUAL;
+
+// --- SISTEMA DE NOTIFICACIONES ---
+
+// 1. Notificación de Bienvenida
+function lanzarBienvenida() {
   const options = {
     body: "¡Hola de nuevo! Gracias por visitar nuestra página oficial.",
     icon: "images/IconPage.jpg",
-    vibrate: [200, 100, 200]
+    vibrate: [200, 100, 200],
+    tag: "bienvenida" // Tag evita que se acumulen muchas iguales
   };
   new Notification("Bienvenido a NI INC App", options);
 }
 
-function gestionarNotificaciones() {
+// 2. Notificación de Actualización
+function lanzarActualizacion(nuevaVersion) {
+  const options = {
+    body: `Hay una nueva versión (${nuevaVersion}) disponible. Haz clic para actualizar.`,
+    icon: "images/IconPage.jpg",
+    vibrate: [500, 200, 500], // Vibración más larga para llamar la atención
+    requireInteraction: true // Se queda en pantalla hasta que el usuario interactúe
+  };
+  
+  const notif = new Notification("¡Actualización Disponible!", options);
+  
+  // Al hacer clic, recargamos la página forzosamente para limpiar caché
+  notif.onclick = function() {
+      window.location.reload(true);
+      notif.close();
+  };
+}
+
+// 3. Chequeo de Versión (Busca el archivo version.json)
+async function checarActualizaciones() {
+    try {
+        // Agregamos ?t=Date.now() para evitar que el navegador lea una versión vieja de la caché
+        const respuesta = await fetch('version.json?t=' + Date.now());
+        if (!respuesta.ok) return; // Si no existe el archivo, no hace nada
+
+        const datos = await respuesta.json();
+        
+        // Si la versión del archivo es diferente a la actual del HTML
+        if (datos.version !== VERSION_ACTUAL) {
+            console.log(`Actualización encontrada: ${datos.version}`);
+            lanzarActualizacion(datos.version);
+        } else {
+            console.log("La aplicación está actualizada.");
+        }
+    } catch (error) {
+        console.error("Error verificando actualizaciones:", error);
+    }
+}
+
+function iniciarSistemaNotificaciones() {
   if (!("Notification" in window)) return;
 
-  // CASO 1: Ya tenemos permiso (Usuario recurrente)
-  // Lanzamos la notificación directamente.
   if (Notification.permission === "granted") {
-    lanzarNotificacion();
-  }
-  // CASO 2: No tenemos permiso aún (Usuario nuevo)
-  // Esperamos al primer clic para pedirlo.
-  else if (Notification.permission !== "denied") {
+    // Si ya hay permiso: Lanza bienvenida y luego checa actualización
+    lanzarBienvenida();
+    checarActualizaciones();
+  } else if (Notification.permission !== "denied") {
+    // Si no hay permiso: Espera clic
     document.addEventListener('click', function pedirPermiso() {
         Notification.requestPermission().then(permission => {
             if (permission === "granted") {
-                lanzarNotificacion();
+                lanzarBienvenida();
+                checarActualizaciones();
             }
         });
-        // Removemos el evento para que no pida permiso a cada rato
         document.removeEventListener('click', pedirPermiso);
     }, { once: true });
   }
 }
-// ---------------------------------
 
+// --- CARGA DE LA PÁGINA ---
 window.addEventListener("load", async () => {
   const loader = document.getElementById("loader");
   const titulo = document.querySelector("h1");
@@ -243,9 +297,8 @@ window.addEventListener("load", async () => {
     document.body.classList.add("loaded");
     document.title = "NI Inc";
     
-    // Aquí llamamos a la función de notificación
-    // Se activará cada vez que se complete la carga (si hay permiso)
-    gestionarNotificaciones();
+    // INICIAR LOGICA DE NOTIFICACIONES
+    iniciarSistemaNotificaciones();
 
     titulo.style.opacity = 1;
     titulo.style.animation = "fadeSlideDown 1.2s ease forwards";
