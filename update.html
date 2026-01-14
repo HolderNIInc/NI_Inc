@@ -25,8 +25,8 @@
       left: 20px;
       font-size: 1.4em;
       font-weight: bold;
-      color: #bb86fc;
-      text-shadow: 0 0 8px #bb86fc;
+      color: yellow; /* Color amarillo */
+      text-shadow: 0 0 8px #000;
     }
 
     .update-panel {
@@ -50,7 +50,14 @@
 
     p {
       font-size: 1.2em;
+      margin-bottom: 20px;
+    }
+
+    .version-info {
+      font-size: 1.1em;
       margin-bottom: 30px;
+      color: #ffd700; /* Dorado/amarillo para destacar */
+      text-shadow: 0 0 6px #000;
     }
 
     .update-btn {
@@ -91,15 +98,20 @@
 <body>
 
   <!-- Encabezado arriba a la izquierda -->
-  <div class="header">🖥️ Actualizador para Windows</div>
+  <div class="header">Actualizador para la App de NI INC</div>
 
   <div class="update-panel">
     <h1>🔄 Actualización Disponible</h1>
     <p>Tu aplicación tiene una nueva versión lista para instalar.<br>
        Mantente al día con las últimas mejoras y correcciones.</p>
 
+    <!-- Información de versiones -->
+    <div class="version-info">
+      Nueva versión: <strong>???</strong>
+    </div>
+
     <!-- Botón de actualización -->
-    <a href="https://tu-enlace-de-descarga.com/ultima-version" class="update-btn">⬇️ Actualizar Ahora</a>
+    <a href="" class="update-btn">⬇️ Actualizar Ahora</a>
 
     <div class="back-link">
       <a href="Menu.html">← Volver al menú</a>
