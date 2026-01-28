@@ -12,6 +12,7 @@
       font-family: 'Segoe UI', sans-serif;
       color: white;
       padding: 60px 20px;
+      transition: background 1s ease-in-out;
       background-repeat: no-repeat;
       background-position: center center;
       background-size: cover;
@@ -21,11 +22,13 @@
     .game-panel {
       background: rgba(0, 0, 0, 0.35);
       backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
       padding: 40px;
       border-radius: 20px;
       max-width: 900px;
-      margin: auto;
+      width: 100%;
       box-shadow: 0 0 30px rgba(58,128,244,0.6);
+      margin: auto;
     }
 
     .game-layout {
@@ -47,63 +50,104 @@
       font-size: 2.5em;
       color: #bb86fc;
       text-shadow: 0 0 10px #bb86fc;
+      margin-bottom: 15px;
     }
 
-    p { font-size: 1.2em; }
+    p { font-size: 1.2em; line-height: 1.6; margin-bottom: 20px; }
 
+    ul { font-size: 1.1em; margin: 20px 0; padding-left: 20px; }
     ul li { margin-bottom: 10px; }
 
     .play-btn, .secondary-btn {
       padding: 12px 24px;
       border-radius: 30px;
       font-weight: bold;
+      font-size: 1em;
       cursor: pointer;
       margin-top: 15px;
       display: block;
+      transition: transform 0.3s, box-shadow 0.3s;
     }
 
     .play-btn {
-      background: #3a80f4;
+      background-color: #3a80f4;
       color: white;
       border: none;
       box-shadow: 0 0 10px #3a80f4;
     }
+    .play-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #3a80f4;
+    }
 
     .secondary-btn {
-      background: transparent;
+      background-color: transparent;
       color: #bb86fc;
       border: 2px solid #bb86fc;
     }
+    .secondary-btn:hover {
+      background-color: #bb86fc;
+      color: white;
+    }
 
-    /* ===== Overlay Inicializando Roblox ===== */
-    .roblox-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.85);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 99999;
+    .back-link {
+      margin-top: 40px;
       text-align: center;
     }
 
-    .roblox-box {
-      background: rgba(20,20,20,0.9);
+    .back-link a {
+      background-color: #bb86fc;
+      color: white;
+      padding: 12px 24px;
+      text-decoration: none;
+      border-radius: 30px;
+      font-weight: bold;
+      box-shadow: 0 0 8px #bb86fc;
+    }
+
+    /* Aviso audio */
+    .notice {
+      position: fixed;
+      inset: 0;
+      display: none;
+      place-items: center;
+      background: rgba(0,0,0,0.6);
+      color: #bb86fc;
+      font-size: 1.6em;
+      text-shadow: 0 0 10px #bb86fc;
+      animation: pulse 1.5s infinite;
+      z-index: 9999;
+    }
+
+    @keyframes pulse {
+      0% { opacity: .4; }
+      50% { opacity: 1; }
+      100% { opacity: .4; }
+    }
+
+    /* Overlay Roblox */
+    #robloxOverlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.85);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100000;
+      text-align: center;
+    }
+
+    #robloxBox {
+      background: #121212;
       padding: 30px 40px;
       border-radius: 20px;
       box-shadow: 0 0 25px #3a80f4;
-      animation: fadeIn 0.4s ease;
-    }
-
-    .roblox-box h2 {
-      color: #bb86fc;
-      margin-bottom: 15px;
     }
 
     .spinner {
       width: 50px;
       height: 50px;
-      border: 4px solid rgba(255,255,255,0.2);
+      border: 4px solid rgba(255,255,255,.2);
       border-top: 4px solid #3a80f4;
       border-radius: 50%;
       margin: 0 auto 15px;
@@ -113,24 +157,27 @@
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.9); }
-      to { opacity: 1; transform: scale(1); }
-    }
   </style>
 </head>
 
 <body>
 
+<div id="notice" class="notice">Refresca la página</div>
+
 <div class="game-panel">
   <div class="game-layout">
     <img src="images/BloxmonGOIcon.png" class="game-image">
 
-    <div style="flex:1">
+    <div style="flex:1;min-width:250px;">
       <h1>Bloxmon GO</h1>
-      <p>Este juego está en desarrollo.</p>
 
+      <p><strong>Descripción:</strong> Este juego está en desarrollo.</p>
+
+      <ul>
+        <li></li><li></li><li></li><li></li>
+      </ul>
+
+      <!-- BOTÓN MODIFICADO -->
       <button class="play-btn" onclick="startRoblox()">
         Jugar en Roblox
       </button>
@@ -141,47 +188,80 @@
       </button>
     </div>
   </div>
-</div>
 
-<!-- Overlay -->
-<div class="roblox-overlay" id="robloxOverlay">
-  <div class="roblox-box">
-    <div class="spinner"></div>
-    <h2 id="rbxTitle">Inicializando Roblox</h2>
-    <p id="rbxText">Prepárate para unirte a la experiencia…</p>
+  <div class="back-link">
+    <a href="informacion.html">← Volver</a>
   </div>
 </div>
 
-<!-- Audio -->
-<audio id="bg-audio" autoplay loop></audio>
+<!-- Overlay Roblox -->
+<div id="robloxOverlay">
+  <div id="robloxBox">
+    <div class="spinner"></div>
+    <h2 id="rbxTitle" style="color:#bb86fc">Inicializando Roblox</h2>
+    <p id="rbxText">Prepárate para unirte…</p>
+  </div>
+</div>
+
+<audio id="bg-audio" autoplay loop preload="auto"></audio>
 
 <script>
-  const GAME_ID = 88756231287275;
+/* LÓGICA DÍA / NOCHE (NO TOCADA) */
+const DAY_START = 390;
+const NIGHT_START = 1110;
+const DAY_BG = "images/Diablox.jpg";
+const NIGHT_BG = "images/Nocheblox.jpg";
+const DAY_SONG = "audios/DayFestivalSong.mp3";
+const NIGHT_SONG = "audios/NightFestivalMusic.mp3";
 
-  function startRoblox() {
-    const overlay = document.getElementById("robloxOverlay");
-    const title = document.getElementById("rbxTitle");
-    const text = document.getElementById("rbxText");
+function isDay() {
+  const n = new Date();
+  const t = n.getHours()*60 + n.getMinutes();
+  return t >= DAY_START && t < NIGHT_START;
+}
 
-    overlay.style.display = "flex";
+function setTheme() {
+  const audio = document.getElementById("bg-audio");
+  const day = isDay();
 
-    // Intentar abrir Roblox
-    setTimeout(() => {
-      window.location.href = `roblox://placeId=${GAME_ID}`;
-    }, 800);
+  document.body.style.backgroundImage =
+    day ? `url('${DAY_BG}')` : `url('${NIGHT_BG}')`;
 
-    // Después de 10s cambia el mensaje
-    setTimeout(() => {
-      title.textContent = "¿Problemas al entrar?";
-      text.textContent =
-        "No te preocupes, se cerrará esta ventana e inténtalo de nuevo.";
-    }, 10000);
-
-    // 3s después se cierra SOLO el overlay
-    setTimeout(() => {
-      overlay.style.display = "none";
-    }, 13000);
+  const src = day ? DAY_SONG : NIGHT_SONG;
+  if (!audio.src.endsWith(src)) {
+    audio.src = src;
+    audio.play().catch(()=> {
+      document.getElementById("notice").style.display="grid";
+    });
   }
+}
+
+window.onload = () => {
+  setTheme();
+  setInterval(setTheme, 60000);
+};
+
+/* ⭐ EXTRA: INICIALIZANDO ROBLOX */
+function startRoblox() {
+  const o = document.getElementById("robloxOverlay");
+  const t = document.getElementById("rbxTitle");
+  const p = document.getElementById("rbxText");
+
+  o.style.display = "flex";
+
+  setTimeout(()=>{
+    window.location.href = "roblox://placeId=88756231287275";
+  },800);
+
+  setTimeout(()=>{
+    t.textContent = "¿Problemas al entrar?";
+    p.textContent = "Se cerrará esta ventana e inténtalo de nuevo.";
+  },10000);
+
+  setTimeout(()=>{
+    o.style.display="none";
+  },13000);
+}
 </script>
 
 </body>
