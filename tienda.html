@@ -97,7 +97,7 @@
       box-shadow: 0 0 25px rgba(225,0,255,0.8);
     }
 
-    /* Loader Roblox */
+    /* Loader tipo Roblox */
     .loader-overlay {
       position: fixed;
       top: 0;
@@ -168,8 +168,8 @@
   <h1>Te presentamos la nueva tienda</h1>
 
   <div class="descripcion">
-    Hemos renovado la experiencia de compra para que sea más rápida,
-    segura y directa desde Roblox.
+    Ahora la tienda vive directamente dentro de Roblox para que
+    tu experiencia de compra sea más rápida y sencilla.
   </div>
 
   <!-- Acordeón -->
@@ -177,24 +177,22 @@
     <div class="acordeon-item">
       <div class="acordeon-header">📦 ¿Dónde está la tienda?</div>
       <div class="acordeon-content">
-        Ahora este apartado lo trasladamos a Roblox para que sea más fácil
-        realizar la compra y evitar errores.
+        Este apartado fue trasladado a Roblox para facilitar la compra
+        y evitar errores durante el proceso.
       </div>
     </div>
 
     <div class="acordeon-item">
-      <div class="acordeon-header">🎮 ¿Cómo funciona?</div>
+      <div class="acordeon-header">🎮 ¿Qué pasará al entrar?</div>
       <div class="acordeon-content">
-        Al entrar, Roblox abrirá automáticamente la experiencia de TIENDA
-        donde podrás ver y adquirir los productos.
+        Roblox abrirá la experiencia TIENDA automáticamente
+        para que puedas ver y adquirir los productos.
       </div>
     </div>
   </div>
 
   <!-- Botón -->
-  <div class="btn-tienda" onclick="irATienda()">
-    Entrar a la TIENDA
-  </div>
+  <div class="btn-tienda" onclick="irATienda()">Entrar a la TIENDA</div>
 
   <!-- Loader -->
   <div id="robloxLoader" class="loader-overlay">
@@ -217,7 +215,7 @@
       });
     });
 
-    // Loader + cambio de texto
+    // Loader Roblox
     function irATienda() {
       const loader = document.getElementById("robloxLoader");
       const titulo = document.getElementById("loaderTitulo");
@@ -225,18 +223,37 @@
 
       loader.style.display = "flex";
 
+      titulo.textContent = "Roblox se está cargando";
+      texto.textContent = "Prepárate para unirte a la TIENDA...";
+
       setTimeout(() => {
         texto.textContent = "Inicializando experiencia...";
-      }, 1200);
+      }, 1500);
 
-      setTimeout(() => {
+      const redirigir = setTimeout(() => {
         titulo.textContent = "Todo listo";
         texto.textContent = "Redirigiendo a Roblox...";
-      }, 2400);
-
-      setTimeout(() => {
         window.location.href = "https://www.roblox.com/games/TU_ID_DE_EXPERIENCIA";
       }, 3500);
+
+      // Si tarda demasiado
+      setTimeout(() => {
+        if (loader.style.display === "flex") {
+          clearTimeout(redirigir);
+
+          titulo.textContent = "¿Problemas al entrar?";
+          texto.textContent =
+            "No te preocupes, se cerrará esta ventana e inténtalo de nuevo.";
+
+          setTimeout(() => {
+            loader.style.display = "none";
+
+            // Reset
+            titulo.textContent = "Roblox se está cargando";
+            texto.textContent = "Prepárate para unirte a la TIENDA...";
+          }, 3000);
+        }
+      }, 10000);
     }
   </script>
 
