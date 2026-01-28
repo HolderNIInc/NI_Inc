@@ -3,12 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TIENDA | NI Inc</title>
+  <title>TIENDA</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -24,6 +22,11 @@
       inset: 0;
       z-index: -2;
       overflow: hidden;
+      transition: opacity 1s ease;
+    }
+
+    .video-bg.fade-out {
+      opacity: 0;
     }
 
     .video-bg video {
@@ -35,15 +38,20 @@
     .video-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.65);
+      background: rgba(0,0,0,0.65);
       z-index: -1;
+      transition: opacity 1s ease;
+    }
+
+    .video-overlay.fade-out {
+      opacity: 0;
     }
 
     /* CONTENIDO */
     .container {
       max-width: 900px;
       margin: auto;
-      padding: 40px 20px;
+      padding: 40px 20px 80px;
       text-align: center;
     }
 
@@ -58,7 +66,7 @@
       margin-bottom: 30px;
     }
 
-    /* Acordeón */
+    /* ACORDEÓN */
     .accordion {
       background: #1b1b1b;
       border-radius: 10px;
@@ -87,7 +95,7 @@
       margin: 15px 0;
     }
 
-    /* Botón */
+    /* BOTÓN PRINCIPAL */
     .btn {
       margin-top: 30px;
       padding: 16px 36px;
@@ -99,12 +107,12 @@
       color: #fff;
     }
 
-    /* Loader Roblox */
+    /* LOADER ROBLOX */
     .loader-overlay {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.85);
+      background: rgba(0,0,0,0.85);
       justify-content: center;
       align-items: center;
       z-index: 9999;
@@ -132,35 +140,56 @@
       to { transform: rotate(360deg); }
     }
 
+    /* BOTÓN REGRESAR */
+    .back-menu {
+      margin-top: 70px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+    }
+
+    .back-menu.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .back-menu button {
+      padding: 14px 28px;
+      font-size: 16px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      background: linear-gradient(135deg, #444, #222);
+      color: #fff;
+      transition: transform 0.2s ease, background 0.3s ease;
+    }
+
+    .back-menu button:hover {
+      background: linear-gradient(135deg, #666, #333);
+      transform: scale(1.06);
+    }
+
     /* RESPONSIVE */
     @media (max-width: 600px) {
-      h1 {
-        font-size: 32px;
-      }
-
-      p {
-        font-size: 16px;
-      }
-
-      .btn {
-        width: 100%;
-      }
+      h1 { font-size: 32px; }
+      p { font-size: 16px; }
+      .btn { width: 100%; }
     }
   </style>
 </head>
 <body>
 
-  <!-- VIDEO + OVERLAY -->
-  <div class="video-bg">
+  <!-- VIDEO -->
+  <div class="video-bg" id="videoBg">
     <video autoplay muted loop playsinline>
-      <source src="fondo.mp4" type="video/mp4">
+      <source src="videos/Fondo3.mp4" type="video/mp4">
     </video>
   </div>
-  <div class="video-overlay"></div>
+  <div class="video-overlay" id="videoOverlay"></div>
 
   <!-- AUDIO -->
   <audio id="bgAudio" loop>
-    <source src="audio.mp3" type="audio/mpeg">
+    <source src="audios/" type="audio/mpeg">
   </audio>
 
   <div class="container">
@@ -173,8 +202,8 @@
       </div>
       <div class="accordion-content">
         <p>
-          Movimos la tienda a Roblox para una experiencia más rápida,
-          segura y totalmente integrada.
+          Movimos la tienda directamente a Roblox para que la compra
+          sea más rápida, sencilla y segura.
         </p>
       </div>
     </div>
@@ -185,18 +214,22 @@
       </div>
       <div class="accordion-content">
         <p>
-          1. Entra a la tienda.<br>
-          2. Roblox se abrirá.<br>
+          1. Presiona entrar a la tienda.<br>
+          2. Roblox se abrirá automáticamente.<br>
           3. Compra dentro de la experiencia.<br>
-          4. Disfruta tu compra.
+          4. Disfruta tu artículo.
         </p>
       </div>
     </div>
 
     <button class="btn" onclick="irATienda()">ENTRAR A LA TIENDA</button>
+
+    <div class="back-menu" id="backMenu">
+      <button onclick="confirmarSalida()">⬅ Regresar al Menu</button>
+    </div>
   </div>
 
-  <!-- Loader -->
+  <!-- LOADER -->
   <div class="loader-overlay" id="robloxLoader">
     <div class="loader-box">
       <div class="spinner"></div>
@@ -219,7 +252,6 @@
       audio.play().catch(() => {});
 
       const loader = document.getElementById("robloxLoader");
-      const titulo = document.getElementById("loaderTitulo");
       const texto = document.getElementById("loaderTexto");
 
       loader.style.display = "flex";
@@ -228,23 +260,49 @@
         texto.textContent = "Inicializando experiencia...";
       }, 1500);
 
-      const redirect = setTimeout(() => {
+      setTimeout(() => {
         window.location.href = "https://www.roblox.com/games/TU_ID_DE_EXPERIENCIA";
       }, 3500);
 
       setTimeout(() => {
         if (loader.style.display === "flex") {
-          clearTimeout(redirect);
-          titulo.textContent = "¿Problemas al entrar?";
-          texto.textContent =
-            "No te preocupes, se cerrará esta ventana e inténtalo de nuevo.";
-
-          setTimeout(() => {
-            loader.style.display = "none";
-          }, 3000);
+          loader.style.display = "none";
         }
-      }, 10000);
+      }, 13000);
     }
+
+    function confirmarSalida() {
+      const salir = confirm("¿Seguro que deseas regresar al Menu?");
+      if (!salir) return;
+
+      const videoBg = document.getElementById("videoBg");
+      const overlay = document.getElementById("videoOverlay");
+      const audio = document.getElementById("bgAudio");
+
+      videoBg.classList.add("fade-out");
+      overlay.classList.add("fade-out");
+
+      const fadeAudio = setInterval(() => {
+        if (audio.volume > 0.05) {
+          audio.volume -= 0.05;
+        } else {
+          audio.pause();
+          clearInterval(fadeAudio);
+        }
+      }, 100);
+
+      setTimeout(() => {
+        window.location.href =
+          "https://holderniinc.github.io/NI_Inc/Menu.html";
+      }, 1000);
+    }
+
+    window.addEventListener("scroll", () => {
+      const backMenu = document.getElementById("backMenu");
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 50) {
+        backMenu.classList.add("visible");
+      }
+    });
   </script>
 
 </body>
