@@ -105,7 +105,6 @@
       box-shadow: 0 0 8px #bb86fc;
     }
 
-    /* Aviso audio */
     .notice {
       position: fixed;
       inset: 0;
@@ -125,7 +124,6 @@
       100% { opacity: .4; }
     }
 
-    /* Overlay Roblox */
     #robloxOverlay {
       position: fixed;
       inset: 0;
@@ -170,17 +168,13 @@
 
     <div style="flex:1;min-width:250px;">
       <h1>Bloxmon GO</h1>
-
       <p><strong>Descripción:</strong> Este juego está en desarrollo.</p>
 
       <ul>
         <li></li><li></li><li></li><li></li>
       </ul>
 
-      <!-- BOTÓN MODIFICADO -->
-      <button class="play-btn" onclick="startRoblox()">
-        Jugar en Roblox
-      </button>
+      <button class="play-btn" onclick="startRoblox()">Jugar en Roblox</button>
 
       <button class="secondary-btn"
         onclick="window.open('https://www.roblox.com/games/88756231287275','_blank')">
@@ -194,7 +188,6 @@
   </div>
 </div>
 
-<!-- Overlay Roblox -->
 <div id="robloxOverlay">
   <div id="robloxBox">
     <div class="spinner"></div>
@@ -206,7 +199,7 @@
 <audio id="bg-audio" autoplay loop preload="auto"></audio>
 
 <script>
-/* LÓGICA DÍA / NOCHE (NO TOCADA) */
+/* DÍA / NOCHE (SIN TOCAR) */
 const DAY_START = 390;
 const NIGHT_START = 1110;
 const DAY_BG = "images/Diablox.jpg";
@@ -241,26 +234,33 @@ window.onload = () => {
   setInterval(setTheme, 60000);
 };
 
-/* ⭐ EXTRA: INICIALIZANDO ROBLOX */
+/* ✅ FIX DEFINITIVO DEL BUG */
+let robloxTimers = [];
+
 function startRoblox() {
+  robloxTimers.forEach(t => clearTimeout(t));
+  robloxTimers = [];
+
   const o = document.getElementById("robloxOverlay");
   const t = document.getElementById("rbxTitle");
   const p = document.getElementById("rbxText");
 
+  t.textContent = "Inicializando Roblox";
+  p.textContent = "Prepárate para unirte…";
   o.style.display = "flex";
 
-  setTimeout(()=>{
+  robloxTimers.push(setTimeout(() => {
     window.location.href = "roblox://placeId=88756231287275";
-  },800);
+  }, 800));
 
-  setTimeout(()=>{
+  robloxTimers.push(setTimeout(() => {
     t.textContent = "¿Problemas al entrar?";
     p.textContent = "Se cerrará esta ventana e inténtalo de nuevo.";
-  },10000);
+  }, 10000));
 
-  setTimeout(()=>{
-    o.style.display="none";
-  },13000);
+  robloxTimers.push(setTimeout(() => {
+    o.style.display = "none";
+  }, 13000));
 }
 </script>
 
