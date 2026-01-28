@@ -13,21 +13,17 @@
       font-family: Arial, sans-serif;
       color: #fff;
       background: #000;
-      overflow-x: hidden;
     }
 
-    /* VIDEO DE FONDO */
+    /* VIDEO */
     .video-bg {
       position: fixed;
       inset: 0;
       z-index: -2;
-      overflow: hidden;
       transition: opacity 1s ease;
     }
 
-    .video-bg.fade-out {
-      opacity: 0;
-    }
+    .video-bg.fade-out { opacity: 0; }
 
     .video-bg video {
       width: 100%;
@@ -43,59 +39,43 @@
       transition: opacity 1s ease;
     }
 
-    .video-overlay.fade-out {
-      opacity: 0;
-    }
+    .video-overlay.fade-out { opacity: 0; }
 
-    /* CONTENIDO */
     .container {
       max-width: 900px;
       margin: auto;
-      padding: 40px 20px 80px;
+      padding: 40px 20px 100px;
       text-align: center;
     }
 
-    h1 {
-      font-size: 42px;
-      margin-bottom: 10px;
-    }
-
-    p {
-      color: #d0d0d0;
-      font-size: 18px;
-      margin-bottom: 30px;
-    }
+    h1 { font-size: 42px; }
+    p { color: #ccc; font-size: 18px; }
 
     /* ACORDEÓN */
     .accordion {
       background: #1b1b1b;
       border-radius: 10px;
-      margin-bottom: 15px;
-      overflow: hidden;
+      margin: 20px 0;
       text-align: left;
     }
 
     .accordion-header {
       padding: 18px;
-      cursor: pointer;
       font-weight: bold;
+      cursor: pointer;
       background: #232323;
     }
 
     .accordion-content {
-      padding: 0 18px;
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.3s ease;
-      background: #1b1b1b;
+      transition: max-height .3s ease;
+      padding: 0 18px;
     }
 
-    .accordion-content p {
-      font-size: 16px;
-      margin: 15px 0;
-    }
+    .accordion-content p { margin: 15px 0; }
 
-    /* BOTÓN PRINCIPAL */
+    /* BOTONES */
     .btn {
       margin-top: 30px;
       padding: 16px 36px;
@@ -107,50 +87,10 @@
       color: #fff;
     }
 
-    /* LOADER ROBLOX */
-    .loader-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.85);
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-    }
-
-    .loader-box {
-      background: #121212;
-      padding: 30px;
-      border-radius: 12px;
-      text-align: center;
-      width: 280px;
-    }
-
-    .spinner {
-      width: 45px;
-      height: 45px;
-      border: 4px solid #333;
-      border-top: 4px solid #00a2ff;
-      border-radius: 50%;
-      margin: 0 auto 20px;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    /* BOTÓN REGRESAR */
     .back-menu {
-      margin-top: 70px;
+      margin-top: 60px;
       opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.6s ease;
-    }
-
-    .back-menu.visible {
-      opacity: 1;
-      transform: translateY(0);
+      animation: fadeInUp .8s forwards;
     }
 
     .back-menu button {
@@ -161,149 +101,148 @@
       cursor: pointer;
       background: linear-gradient(135deg, #444, #222);
       color: #fff;
-      transition: transform 0.2s ease, background 0.3s ease;
     }
 
-    .back-menu button:hover {
-      background: linear-gradient(135deg, #666, #333);
-      transform: scale(1.06);
+    @keyframes fadeInUp {
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    /* RESPONSIVE */
-    @media (max-width: 600px) {
-      h1 { font-size: 32px; }
-      p { font-size: 16px; }
-      .btn { width: 100%; }
+    /* LOADER */
+    .loader-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
     }
+
+    .loader-box {
+      background: #121212;
+      padding: 30px;
+      border-radius: 12px;
+      width: 280px;
+      text-align: center;
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid #333;
+      border-top: 4px solid #00a2ff;
+      border-radius: 50%;
+      margin: auto;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
 
-  <!-- VIDEO -->
-  <div class="video-bg" id="videoBg">
-    <video autoplay muted loop playsinline>
-      <source src="videos/Fondo3.mp4" type="video/mp4">
-    </video>
-  </div>
-  <div class="video-overlay" id="videoOverlay"></div>
+<div class="video-bg" id="videoBg">
+  <video autoplay muted loop playsinline>
+    <source src="videos/Fondo3.mp4" type="video/mp4">
+  </video>
+</div>
+<div class="video-overlay" id="videoOverlay"></div>
 
-  <!-- AUDIO -->
-  <audio id="bgAudio" loop>
-    <source src="audios/" type="audio/mpeg">
-  </audio>
+<audio id="bgAudio" loop>
+  <source src="audios/" type="audio/mpeg">
+</audio>
 
-  <div class="container">
-    <h1>TIENDA</h1>
-    <p>Transladamos la tienda a Roblox</p>
+<div class="container">
+  <h1>TIENDA</h1>
+  <p>Transladamos la tienda a Roblox</p>
 
-    <div class="accordion">
-      <div class="accordion-header" onclick="toggleAccordion(this)">
-        ¿Por qué este cambio?
-      </div>
-      <div class="accordion-content">
-        <p>
-          Movimos la tienda directamente a Roblox para que la compra
-          sea más rápida, sencilla y segura.
-        </p>
-      </div>
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAccordion(this)">
+      ¿Por qué este cambio?
     </div>
-
-    <div class="accordion">
-      <div class="accordion-header" onclick="toggleAccordion(this)">
-        Manual de compra en la nueva Tienda
-      </div>
-      <div class="accordion-content">
-        <p>
-          1. Presiona entrar a la tienda.<br>
-          2. Roblox se abrirá automáticamente.<br>
-          3. Compra dentro de la experiencia.<br>
-          4. Disfruta tu artículo.
-        </p>
-      </div>
-    </div>
-
-    <button class="btn" onclick="irATienda()">ENTRAR A LA TIENDA</button>
-
-    <div class="back-menu" id="backMenu">
-      <button onclick="confirmarSalida()">⬅ Regresar al Menu</button>
+    <div class="accordion-content">
+      <p>Ahora la compra es más rápida y directa desde Roblox.</p>
     </div>
   </div>
 
-  <!-- LOADER -->
-  <div class="loader-overlay" id="robloxLoader">
-    <div class="loader-box">
-      <div class="spinner"></div>
-      <h2 id="loaderTitulo">Roblox se está cargando</h2>
-      <p id="loaderTexto">Prepárate para unirte a la TIENDA...</p>
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAccordion(this)">
+      Manual de compra en la nueva Tienda
+    </div>
+    <div class="accordion-content">
+      <p>Entra → Roblox abre → compra → disfruta.</p>
     </div>
   </div>
 
-  <script>
-    function toggleAccordion(header) {
-      const content = header.nextElementSibling;
-      content.style.maxHeight = content.style.maxHeight
-        ? null
-        : content.scrollHeight + "px";
-    }
+  <button class="btn" onclick="irATienda()">ENTRAR A LA TIENDA</button>
 
-    function irATienda() {
-      const audio = document.getElementById("bgAudio");
-      audio.volume = 0.4;
-      audio.play().catch(() => {});
+  <div class="back-menu">
+    <button onclick="confirmarSalida()">⬅ Regresar al Menu</button>
+  </div>
+</div>
 
-      const loader = document.getElementById("robloxLoader");
-      const texto = document.getElementById("loaderTexto");
+<div class="loader-overlay" id="robloxLoader">
+  <div class="loader-box">
+    <div class="spinner"></div>
+    <h3 id="loaderTitulo">Roblox se está cargando</h3>
+    <p id="loaderTexto">Prepárate para unirte...</p>
+  </div>
+</div>
 
-      loader.style.display = "flex";
+<script>
+let loaderActivo = false;
 
-      setTimeout(() => {
-        texto.textContent = "Inicializando experiencia...";
-      }, 1500);
+function toggleAccordion(h) {
+  const c = h.nextElementSibling;
+  c.style.maxHeight = c.style.maxHeight ? null : c.scrollHeight + "px";
+}
 
-      setTimeout(() => {
-        window.location.href = "https://www.roblox.com/games/TU_ID_DE_EXPERIENCIA";
-      }, 3500);
+function irATienda() {
+  if (loaderActivo) return;
+  loaderActivo = true;
 
-      setTimeout(() => {
-        if (loader.style.display === "flex") {
-          loader.style.display = "none";
-        }
-      }, 13000);
-    }
+  const loader = document.getElementById("robloxLoader");
+  const t = document.getElementById("loaderTitulo");
+  const p = document.getElementById("loaderTexto");
 
-    function confirmarSalida() {
-      const salir = confirm("¿Seguro que deseas regresar al Menu?");
-      if (!salir) return;
+  loader.style.display = "flex";
+  t.textContent = "Roblox se está cargando";
+  p.textContent = "Prepárate para unirte...";
 
-      const videoBg = document.getElementById("videoBg");
-      const overlay = document.getElementById("videoOverlay");
-      const audio = document.getElementById("bgAudio");
+  setTimeout(() => {
+    if (!loaderActivo) return;
+    p.textContent = "Inicializando experiencia...";
+  }, 1500);
 
-      videoBg.classList.add("fade-out");
-      overlay.classList.add("fade-out");
+  setTimeout(() => {
+    if (!loaderActivo) return;
+    t.textContent = "Redirigiendo";
+    p.textContent = "Abriendo Roblox...";
+    window.location.href = "https://www.roblox.com/games/TU_ID_DE_EXPERIENCIA";
+  }, 3500);
 
-      const fadeAudio = setInterval(() => {
-        if (audio.volume > 0.05) {
-          audio.volume -= 0.05;
-        } else {
-          audio.pause();
-          clearInterval(fadeAudio);
-        }
-      }, 100);
+  setTimeout(() => {
+    if (!loaderActivo) return;
+    t.textContent = "¿Problemas al entrar?";
+    p.textContent = "Se cerrará esta ventana e inténtalo de nuevo.";
+    setTimeout(() => {
+      loader.style.display = "none";
+      loaderActivo = false;
+    }, 3000);
+  }, 10000);
+}
 
-      setTimeout(() => {
-        window.location.href =
-          "https://holderniinc.github.io/NI_Inc/Menu.html";
-      }, 1000);
-    }
+function confirmarSalida() {
+  if (!confirm("¿Seguro que deseas regresar al Menu?")) return;
 
-    window.addEventListener("scroll", () => {
-      const backMenu = document.getElementById("backMenu");
-      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 50) {
-        backMenu.classList.add("visible");
-      }
-    });
-  </script>
+  document.getElementById("videoBg").classList.add("fade-out");
+  document.getElementById("videoOverlay").classList.add("fade-out");
+
+  setTimeout(() => {
+    location.href = "https://holderniinc.github.io/NI_Inc/Menu.html";
+  }, 1000);
+}
+</script>
 
 </body>
   </html>
