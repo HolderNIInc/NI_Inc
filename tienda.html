@@ -45,7 +45,7 @@
     .container {
       max-width: 900px;
       margin: auto;
-      padding: 40px 20px 100px;
+      padding: 40px 20px 120px;
       text-align: center;
     }
 
@@ -78,20 +78,18 @@
 
     /* BOTONES */
     .btn {
-      margin-top: 30px;
-      padding: 16px 36px;
+      margin-top: 35px;
+      padding: 16px 40px;
       font-size: 18px;
       border: none;
-      border-radius: 10px;
+      border-radius: 12px;
       cursor: pointer;
       background: #00a2ff;
       color: #fff;
     }
 
     .back-menu {
-      margin-top: 60px;
-      opacity: 0;
-      animation: fadeInUp .8s forwards;
+      margin-top: 70px;
     }
 
     .back-menu button {
@@ -102,10 +100,6 @@
       cursor: pointer;
       background: linear-gradient(135deg, #444, #222);
       color: #fff;
-    }
-
-    @keyframes fadeInUp {
-      to { opacity: 1; transform: translateY(0); }
     }
 
     /* LOADER */
@@ -122,24 +116,25 @@
     .loader-box {
       background: #121212;
       padding: 30px;
-      border-radius: 12px;
-      width: 280px;
+      border-radius: 14px;
+      width: 300px;
       text-align: center;
     }
 
     .spinner {
-      width: 40px;
-      height: 40px;
+      width: 42px;
+      height: 42px;
       border: 4px solid #333;
       border-top: 4px solid #00a2ff;
       border-radius: 50%;
-      margin: auto;
+      margin: 10px auto 20px;
       animation: spin 1s linear infinite;
     }
 
     @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
+
 <body>
 
 <div class="video-bg" id="videoBg">
@@ -149,7 +144,7 @@
 </div>
 <div class="video-overlay" id="videoOverlay"></div>
 
-<audio id="bgAudio" loop>
+<audio autoplay loop>
   <source src="audios/" type="audio/mpeg">
 </audio>
 
@@ -162,7 +157,7 @@
       ¿Por qué este cambio?
     </div>
     <div class="accordion-content">
-      <p>Ahora la compra es más rápida y directa desde Roblox.</p>
+      <p>Ahora la compra es más rápida y directa dentro de Roblox.</p>
     </div>
   </div>
 
@@ -171,7 +166,7 @@
       Manual de compra en la nueva Tienda
     </div>
     <div class="accordion-content">
-      <p>Entra → Roblox abre → compra → disfruta.</p>
+      <p>Haz clic en entrar → Roblox se abre → compra → disfruta.</p>
     </div>
   </div>
 
@@ -185,7 +180,7 @@
 <div class="loader-overlay" id="robloxLoader">
   <div class="loader-box">
     <div class="spinner"></div>
-    <h3 id="loaderTitulo">Roblox se está cargando</h3>
+    <h3 id="loaderTitulo">Inicializando Roblox</h3>
     <p id="loaderTexto">Prepárate para unirte...</p>
   </div>
 </div>
@@ -207,29 +202,26 @@ function irATienda() {
   const p = document.getElementById("loaderTexto");
 
   loader.style.display = "flex";
-  t.textContent = "Roblox se está cargando";
+  t.textContent = "Inicializando Roblox";
   p.textContent = "Prepárate para unirte...";
 
   setTimeout(() => {
     if (!loaderActivo) return;
-    p.textContent = "Inicializando experiencia...";
-  }, 1500);
+    p.textContent = "Abriendo la experiencia...";
+    window.location.href = "roblox://placeId=15099460018";
+  }, 2000);
 
   setTimeout(() => {
-    if (!loaderActivo) return;
-    t.textContent = "Redirigiendo";
-    p.textContent = "Abriendo Roblox...";
     window.open(
-
       "https://www.roblox.com/games/15099460018",
       "_blank"
-      );
-  }, 3500);
+    );
+  }, 3000);
 
   setTimeout(() => {
     if (!loaderActivo) return;
     t.textContent = "¿Problemas al entrar?";
-    p.textContent = "Se cerrará esta ventana e inténtalo de nuevo.";
+    p.textContent = "No te preocupes, inténtalo de nuevo.";
     setTimeout(() => {
       loader.style.display = "none";
       loaderActivo = false;
@@ -238,8 +230,6 @@ function irATienda() {
 }
 
 function confirmarSalida() {
-  if (!confirm("¿Seguro que deseas regresar al Menu?")) return;
-
   document.getElementById("videoBg").classList.add("fade-out");
   document.getElementById("videoOverlay").classList.add("fade-out");
 
@@ -250,4 +240,4 @@ function confirmarSalida() {
 </script>
 
 </body>
-  </html>
+</html>
