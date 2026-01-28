@@ -2,200 +2,171 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tienda de NI Inc</title>
-  <link rel="icon" href="images/IconPage.jpg" type="image/x-icon">
-
+  <title>TIENDA | NI Inc</title>
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #0f0f0f;
+      font-family: Arial, sans-serif;
+      background: #0f0f0f;
       color: #fff;
-      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 40px 20px;
       text-align: center;
     }
 
     h1 {
-      color: #e100ff;
-      text-shadow: 0 0 6px #ae00ff;
-      margin-top: 60px;
+      font-size: 42px;
+      margin-bottom: 10px;
     }
 
-    .descripcion {
-      max-width: 600px;
-      margin: 20px auto 40px;
-      font-size: 1.1rem;
-      color: #ccc;
+    p {
+      color: #cfcfcf;
+      font-size: 18px;
+      margin-bottom: 30px;
     }
 
     /* Acordeón */
-    .acordeon {
-      max-width: 600px;
-      margin: auto;
+    .accordion {
+      background: #1b1b1b;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      overflow: hidden;
       text-align: left;
     }
 
-    .acordeon-item {
-      background: rgba(0,0,0,0.6);
-      border: 1px solid #00c3ff;
-      border-radius: 8px;
-      margin-bottom: 15px;
-      overflow: hidden;
-    }
-
-    .acordeon-header {
-      padding: 15px;
+    .accordion-header {
+      padding: 18px;
       cursor: pointer;
       font-weight: bold;
-      color: #00c3ff;
-      position: relative;
+      background: #232323;
+      transition: background 0.2s;
     }
 
-    .acordeon-header::after {
-      content: "▼";
-      position: absolute;
-      right: 15px;
-      transition: transform 0.3s ease;
+    .accordion-header:hover {
+      background: #2d2d2d;
     }
 
-    .acordeon-item.active .acordeon-header::after {
-      transform: rotate(180deg);
-    }
-
-    .acordeon-content {
+    .accordion-content {
+      padding: 0 18px;
       max-height: 0;
       overflow: hidden;
-      padding: 0 15px;
-      color: #ddd;
-      transition: max-height 0.4s ease, padding 0.3s ease;
+      background: #1b1b1b;
+      transition: max-height 0.3s ease;
     }
 
-    .acordeon-item.active .acordeon-content {
-      max-height: 200px;
-      padding: 15px;
+    .accordion-content p {
+      font-size: 16px;
+      margin: 15px 0;
     }
 
     /* Botón */
-    .btn-tienda {
-      margin-top: 40px;
-      display: inline-block;
-      background: linear-gradient(135deg, #00c3ff, #e100ff);
-      color: #000;
-      padding: 14px 30px;
-      border-radius: 30px;
-      font-size: 1.1rem;
-      font-weight: bold;
-      text-decoration: none;
-      box-shadow: 0 0 15px rgba(0,195,255,0.6);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    .btn {
+      margin-top: 30px;
+      padding: 15px 35px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
       cursor: pointer;
+      background: #00a2ff;
+      color: #fff;
+      transition: transform 0.2s, background 0.2s;
     }
 
-    .btn-tienda:hover {
-      transform: scale(1.08);
-      box-shadow: 0 0 25px rgba(225,0,255,0.8);
+    .btn:hover {
+      background: #0089d1;
+      transform: scale(1.05);
     }
 
-    /* Loader tipo Roblox */
+    /* Overlay Roblox */
     .loader-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.85);
       display: none;
-      align-items: center;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
       justify-content: center;
+      align-items: center;
       z-index: 9999;
     }
 
     .loader-box {
-      background: #0f0f0f;
-      border: 2px solid #00c3ff;
+      background: #121212;
+      padding: 30px;
       border-radius: 12px;
-      padding: 30px 40px;
       text-align: center;
-      box-shadow: 0 0 25px rgba(0,195,255,0.7);
-      animation: aparecer 0.4s ease;
+      width: 300px;
+      box-shadow: 0 0 25px rgba(0,0,0,0.5);
     }
 
     .spinner {
-      width: 60px;
-      height: 60px;
-      border: 6px solid rgba(255,255,255,0.1);
-      border-top: 6px solid #00c3ff;
+      width: 45px;
+      height: 45px;
+      border: 4px solid #333;
+      border-top: 4px solid #00a2ff;
       border-radius: 50%;
-      animation: girar 1s linear infinite;
-      margin: auto;
+      margin: 0 auto 20px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
     .loader-box h2 {
-      margin: 15px 0 5px;
-      color: #00c3ff;
+      margin: 10px 0;
+      font-size: 20px;
     }
 
     .loader-box p {
-      color: #ccc;
-      font-size: 0.95rem;
-    }
-
-    @keyframes girar {
-      to { transform: rotate(360deg); }
-    }
-
-    @keyframes aparecer {
-      from { transform: scale(0.8); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    #videoFondo {
-      position: fixed;
-      top: 0;
-      left: 0;
-      min-width: 100%;
-      min-height: 100%;
-      object-fit: cover;
-      z-index: -1;
-      opacity: 0.3;
+      font-size: 14px;
+      color: #cfcfcf;
     }
   </style>
 </head>
-
 <body>
 
-  <h1>Te presentamos la nueva tienda</h1>
+  <div class="container">
+    <!-- TÍTULO Y TEXTO -->
+    <h1>TIENDA</h1>
+    <p>Transladamos la tienda a Roblox</p>
 
-  <div class="descripcion">
-    Ahora la tienda vive directamente dentro de Roblox para que
-    tu experiencia de compra sea más rápida y sencilla.
-  </div>
-
-  <!-- Acordeón -->
-  <div class="acordeon">
-    <div class="acordeon-item">
-      <div class="acordeon-header">📦 ¿Dónde está la tienda?</div>
-      <div class="acordeon-content">
-        Este apartado fue trasladado a Roblox para facilitar la compra
-        y evitar errores durante el proceso.
+    <!-- Acordeón -->
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        ¿Por qué este cambio?
+      </div>
+      <div class="accordion-content">
+        <p>
+          Decidimos mover la tienda directamente a Roblox para ofrecerte un
+          sistema más rápido, seguro y totalmente integrado con tu cuenta.
+        </p>
       </div>
     </div>
 
-    <div class="acordeon-item">
-      <div class="acordeon-header">🎮 ¿Qué pasará al entrar?</div>
-      <div class="acordeon-content">
-        Roblox abrirá la experiencia TIENDA automáticamente
-        para que puedas ver y adquirir los productos.
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        Manual de compra en la nueva Tienda
+      </div>
+      <div class="accordion-content">
+        <p>
+          1. Pulsa el botón <b>Entrar a la TIENDA</b>.<br>
+          2. Roblox se abrirá automáticamente.<br>
+          3. Dentro de la experiencia podrás ver y comprar los productos.<br>
+          4. Disfruta tu compra al instante.
+        </p>
       </div>
     </div>
+
+    <!-- Botón -->
+    <button class="btn" onclick="irATienda()">ENTRAR A LA TIENDA</button>
   </div>
 
-  <!-- Botón -->
-  <div class="btn-tienda" onclick="irATienda()">Entrar a la TIENDA</div>
-
-  <!-- Loader -->
-  <div id="robloxLoader" class="loader-overlay">
+  <!-- Overlay tipo Roblox -->
+  <div class="loader-overlay" id="robloxLoader">
     <div class="loader-box">
       <div class="spinner"></div>
       <h2 id="loaderTitulo">Roblox se está cargando</h2>
@@ -203,19 +174,20 @@
     </div>
   </div>
 
-  <video autoplay muted loop id="videoFondo">
-    <source src="videos/Fondo3.mp4" type="video/mp4">
-  </video>
-
   <script>
-    // Acordeón
-    document.querySelectorAll('.acordeon-header').forEach(header => {
-      header.addEventListener('click', () => {
-        header.parentElement.classList.toggle('active');
-      });
-    });
+    function toggleAccordion(header) {
+      const content = header.nextElementSibling;
+      const isOpen = content.style.maxHeight;
 
-    // Loader Roblox
+      document.querySelectorAll(".accordion-content").forEach(c => {
+        c.style.maxHeight = null;
+      });
+
+      if (!isOpen) {
+        content.style.maxHeight = content.scrollHeight + "px";
+      }
+    }
+
     function irATienda() {
       const loader = document.getElementById("robloxLoader");
       const titulo = document.getElementById("loaderTitulo");
@@ -236,7 +208,6 @@
         window.location.href = "https://www.roblox.com/games/TU_ID_DE_EXPERIENCIA";
       }, 3500);
 
-      // Si tarda demasiado
       setTimeout(() => {
         if (loader.style.display === "flex") {
           clearTimeout(redirigir);
@@ -247,8 +218,6 @@
 
           setTimeout(() => {
             loader.style.display = "none";
-
-            // Reset
             titulo.textContent = "Roblox se está cargando";
             texto.textContent = "Prepárate para unirte a la TIENDA...";
           }, 3000);
