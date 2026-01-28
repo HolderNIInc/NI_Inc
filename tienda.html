@@ -193,6 +193,9 @@ function toggleAccordion(h) {
   c.style.maxHeight = c.style.maxHeight ? null : c.scrollHeight + "px";
 }
 
+<script>
+let loaderActivo = false;
+
 function irATienda() {
   if (loaderActivo) return;
   loaderActivo = true;
@@ -205,23 +208,24 @@ function irATienda() {
   t.textContent = "Inicializando Roblox";
   p.textContent = "Prepárate para unirte...";
 
+  // 🔥 ENTRAR DIRECTO AL JUEGO (como botón Play)
+  setTimeout(() => {
+    window.location.href = "roblox://placeId=15099460018";
+  }, 1500);
+
+  // Texto intermedio
   setTimeout(() => {
     if (!loaderActivo) return;
     p.textContent = "Abriendo la experiencia...";
-    window.location.href = "roblox://placeId=15099460018";
-  }, 2000);
-
-  setTimeout(() => {
-    window.open(
-      "https://www.roblox.com/games/15099460018",
-      "_blank"
-    );
   }, 3000);
 
+  // Si después de 10s no entró
   setTimeout(() => {
     if (!loaderActivo) return;
+
     t.textContent = "¿Problemas al entrar?";
-    p.textContent = "No te preocupes, inténtalo de nuevo.";
+    p.textContent = "Asegúrate de tener Roblox instalado e inténtalo de nuevo.";
+
     setTimeout(() => {
       loader.style.display = "none";
       loaderActivo = false;
