@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bloxmon GO — NI Inc</title>
   <link rel="icon" href="images/IconPage.jpg" type="image/x-icon">
+
   <style>
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
       color: white;
       padding: 60px 20px;
-      transition: background 1s ease-in-out;
       background-repeat: no-repeat;
       background-position: center center;
       background-size: cover;
@@ -21,13 +21,11 @@
     .game-panel {
       background: rgba(0, 0, 0, 0.35);
       backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
       padding: 40px;
       border-radius: 20px;
       max-width: 900px;
-      width: 100%;
-      box-shadow: 0 0 30px rgba(58,128,244,0.6);
       margin: auto;
+      box-shadow: 0 0 30px rgba(58,128,244,0.6);
     }
 
     .game-layout {
@@ -49,148 +47,142 @@
       font-size: 2.5em;
       color: #bb86fc;
       text-shadow: 0 0 10px #bb86fc;
-      margin-bottom: 15px;
     }
 
-    p { font-size: 1.2em; line-height: 1.6; margin-bottom: 20px; }
+    p { font-size: 1.2em; }
 
-    ul { font-size: 1.1em; margin: 20px 0; padding-left: 20px; }
     ul li { margin-bottom: 10px; }
 
     .play-btn, .secondary-btn {
       padding: 12px 24px;
       border-radius: 30px;
       font-weight: bold;
-      font-size: 1em;
       cursor: pointer;
       margin-top: 15px;
       display: block;
-      transition: transform 0.3s, box-shadow 0.3s;
     }
 
     .play-btn {
-      background-color: #3a80f4;
+      background: #3a80f4;
       color: white;
       border: none;
       box-shadow: 0 0 10px #3a80f4;
     }
-    .play-btn:hover { transform: scale(1.05); box-shadow: 0 0 15px #3a80f4; }
 
     .secondary-btn {
-      background-color: transparent;
+      background: transparent;
       color: #bb86fc;
       border: 2px solid #bb86fc;
     }
-    .secondary-btn:hover { background-color: #bb86fc; color: white; }
 
-    .back-link { margin-top: 40px; text-align: center; }
-    .back-link a {
-      background-color: #bb86fc;
-      color: white;
-      padding: 12px 24px;
-      text-decoration: none;
-      border-radius: 30px;
-      font-weight: bold;
-      box-shadow: 0 0 8px #bb86fc;
-      transition: background 0.3s ease;
-    }
-    .back-link a:hover { background-color: #9f70d6; }
-
-    /* Aviso si el audio está bloqueado */
-    .notice {
+    /* ===== Overlay Inicializando Roblox ===== */
+    .roblox-overlay {
       position: fixed;
       inset: 0;
+      background: rgba(0,0,0,0.85);
       display: none;
-      place-items: center;
-      background: rgba(0,0,0,0.6);
-      color: #bb86fc;
-      font-size: 1.6em;
-      text-shadow: 0 0 10px #bb86fc;
-      animation: pulse 1.5s infinite;
-      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+      text-align: center;
     }
-    @keyframes pulse {
-      0% { opacity: 0.4; }
-      50% { opacity: 1; }
-      100% { opacity: 0.4; }
+
+    .roblox-box {
+      background: rgba(20,20,20,0.9);
+      padding: 30px 40px;
+      border-radius: 20px;
+      box-shadow: 0 0 25px #3a80f4;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .roblox-box h2 {
+      color: #bb86fc;
+      margin-bottom: 15px;
+    }
+
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid rgba(255,255,255,0.2);
+      border-top: 4px solid #3a80f4;
+      border-radius: 50%;
+      margin: 0 auto 15px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
     }
   </style>
 </head>
+
 <body>
 
-  <!-- Aviso inicial -->
-  <div id="notice" class="notice">Refresca la página</div>
+<div class="game-panel">
+  <div class="game-layout">
+    <img src="images/BloxmonGOIcon.png" class="game-image">
 
-  <div class="game-panel">
-    <div class="game-layout">
-      <img src="images/BloxmonGOIcon.png" alt="Bloxmon GO" class="game-image">
+    <div style="flex:1">
+      <h1>Bloxmon GO</h1>
+      <p>Este juego está en desarrollo.</p>
 
-      <div style="flex: 1; min-width: 250px;">
-        <h1>Bloxmon GO</h1>
-        <p><strong>Descripción:</strong> Este juego está en desarrollo y algunas cosas pueden cambiar.</p>
-        <p><strong>Características principales:</strong></p>
-        <ul>
-          <li>                                   </li>
-          <li>                                   </li>
-          <li>                                   </li>
-          <li>                                   </li>
-        </ul>
+      <button class="play-btn" onclick="startRoblox()">
+        Jugar en Roblox
+      </button>
 
-        <button class="play-btn" onclick="window.open('https://www.roblox.com/share?code=_5gf40kgnxu20eb16pom76pwwiboxo5ecbk58hntl42kib4th3i&type=ExperienceInvite','_blank')">
-          Jugar en Roblox
-        </button>
-        <button class="secondary-btn" onclick="window.open('https://www.roblox.com/games/88756231287275','_blank')">
-          Ver en Roblox
-        </button>
-      </div>
-    </div>
-
-    <div class="back-link">
-      <a href="informacion.html">← Volver a la información</a>
+      <button class="secondary-btn"
+        onclick="window.open('https://www.roblox.com/games/88756231287275','_blank')">
+        Ver en Roblox
+      </button>
     </div>
   </div>
+</div>
 
-  <!-- Audio -->
-  <audio id="bg-audio" autoplay loop preload="auto"></audio>
+<!-- Overlay -->
+<div class="roblox-overlay" id="robloxOverlay">
+  <div class="roblox-box">
+    <div class="spinner"></div>
+    <h2 id="rbxTitle">Inicializando Roblox</h2>
+    <p id="rbxText">Prepárate para unirte a la experiencia…</p>
+  </div>
+</div>
 
-  <script>
-    const DAY_START = 6 * 60 + 30;   // 6:30 AM
-    const NIGHT_START = 18 * 60 + 30; // 6:30 PM
-    const DAY_BG = "images/Diablox.jpg";
-    const NIGHT_BG = "images/Nocheblox.jpg";
-    const DAY_SONG = "audios/DayFestivalSong.mp3";
-    const NIGHT_SONG = "audios/NightFestivalMusic.mp3";
-    function isDay() {
-      const now = new Date();
-      const total = now.getHours() * 60 + now.getMinutes();
-      return total >= DAY_START && total < NIGHT_START;
-    }
+<!-- Audio -->
+<audio id="bg-audio" autoplay loop></audio>
 
-    function setTheme() {
-      const audio = document.getElementById("bg-audio");
-      const day = isDay();
+<script>
+  const GAME_ID = 88756231287275;
 
-      // Fondo
-      document.body.style.backgroundImage = day ? `url('${DAY_BG}')` : `url('${NIGHT_BG}')`;
+  function startRoblox() {
+    const overlay = document.getElementById("robloxOverlay");
+    const title = document.getElementById("rbxTitle");
+    const text = document.getElementById("rbxText");
 
-      // Audio
-      const desiredSrc = day ? DAY_SONG : NIGHT_SONG;
-      if (!audio.src.endsWith(desiredSrc)) {
-        audio.src = desiredSrc;
-        audio.load();
-        audio.play().then(() => {
-          document.getElementById("notice").style.display = "none";
-        }).catch(() => {
-          document.getElementById("notice").style.display = "grid";
-        });
-      }
-    }
+    overlay.style.display = "flex";
 
-    window.addEventListener("load", () => {
-      setTheme();
-      setInterval(setTheme, 60000);
-    });
-  </script>
+    // Intentar abrir Roblox
+    setTimeout(() => {
+      window.location.href = `roblox://placeId=${GAME_ID}`;
+    }, 800);
+
+    // Después de 10s cambia el mensaje
+    setTimeout(() => {
+      title.textContent = "¿Problemas al entrar?";
+      text.textContent =
+        "No te preocupes, se cerrará esta ventana e inténtalo de nuevo.";
+    }, 10000);
+
+    // 3s después se cierra SOLO el overlay
+    setTimeout(() => {
+      overlay.style.display = "none";
+    }, 13000);
+  }
+</script>
 
 </body>
 </html>
