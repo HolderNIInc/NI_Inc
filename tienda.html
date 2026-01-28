@@ -2,15 +2,44 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TIENDA | NI Inc</title>
+
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #0f0f0f;
       color: #fff;
+      background: #000;
+      overflow-x: hidden;
     }
 
+    /* VIDEO DE FONDO */
+    .video-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      overflow: hidden;
+    }
+
+    .video-bg video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .video-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      z-index: -1;
+    }
+
+    /* CONTENIDO */
     .container {
       max-width: 900px;
       margin: auto;
@@ -24,7 +53,7 @@
     }
 
     p {
-      color: #cfcfcf;
+      color: #d0d0d0;
       font-size: 18px;
       margin-bottom: 30px;
     }
@@ -43,19 +72,14 @@
       cursor: pointer;
       font-weight: bold;
       background: #232323;
-      transition: background 0.2s;
-    }
-
-    .accordion-header:hover {
-      background: #2d2d2d;
     }
 
     .accordion-content {
       padding: 0 18px;
       max-height: 0;
       overflow: hidden;
-      background: #1b1b1b;
       transition: max-height 0.3s ease;
+      background: #1b1b1b;
     }
 
     .accordion-content p {
@@ -66,22 +90,16 @@
     /* Botón */
     .btn {
       margin-top: 30px;
-      padding: 15px 35px;
+      padding: 16px 36px;
       font-size: 18px;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       cursor: pointer;
       background: #00a2ff;
       color: #fff;
-      transition: transform 0.2s, background 0.2s;
     }
 
-    .btn:hover {
-      background: #0089d1;
-      transform: scale(1.05);
-    }
-
-    /* Overlay Roblox */
+    /* Loader Roblox */
     .loader-overlay {
       display: none;
       position: fixed;
@@ -97,8 +115,7 @@
       padding: 30px;
       border-radius: 12px;
       text-align: center;
-      width: 300px;
-      box-shadow: 0 0 25px rgba(0,0,0,0.5);
+      width: 280px;
     }
 
     .spinner {
@@ -112,37 +129,52 @@
     }
 
     @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+      to { transform: rotate(360deg); }
     }
 
-    .loader-box h2 {
-      margin: 10px 0;
-      font-size: 20px;
-    }
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 32px;
+      }
 
-    .loader-box p {
-      font-size: 14px;
-      color: #cfcfcf;
+      p {
+        font-size: 16px;
+      }
+
+      .btn {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
 
+  <!-- VIDEO + OVERLAY -->
+  <div class="video-bg">
+    <video autoplay muted loop playsinline>
+      <source src="fondo.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="video-overlay"></div>
+
+  <!-- AUDIO -->
+  <audio id="bgAudio" loop>
+    <source src="audio.mp3" type="audio/mpeg">
+  </audio>
+
   <div class="container">
-    <!-- TÍTULO Y TEXTO -->
     <h1>TIENDA</h1>
     <p>Transladamos la tienda a Roblox</p>
 
-    <!-- Acordeón -->
     <div class="accordion">
       <div class="accordion-header" onclick="toggleAccordion(this)">
         ¿Por qué este cambio?
       </div>
       <div class="accordion-content">
         <p>
-          Decidimos mover la tienda directamente a Roblox para ofrecerte un
-          sistema más rápido, seguro y totalmente integrado con tu cuenta.
+          Movimos la tienda a Roblox para una experiencia más rápida,
+          segura y totalmente integrada.
         </p>
       </div>
     </div>
@@ -153,19 +185,18 @@
       </div>
       <div class="accordion-content">
         <p>
-          1. Pulsa el botón <b>Entrar a la TIENDA</b>.<br>
-          2. Roblox se abrirá automáticamente.<br>
-          3. Dentro de la experiencia podrás ver y comprar los productos.<br>
-          4. Disfruta tu compra al instante.
+          1. Entra a la tienda.<br>
+          2. Roblox se abrirá.<br>
+          3. Compra dentro de la experiencia.<br>
+          4. Disfruta tu compra.
         </p>
       </div>
     </div>
 
-    <!-- Botón -->
     <button class="btn" onclick="irATienda()">ENTRAR A LA TIENDA</button>
   </div>
 
-  <!-- Overlay tipo Roblox -->
+  <!-- Loader -->
   <div class="loader-overlay" id="robloxLoader">
     <div class="loader-box">
       <div class="spinner"></div>
@@ -177,49 +208,39 @@
   <script>
     function toggleAccordion(header) {
       const content = header.nextElementSibling;
-      const isOpen = content.style.maxHeight;
-
-      document.querySelectorAll(".accordion-content").forEach(c => {
-        c.style.maxHeight = null;
-      });
-
-      if (!isOpen) {
-        content.style.maxHeight = content.scrollHeight + "px";
-      }
+      content.style.maxHeight = content.style.maxHeight
+        ? null
+        : content.scrollHeight + "px";
     }
 
     function irATienda() {
+      const audio = document.getElementById("bgAudio");
+      audio.volume = 0.4;
+      audio.play().catch(() => {});
+
       const loader = document.getElementById("robloxLoader");
       const titulo = document.getElementById("loaderTitulo");
       const texto = document.getElementById("loaderTexto");
 
       loader.style.display = "flex";
 
-      titulo.textContent = "Roblox se está cargando";
-      texto.textContent = "Prepárate para unirte a la TIENDA...";
-
       setTimeout(() => {
         texto.textContent = "Inicializando experiencia...";
       }, 1500);
 
-      const redirigir = setTimeout(() => {
-        titulo.textContent = "Todo listo";
-        texto.textContent = "Redirigiendo a Roblox...";
+      const redirect = setTimeout(() => {
         window.location.href = "https://www.roblox.com/games/TU_ID_DE_EXPERIENCIA";
       }, 3500);
 
       setTimeout(() => {
         if (loader.style.display === "flex") {
-          clearTimeout(redirigir);
-
+          clearTimeout(redirect);
           titulo.textContent = "¿Problemas al entrar?";
           texto.textContent =
             "No te preocupes, se cerrará esta ventana e inténtalo de nuevo.";
 
           setTimeout(() => {
             loader.style.display = "none";
-            titulo.textContent = "Roblox se está cargando";
-            texto.textContent = "Prepárate para unirte a la TIENDA...";
           }, 3000);
         }
       }, 10000);
