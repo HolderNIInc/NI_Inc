@@ -89,11 +89,65 @@
       text-decoration: none;
       box-shadow: 0 0 15px rgba(0,195,255,0.6);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
     }
 
     .btn-tienda:hover {
       transform: scale(1.08);
       box-shadow: 0 0 25px rgba(225,0,255,0.8);
+    }
+
+    /* Loader Roblox */
+    .loader-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.85);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .loader-box {
+      background: #0f0f0f;
+      border: 2px solid #00c3ff;
+      border-radius: 12px;
+      padding: 30px 40px;
+      text-align: center;
+      box-shadow: 0 0 25px rgba(0,195,255,0.7);
+      animation: aparecer 0.4s ease;
+    }
+
+    .spinner {
+      width: 60px;
+      height: 60px;
+      border: 6px solid rgba(255,255,255,0.1);
+      border-top: 6px solid #00c3ff;
+      border-radius: 50%;
+      animation: girar 1s linear infinite;
+      margin: auto;
+    }
+
+    .loader-box h2 {
+      margin: 15px 0 5px;
+      color: #00c3ff;
+    }
+
+    .loader-box p {
+      color: #ccc;
+      font-size: 0.95rem;
+    }
+
+    @keyframes girar {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes aparecer {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
     }
 
     #videoFondo {
@@ -114,51 +168,77 @@
   <h1>Te presentamos la nueva tienda</h1>
 
   <div class="descripcion">
-    Hemos renovado por completo la forma en la que obtienes nuestros productos.
-    Descubre cómo funciona esta nueva experiencia.
+    Hemos renovado la experiencia de compra para que sea más rápida,
+    segura y directa desde Roblox.
   </div>
 
   <!-- Acordeón -->
   <div class="acordeon">
-
     <div class="acordeon-item">
-      <div class="acordeon-header">📦 ¿Dónde se encuentra la tienda?</div>
+      <div class="acordeon-header">📦 ¿Dónde está la tienda?</div>
       <div class="acordeon-content">
-        Ahora este apartado lo trasladamos directamente a Roblox para que la compra
-        sea más rápida, segura y sencilla para todos los usuarios.
+        Ahora este apartado lo trasladamos a Roblox para que sea más fácil
+        realizar la compra y evitar errores.
       </div>
     </div>
 
     <div class="acordeon-item">
-      <div class="acordeon-header">🛍️ ¿Por qué el cambio?</div>
+      <div class="acordeon-header">🎮 ¿Cómo funciona?</div>
       <div class="acordeon-content">
-        Roblox ofrece un sistema de compra integrado, lo que evita errores,
-        facilita los pagos y mejora la experiencia general.
+        Al entrar, Roblox abrirá automáticamente la experiencia de TIENDA
+        donde podrás ver y adquirir los productos.
       </div>
     </div>
-
   </div>
 
   <!-- Botón -->
-  <a class="btn-tienda"
-     href="https://www.roblox.com/games/TU_ID_DE_EXPERIENCIA"
-     target="_blank">
-     Entrar a la TIENDA
-  </a>
+  <div class="btn-tienda" onclick="irATienda()">
+    Entrar a la TIENDA
+  </div>
+
+  <!-- Loader -->
+  <div id="robloxLoader" class="loader-overlay">
+    <div class="loader-box">
+      <div class="spinner"></div>
+      <h2 id="loaderTitulo">Roblox se está cargando</h2>
+      <p id="loaderTexto">Prepárate para unirte a la TIENDA...</p>
+    </div>
+  </div>
 
   <video autoplay muted loop id="videoFondo">
     <source src="videos/Fondo3.mp4" type="video/mp4">
   </video>
 
   <script>
-    const items = document.querySelectorAll('.acordeon-item');
-
-    items.forEach(item => {
-      item.querySelector('.acordeon-header').addEventListener('click', () => {
-        item.classList.toggle('active');
+    // Acordeón
+    document.querySelectorAll('.acordeon-header').forEach(header => {
+      header.addEventListener('click', () => {
+        header.parentElement.classList.toggle('active');
       });
     });
+
+    // Loader + cambio de texto
+    function irATienda() {
+      const loader = document.getElementById("robloxLoader");
+      const titulo = document.getElementById("loaderTitulo");
+      const texto = document.getElementById("loaderTexto");
+
+      loader.style.display = "flex";
+
+      setTimeout(() => {
+        texto.textContent = "Inicializando experiencia...";
+      }, 1200);
+
+      setTimeout(() => {
+        titulo.textContent = "Todo listo";
+        texto.textContent = "Redirigiendo a Roblox...";
+      }, 2400);
+
+      setTimeout(() => {
+        window.location.href = "https://www.roblox.com/games/TU_ID_DE_EXPERIENCIA";
+      }, 3500);
+    }
   </script>
 
 </body>
-</html>
+  </html>
