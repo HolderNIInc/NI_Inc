@@ -137,6 +137,7 @@
 
 <body>
 
+<!-- VIDEO FONDO -->
 <div class="video-bg" id="videoBg">
   <video autoplay muted loop playsinline>
     <source src="videos/Fondo3.mp4" type="video/mp4">
@@ -177,6 +178,7 @@
   </div>
 </div>
 
+<!-- LOADER -->
 <div class="loader-overlay" id="robloxLoader">
   <div class="loader-box">
     <div class="spinner"></div>
@@ -193,9 +195,6 @@ function toggleAccordion(h) {
   c.style.maxHeight = c.style.maxHeight ? null : c.scrollHeight + "px";
 }
 
-<script>
-let loaderActivo = false;
-
 function irATienda() {
   if (loaderActivo) return;
   loaderActivo = true;
@@ -208,23 +207,21 @@ function irATienda() {
   t.textContent = "Inicializando Roblox";
   p.textContent = "Prepárate para unirte...";
 
-  // 🔥 ENTRAR DIRECTO AL JUEGO (como botón Play)
-  setTimeout(() => {
-    window.location.href = "roblox://placeId=15099460018";
-  }, 1500);
+  // 🔥 CLAVE: ejecución DIRECTA desde el click
+  window.location.href = "roblox://placeId=15099460018";
 
-  // Texto intermedio
+  // Textos posteriores (solo visual)
   setTimeout(() => {
     if (!loaderActivo) return;
     p.textContent = "Abriendo la experiencia...";
-  }, 3000);
+  }, 1500);
 
-  // Si después de 10s no entró
+  // Fallback visual si tarda
   setTimeout(() => {
     if (!loaderActivo) return;
-
     t.textContent = "¿Problemas al entrar?";
-    p.textContent = "Asegúrate de tener Roblox instalado e inténtalo de nuevo.";
+    p.textContent =
+      "Asegúrate de tener Roblox instalado e inténtalo de nuevo.";
 
     setTimeout(() => {
       loader.style.display = "none";
