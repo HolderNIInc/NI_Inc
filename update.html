@@ -18,14 +18,13 @@
       align-items: center;
     }
 
-    /* Encabezado arriba a la izquierda */
     .header {
       position: absolute;
       top: 20px;
       left: 20px;
       font-size: 1.4em;
       font-weight: bold;
-      color: yellow; /* Color amarillo */
+      color: yellow;
       text-shadow: 0 0 8px #000;
     }
 
@@ -56,7 +55,7 @@
     .version-info {
       font-size: 1.1em;
       margin-bottom: 30px;
-      color: #ffd700; /* Dorado/amarillo para destacar */
+      color: #ffd700;
       text-shadow: 0 0 6px #000;
     }
 
@@ -73,31 +72,27 @@
       box-shadow: 0 0 10px #3a80f4;
       transition: transform 0.3s, box-shadow 0.3s;
       text-decoration: none;
+      margin: 10px 0;
     }
+
     .update-btn:hover {
       transform: scale(1.05);
       box-shadow: 0 0 15px #3a80f4;
     }
 
-    .back-link {
-      margin-top: 30px;
+    .android-btn {
+      background-color: #3ddc84;
+      box-shadow: 0 0 10px #3ddc84;
     }
-    .back-link a {
-      background-color: #bb86fc;
-      color: white;
-      padding: 12px 24px;
-      text-decoration: none;
-      border-radius: 30px;
-      font-weight: bold;
-      box-shadow: 0 0 8px #bb86fc;
-      transition: background 0.3s ease;
+
+    .android-btn:hover {
+      box-shadow: 0 0 15px #3ddc84;
     }
-    .back-link a:hover { background-color: #9f70d6; }
+
   </style>
 </head>
 <body>
 
-  <!-- Encabezado arriba a la izquierda -->
   <div class="header">Actualizador para la App de NI INC</div>
 
   <div class="update-panel">
@@ -105,20 +100,21 @@
     <p>Tu aplicación tiene una nueva versión lista para instalar.<br>
        Mantente al día con las últimas mejoras y correcciones.</p>
 
-    <!-- Información de versiones -->
     <div class="version-info">
       Nueva versión: <strong>2.0.0</strong>
     </div>
 
-    <!-- Botón de actualización -->
-    <a href="https://www.dropbox.com/scl/fi/o9sowj0viht9fq5o08k3y/NIINC-App-BETA-v2.0.0.msi?rlkey=2q9oc3iqh8d2wktawqhbwgusb&st=krb0kk1t&dl=1" class="update-btn">Actualizar para Windowsq</a>
+    <!-- Botón Windows -->
+    <a href="https://www.dropbox.com/scl/fi/o9sowj0viht9fq5o08k3y/NIINC-App-BETA-v2.0.0.msi?rlkey=2q9oc3iqh8d2wktawqhbwgusb&st=krb0kk1t&dl=1" class="update-btn">
+      Actualizar para Windows
+    </a>
+
+    <!-- Botón Android -->
+    <a href="???" class="update-btn android-btn">
+      Actualizar para Android
+    </a>
 
   </div>
 
 </body>
 </html>
-
-
-
-
-
