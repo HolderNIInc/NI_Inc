@@ -179,6 +179,18 @@
 <script>
 document.title = "Cargando...";
 
+  // Comprueba si la función existe (esto es para que no dé error en navegadores normales)
+if (window.Android && window.Android.showNotification) {  // Llama a la función de la app para mostrar la notificación nativa
+  window.Android.showNotification("Este es el título", "Este es el cuerpo del mensaje de la notificación.");
+
+} else {
+
+  // (Opcional) Aquí puedes poner tu código de notificación web antiguo, 
+  // para que siga funcionando si alguien abre tu web en un PC.
+  // new Notification("Este es el título", { body: "Este es el cuerpo..." });
+  
+}
+
 // --- LOGICA DE NOTIFICACIÓN DE BIENVENIDA ---
 function lanzarNotificacion() {
   const options = {
@@ -265,5 +277,6 @@ window.addEventListener("load", async () => {
 
 </body>
 </html>
+
 
 
