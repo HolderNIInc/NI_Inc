@@ -336,6 +336,10 @@ window.addEventListener("load", async () => {
       alert("Abrir configuración de la app");
       // Aquí puedes poner la lógica real de tu panel de configuración
 
+ const { ipcRenderer } = require('electron');
+  document.getElementById('configBtn').onclick = () => {
+    ipcRenderer.send('open-config');
+  };
 
 
 
@@ -353,6 +357,7 @@ window.addEventListener("load", async () => {
 
 </body>
 </html>
+
 
 
 
