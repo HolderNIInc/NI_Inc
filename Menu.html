@@ -167,46 +167,6 @@
     <a class="info-button" href="informacion.html">Información</a>
     <a class="info-button" href="tienda.html">Tienda de NI Inc</a>
   </div>
-
- <!-- Botón de Configuración -->
-<div id="configBtn" style="
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  width: 40px;
-  height: 40px;
-  background: #007acc;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-">
-  ⚙️
-</div>
-
-  <!-- Panel de Configuración -->
-<div id="configPanel" style="
-  position: fixed;
-  bottom: 70px;
-  left: 20px;
-  width: 250px;
-  background: #f0f0f0;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 15px;
-  font-family: sans-serif;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  display: none;
-  z-index: 9999;
-">
-  <h4 style="margin-top:0;">⚙️ Configuración</h4>
-  <button id="resizeBtn" style="margin:5px;">Redimensionar ventana</button>
-  <button id="backgroundBtn" style="margin:5px;">Modo segundo plano</button>
-</div>
-
-
   
 </header>
 
@@ -331,32 +291,11 @@ window.addEventListener("load", async () => {
       }
     };
 
-    // Acción del botón
-    document.getElementById('configBtn').onclick = () => {
-      alert("Abrir configuración de la app");
-      // Aquí puedes poner la lógica real de tu panel de configuración
-
- const { ipcRenderer } = require('electron');
-  document.getElementById('configBtn').onclick = () => {
-    ipcRenderer.send('open-config');
-  };
-
-
-
-
-
-
-
-
-
-
-      
-    };
-
 </script>
 
 </body>
 </html>
+
 
 
 
