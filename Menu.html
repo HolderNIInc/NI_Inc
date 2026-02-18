@@ -18,6 +18,25 @@
       min-height: 100vh;
     }
 
+  /* Estilo del botón de configuración */
+    #configBtn {
+      display: none; /* oculto por defecto */
+      position: fixed;
+      bottom: 20px;   /* 👈 parte inferior */
+      left: 20px;     /* 👈 lado izquierdo */
+      width: 40px;
+      height: 40px;
+      background: #007acc;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      color: white;
+      font-size: 20px;
+      z-index: 9999;
+
     /* Ocultar contenido hasta carga */
     header, footer, #github-hosting, #toggleSocialPanel {
       visibility: hidden;
@@ -166,6 +185,10 @@
     <a class="info-button" href="informacion.html">Información</a>
     <a class="info-button" href="tienda.html">Tienda de NI Inc</a>
   </div>
+
+ <!-- Botón de Configuración -->
+  <div id="configBtn">⚙️</div>
+  
 </header>
 
 <footer>
@@ -273,10 +296,32 @@ window.addEventListener("load", async () => {
     escribir();
   }, 500);
 });
+
+  // Detectar si el dispositivo es PC/Laptop
+    function isDesktop() {
+      const ua = navigator.userAgent.toLowerCase();
+      const isMobile = /mobile|android|iphone|ipad|tablet/.test(ua);
+      return !isMobile;
+    }
+
+    // Mostrar el botón solo en PC/Laptop
+    window.onload = () => {
+      if (isDesktop()) {
+        document.getElementById('configBtn').style.display = 'flex';
+      }
+    };
+
+    // Acción del botón
+    document.getElementById('configBtn').onclick = () => {
+      alert("Abrir configuración de la app");
+      // Aquí puedes poner la lógica real de tu panel de configuración
+    };
+
 </script>
 
 </body>
 </html>
+
 
 
 
