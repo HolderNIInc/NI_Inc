@@ -17,26 +17,7 @@
       flex-direction: column;
       min-height: 100vh;
     }
-
-  /* Estilo del botón de configuración */
-    #configBtn {
-      display: none; /* oculto por defecto */
-      position: fixed;
-      bottom: 20px;   /* 👈 parte inferior */
-      left: 20px;     /* 👈 lado izquierdo */
-      width: 40px;
-      height: 40px;
-      background: #007acc;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-      color: white;
-      font-size: 20px;
-      z-index: 9999;
-
+    
     /* Ocultar contenido hasta carga */
     header, footer, #github-hosting, #toggleSocialPanel {
       visibility: hidden;
@@ -166,6 +147,27 @@
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
+
+     /* Estilo del botón de configuración */
+    #configBtn {
+      display: none; /* oculto por defecto */
+      position: fixed;
+      bottom: 20px;   /* 👈 parte inferior */
+      left: 20px;     /* 👈 lado izquierdo */
+      width: 40px;
+      height: 40px;
+      background: #007acc;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      color: white;
+      font-size: 20px;
+      z-index: 9999;
+     }
+    
   </style>
 </head>
 
@@ -321,6 +323,7 @@ window.addEventListener("load", async () => {
 
 </body>
 </html>
+
 
 
 
