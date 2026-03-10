@@ -133,18 +133,127 @@
 
     @keyframes spin { to { transform: rotate(360deg); } }
 
-     html, body, * {
-    cursor: url("cursors/Arrow.cur") 0 0, auto !important;
-  }
+    /* CURSORES */
+    html, body, * {
+      cursor: url("cursors/Arrow.cur") 0 0, auto !important;
+    }
 
-  button, a {
-    cursor: url("cursors/Hand.cur") 0 0, pointer !important;
-  }
+    button, a {
+      cursor: url("cursors/Hand.cur") 0 0, pointer !important;
+    }
 
-  input, textarea {
-    cursor: url("cursors/Text.ani") 0 0, text !important;
-  }
-    
+    input, textarea {
+      cursor: url("cursors/Text.ani") 0 0, text !important;
+    }
+
+    /* BOTÓN INFO */
+    #infoBtn {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      padding: 14px 20px;
+      font-size: 20px;
+      border-radius: 12px;
+      background: #00a2ff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      z-index: 9999;
+      box-shadow: 0 0 10px #000;
+      transition: transform .2s ease;
+    }
+
+    #infoBtn:hover {
+      transform: scale(1.1);
+    }
+
+    /* PANEL INFO */
+    #infoPanel {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 90%;
+      max-width: 420px;
+      transform: translate(-50%, -50%) scale(0.7);
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(12px);
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 0 20px #000;
+      color: white;
+      display: none;
+      z-index: 99999;
+      transition: transform .3s ease, opacity .3s ease;
+      opacity: 0;
+    }
+
+    #infoPanel.active {
+      display: block;
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .info-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .info-header button {
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    .info-body {
+      display: flex;
+      gap: 15px;
+    }
+
+    #trackImg {
+      width: 120px;
+      height: 120px;
+      border-radius: 12px;
+      object-fit: cover;
+    }
+
+    .track-info h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .track-info p {
+      margin: 5px 0 15px;
+      color: #ccc;
+    }
+
+    #progressBar {
+      width: 100%;
+      margin-bottom: 15px;
+    }
+
+    .info-buttons button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    #vocalBtn2 {
+      background: #ffcc00;
+      color: #000;
+    }
+
+    #lyricsBtn {
+      background: #3a80f4;
+      color: white;
+    }
   </style>
 </head>
 
@@ -158,24 +267,39 @@
 </div>
 <div class="video-overlay" id="videoOverlay"></div>
 
-  <button onclick="toggleVocal()" style="
-  margin-top:20px;
-  padding:12px 24px;
-  border-radius:10px;
-  background:#ffcc00;
-  color:#000;
-  font-weight:bold;
-  cursor:pointer;
-">
-🎤 Pausar Vocal
-  </button>
+<!-- BOTÓN INFO -->
+<button id="infoBtn">ℹ️</button>
+
+<!-- PANEL INFO -->
+<div id="infoPanel">
+  <div class="info-header">
+    <span>Reproduciendo ahora</span>
+    <button id="closeInfo">✖</button>
+  </div>
+
+  <div class="info-body">
+    <img id="trackImg" src="images/track.jpg" alt="Track">
+
+    <div class="track-info">
+      <h2 id="trackName">The Logical Song (MSI)</h2>
+      <p id="trackArtist">Supertramp / MSI Remix</p>
+
+      <input type="range" id="progressBar" min="0" max="100" value="0">
+
+      <div class="info-buttons">
+        <button id="vocalBtn2" onclick="toggleVocal()">⏸ Pausar Vocal</button>
+        <button id="lyricsBtn">📜 Lyrics</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- AUDIO INSTRUMENTAL -->
 <audio id="musica" autoplay loop>
   <source src="audios/Tienda_Audios/The_Logical_Song_MSI_Audio.mp3" type="audio/mpeg">
 </audio>
 
-<!-- AUDIO VOCAL (SINCRONIZADO) -->
+<!-- AUDIO VOCAL -->
 <audio id="vocal" autoplay loop>
   <source src="audios/Tienda_Audios/The_Logical_Song_MSI_Vocales.mp3" type="audio/mpeg">
 </audio>
@@ -238,21 +362,17 @@ function irATienda() {
   t.textContent = "Inicializando Roblox";
   p.textContent = "Prepárate para unirte...";
 
-  // 🔥 CLAVE: ejecución DIRECTA desde el click
   window.location.href = "roblox://placeId=15099460018";
 
-  // Textos posteriores (solo visual)
   setTimeout(() => {
     if (!loaderActivo) return;
     p.textContent = "Abriendo la experiencia...";
   }, 1500);
 
-  // Fallback visual si tarda
   setTimeout(() => {
     if (!loaderActivo) return;
     t.textContent = "¿Problemas al entrar?";
-    p.textContent =
-      "Asegúrate de tener Roblox instalado e inténtalo de nuevo.";
+    p.textContent = "Asegúrate de tener Roblox instalado e inténtalo de nuevo.";
 
     setTimeout(() => {
       loader.style.display = "none";
@@ -270,38 +390,52 @@ function confirmarSalida() {
   }, 1000);
 }
 
-  
+/* AUDIO SINCRONIZADO */
 let vocalMuted = false;
-let vocalOriginalVolume = 1; // volumen normal
+let vocalOriginalVolume = 1;
 
 const musica = document.getElementById("musica");
 const vocal = document.getElementById("vocal");
+const vocalBtn2 = document.getElementById("vocalBtn2");
 
-// Asegurar sincronización al cargar
 musica.onplay = () => {
   vocal.currentTime = musica.currentTime;
   vocal.play();
 };
 
-// Mantener sincronía cada 500ms
 setInterval(() => {
+  if (!musica.duration) return;
   if (Math.abs(musica.currentTime - vocal.currentTime) > 0.15) {
     vocal.currentTime = musica.currentTime;
   }
 }, 500);
 
-// Botón para mutear vocal sin detenerla
 function toggleVocal() {
   if (!vocalMuted) {
     vocalOriginalVolume = vocal.volume;
     vocal.volume = 0;
     vocalMuted = true;
+    vocalBtn2.textContent = "▶️ Activar Vocal";
   } else {
     vocal.volume = vocalOriginalVolume;
     vocalMuted = false;
+    vocalBtn2.textContent = "⏸ Pausar Vocal";
   }
 }
 
+/* PANEL INFO */
+const infoBtn = document.getElementById("infoBtn");
+const infoPanel = document.getElementById("infoPanel");
+const closeInfo = document.getElementById("closeInfo");
+const progressBar = document.getElementById("progressBar");
+
+infoBtn.onclick = () => infoPanel.classList.add("active");
+closeInfo.onclick = () => infoPanel.classList.remove("active");
+
+setInterval(() => {
+  if (!musica.duration) return;
+  progressBar.value = (musica.currentTime / musica.duration) * 100;
+}, 300);
 </script>
 
 </body>
