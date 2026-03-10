@@ -255,6 +255,36 @@
       background: #3a80f4;
       color: white;
     }
+
+    /* Acomodo perfecto del panel */
+.info-body {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.track-info {
+  flex: 1;
+  min-width: 180px;
+}
+
+/* Responsive para móviles */
+@media (max-width: 500px) {
+  #trackImg {
+    width: 100%;
+    height: auto;
+  }
+
+  .info-body {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .track-info {
+    width: 100%;
+  }
+}
   </style>
 </head>
 
@@ -279,25 +309,40 @@
   </div>
 
   <div class="info-body">
+
+    <!-- IMAGEN DEL TRACK -->
     <img id="trackImg" src="images/The_Logical_Song_MSI_Track.jpeg" alt="Track">
 
-    <h2 id="trackName">The Logical Song</h2>
+    <!-- INFORMACIÓN DEL TRACK -->
+    <div class="track-info">
 
-<div style="display:flex; align-items:center; gap:10px;">
-  <p id="trackArtist" style="margin:0;">Mindless Self Indulgence</p>
+      <h2 id="trackName" style="margin:0 0 6px 0;">The Logical Song</h2>
 
-  <!-- LOGO DEL ARTISTA -->
-  <img src="images/MSI_Logo.jpeg" 
-       alt="Artist Logo" 
-       style="width:40px; height:40px; object-fit:contain; border-radius:6px;">
+      <!-- ARTISTA + LOGO -->
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:15px;">
+        <p id="trackArtist" style="margin:0;">Mindless Self Indulgence</p>
 
-    
-      <input type="range" id="progressBar" min="0" max="100" value="0">
-
-      <div class="info-buttons">
-        <button id="vocalBtn2" onclick="toggleVocal()">⏸ Pausar Vocal</button>
-        <button id="lyricsBtn">📜 Lyrics</button>
+        <img src="images/MSI_Logo.jpeg" 
+             alt="Artist Logo" 
+             style="width:40px; height:40px; object-fit:contain; border-radius:6px;">
       </div>
+
+      <!-- BARRA DE PROGRESO -->
+      <input type="range" id="progressBar" min="0" max="100" value="0" style="width:100%; margin-bottom:15px;">
+
+      <!-- BOTONES -->
+      <div class="info-buttons" style="display:flex; flex-direction:column; gap:10px;">
+        <button id="vocalBtn2" onclick="toggleVocal()" 
+                style="background:#ffcc00; color:#000; padding:10px; border-radius:10px; font-weight:bold;">
+          ⏸ Pausar Vocal
+        </button>
+
+        <button id="lyricsBtn" 
+                style="background:#3a80f4; color:white; padding:10px; border-radius:10px; font-weight:bold;">
+          📜 Lyrics
+        </button>
+      </div>
+
     </div>
   </div>
 </div>
