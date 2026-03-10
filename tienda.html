@@ -158,8 +158,26 @@
 </div>
 <div class="video-overlay" id="videoOverlay"></div>
 
-<audio autoplay loop>
+  <button onclick="toggleVocal()" style="
+  margin-top:20px;
+  padding:12px 24px;
+  border-radius:10px;
+  background:#ffcc00;
+  color:#000;
+  font-weight:bold;
+  cursor:pointer;
+">
+🎤 Pausar Vocal
+  </button>
+
+<!-- AUDIO INSTRUMENTAL -->
+<audio id="musica" autoplay loop>
   <source src="audios/Tienda_Audios/The_Logical_Song_MSI_Audio.mp3" type="audio/mpeg">
+</audio>
+
+<!-- AUDIO VOCAL (SINCRONIZADO) -->
+<audio id="vocal" autoplay loop>
+  <source src="audios/Tienda_Audios/The_Logical_Song_MSI_Vocal.mp3" type="audio/mpeg">
 </audio>
 
 <div class="container">
@@ -251,6 +269,39 @@ function confirmarSalida() {
     location.href = "https://holderniinc.github.io/NI_Inc/Menu.html";
   }, 1000);
 }
+
+  
+let vocalMuted = false;
+let vocalOriginalVolume = 1; // volumen normal
+
+const musica = document.getElementById("musica");
+const vocal = document.getElementById("vocal");
+
+// Asegurar sincronización al cargar
+musica.onplay = () => {
+  vocal.currentTime = musica.currentTime;
+  vocal.play();
+};
+
+// Mantener sincronía cada 500ms
+setInterval(() => {
+  if (Math.abs(musica.currentTime - vocal.currentTime) > 0.15) {
+    vocal.currentTime = musica.currentTime;
+  }
+}, 500);
+
+// Botón para mutear vocal sin detenerla
+function toggleVocal() {
+  if (!vocalMuted) {
+    vocalOriginalVolume = vocal.volume;
+    vocal.volume = 0;
+    vocalMuted = true;
+  } else {
+    vocal.volume = vocalOriginalVolume;
+    vocalMuted = false;
+  }
+}
+
 </script>
 
 </body>
