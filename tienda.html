@@ -147,25 +147,26 @@
     }
 
     /* BOTÓN INFO */
-    #infoBtn {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      padding: 14px 20px;
-      font-size: 20px;
-      border-radius: 12px;
-      background: #00a2ff;
-      color: #fff;
-      border: none;
-      cursor: pointer;
-      z-index: 9999;
-      box-shadow: 0 0 10px #000;
-      transition: transform .2s ease;
-    }
+#infoBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px; /* ← MOVIDO A LA DERECHA */
+  padding: 14px 20px;
+  font-size: 20px;
+  border-radius: 12px;
+  background: #00a2ff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  z-index: 9999;
+  box-shadow: 0 0 10px #000;
+  transition: transform .2s ease;
+}
 
-    #infoBtn:hover {
-      transform: scale(1.1);
-    }
+#infoBtn:hover {
+  transform: scale(1.1);
+}
+
 
     /* PANEL INFO */
     #infoPanel {
@@ -280,10 +281,17 @@
   <div class="info-body">
     <img id="trackImg" src="images/The_Logical_Song_MSI_Track.jpeg" alt="Track">
 
-    <div class="track-info">
-      <h2 id="trackName">The Logical Song</h2>
-      <p id="trackArtist">Mindless Self Indulgence</p>
+    <h2 id="trackName">The Logical Song</h2>
 
+<div style="display:flex; align-items:center; gap:10px;">
+  <p id="trackArtist" style="margin:0;">Mindless Self Indulgence</p>
+
+  <!-- LOGO DEL ARTISTA -->
+  <img src="images/MSI_Logo.png" 
+       alt="Artist Logo" 
+       style="width:40px; height:40px; object-fit:contain; border-radius:6px;">
+</div>
+    
       <input type="range" id="progressBar" min="0" max="100" value="0">
 
       <div class="info-buttons">
