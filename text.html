@@ -3,264 +3,439 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cargando...</title>
   <link rel="icon" href="images/IconPage.jpg" type="image/x-icon">
+  <title>TIENDA</title>
 
   <style>
+    * { box-sizing: border-box; }
+
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: url("images/Fondo.jpg") no-repeat center center fixed;
-      background-size: cover;
+      font-family: Arial, sans-serif;
       color: #fff;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
+      background: #000;
     }
 
-    /* Ocultar contenido hasta carga */
-    header, footer, #github-hosting, #toggleSocialPanel {
-      visibility: hidden;
-    }
-
-    body.loaded header,
-    body.loaded footer,
-    body.loaded #toggleSocialPanel {
-      visibility: visible;
-    }
-
-    header {
-      background-color: rgba(0, 0, 0, 0.5);
-      padding: 60px 40px 20px;
-      text-align: center;
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-
-    h1 {
-      font-size: clamp(2.5em, 6vw, 4em);
-      margin: 0;
-      letter-spacing: 3px;
-      text-shadow: 0 0 10px #bb86fc, 0 0 20px #bb86fc;
-      opacity: 0;
-    }
-
-    .tagline {
-      font-size: 1.5em;
-      color: #bb86fc;
-      margin-top: 20px;
-      text-shadow: 0 0 5px #bb86fc;
-      opacity: 0;
-    }
-
-    @keyframes fadeSlideDown {
-      from { transform: translateY(-30px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    @keyframes fadeZoomIn {
-      from { transform: scale(0.9); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    #mensajeBienvenida {
-      font-family: 'Courier New', monospace;
-      margin-top: 25px;
-      border-right: 2px solid #bb86fc;
-      animation: blink-caret 0.8s step-end infinite;
-      opacity: 0;
-    }
-
-    @keyframes blink-caret {
-      50% { border-color: transparent; }
-    }
-
-    .menu-label {
-      margin-top: 30px;
-      color: navy;
-      opacity: 0;
-      animation: fadeInLabel 1.5s ease forwards;
-    }
-
-    @keyframes fadeInLabel {
-      to { opacity: 1; }
-    }
-
-    .menu-buttons {
-      margin-top: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      opacity: 0;
-      animation: slideUp 1.5s ease forwards;
-    }
-
-    @keyframes slideUp {
-      from { transform: translateY(40px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    .menu-buttons a {
-      margin-bottom: 15px;
-    }
-
-    .info-button {
-      padding: 15px 30px;
-      border-radius: 30px;
-      background: rgba(58,128,244,.8);
-      color: #fff;
-      text-decoration: none;
-      box-shadow: 0 0 10px #3a80f4;
-    }
-
-    footer {
-      background: rgba(0,0,0,.6);
-      padding: 20px;
-      text-align: center;
-    }
-
-    /* Loader */
-    #loader {
+    /* VIDEO */
+    .video-bg {
       position: fixed;
       inset: 0;
-      background: #0f0f0f;
-      display: flex;
-      flex-direction: column;
+      z-index: -2;
+      transition: opacity 1s ease;
+    }
+
+    .video-bg.fade-out { opacity: 0; }
+
+    .video-bg video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .video-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      z-index: -1;
+      transition: opacity 1s ease;
+    }
+
+    .video-overlay.fade-out { opacity: 0; }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 40px 20px 120px;
+      text-align: center;
+    }
+
+    h1 { font-size: 42px; }
+    p { color: #ccc; font-size: 18px; }
+
+    /* ACORDEÓN */
+    .accordion {
+      background: #1b1b1b;
+      border-radius: 10px;
+      margin: 20px 0;
+      text-align: left;
+    }
+
+    .accordion-header {
+      padding: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      background: #232323;
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .3s ease;
+      padding: 0 18px;
+    }
+
+    .accordion-content p { margin: 15px 0; }
+
+    /* BOTONES */
+    .btn {
+      margin-top: 35px;
+      padding: 16px 40px;
+      font-size: 18px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      background: #00a2ff;
+      color: #fff;
+    }
+
+    .back-menu {
+      margin-top: 70px;
+    }
+
+    .back-menu button {
+      padding: 14px 28px;
+      font-size: 16px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      background: linear-gradient(135deg, #444, #222);
+      color: #fff;
+    }
+
+    /* LOADER */
+    .loader-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 9999;
       justify-content: center;
       align-items: center;
-      z-index: 9999;
-      transition: opacity .6s ease;
+    }
+
+    .loader-box {
+      background: #121212;
+      padding: 30px;
+      border-radius: 14px;
+      width: 300px;
+      text-align: center;
     }
 
     .spinner {
-      width: 50px;
-      height: 50px;
-      border: 5px solid #888;
-      border-top: 5px solid #00c3ff;
+      width: 42px;
+      height: 42px;
+      border: 4px solid #333;
+      border-top: 4px solid #00a2ff;
       border-radius: 50%;
+      margin: 10px auto 20px;
       animation: spin 1s linear infinite;
     }
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* CURSORES */
+    html, body, * {
+      cursor: url("cursors/Arrow.cur") 0 0, auto !important;
+    }
+
+    button, a {
+      cursor: url("cursors/Hand.cur") 0 0, pointer !important;
+    }
+
+    input, textarea {
+      cursor: url("cursors/Text.ani") 0 0, text !important;
+    }
+
+    /* BOTÓN INFO */
+    #infoBtn {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      padding: 14px 20px;
+      font-size: 20px;
+      border-radius: 12px;
+      background: #00a2ff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      z-index: 9999;
+      box-shadow: 0 0 10px #000;
+      transition: transform .2s ease;
+    }
+
+    #infoBtn:hover {
+      transform: scale(1.1);
+    }
+
+    /* PANEL INFO */
+    #infoPanel {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 90%;
+      max-width: 420px;
+      transform: translate(-50%, -50%) scale(0.7);
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(12px);
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 0 20px #000;
+      color: white;
+      display: none;
+      z-index: 99999;
+      transition: transform .3s ease, opacity .3s ease;
+      opacity: 0;
+    }
+
+    #infoPanel.active {
+      display: block;
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .info-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .info-header button {
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    .info-body {
+      display: flex;
+      gap: 15px;
+    }
+
+    #trackImg {
+      width: 120px;
+      height: 120px;
+      border-radius: 12px;
+      object-fit: cover;
+    }
+
+    .track-info h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .track-info p {
+      margin: 5px 0 15px;
+      color: #ccc;
+    }
+
+    #progressBar {
+      width: 100%;
+      margin-bottom: 15px;
+    }
+
+    .info-buttons button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    #vocalBtn2 {
+      background: #ffcc00;
+      color: #000;
+    }
+
+    #lyricsBtn {
+      background: #3a80f4;
+      color: white;
     }
   </style>
 </head>
 
 <body>
 
-<div id="loader">
-  <div class="spinner"></div>
-  <p>Cargando NI Inc...</p>
+<!-- VIDEO FONDO -->
+<div class="video-bg" id="videoBg">
+  <video autoplay muted loop playsinline>
+    <source src="videos/Fondo3.mp4" type="video/mp4">
+  </video>
+</div>
+<div class="video-overlay" id="videoOverlay"></div>
+
+<!-- BOTÓN INFO -->
+<button id="infoBtn">ℹ️</button>
+
+<!-- PANEL INFO -->
+<div id="infoPanel">
+  <div class="info-header">
+    <span>Reproduciendo ahora</span>
+    <button id="closeInfo">✖</button>
+  </div>
+
+  <div class="info-body">
+    <img id="trackImg" src="images/track.jpg" alt="Track">
+
+    <div class="track-info">
+      <h2 id="trackName">The Logical Song (MSI)</h2>
+      <p id="trackArtist">Supertramp / MSI Remix</p>
+
+      <input type="range" id="progressBar" min="0" max="100" value="0">
+
+      <div class="info-buttons">
+        <button id="vocalBtn2" onclick="toggleVocal()">⏸ Pausar Vocal</button>
+        <button id="lyricsBtn">📜 Lyrics</button>
+      </div>
+    </div>
+  </div>
 </div>
 
-<header>
-  <h1>Noobs Interactive Incorporation</h1>
-  <p class="tagline">Creando juegos divertidos para todo el público.</p>
-  <p id="mensajeBienvenida"></p>
-  <p class="menu-label">MENU</p>
-  <div class="menu-buttons">
-    <a class="info-button" href="informacion.html">Información</a>
-    <a class="info-button" href="tienda.html">Tienda de NI Inc</a>
-  </div>
-</header>
-
-<footer>
-  &copy; 2026 Noobs Interactive Incorporation
-</footer>
-
-<audio id="audioFondo" autoplay loop>
-  <source src="audios/Poppy.mp3" type="audio/mpeg">
+<!-- AUDIO INSTRUMENTAL -->
+<audio id="musica" autoplay loop>
+  <source src="audios/Tienda_Audios/The_Logical_Song_MSI_Audio.mp3" type="audio/mpeg">
 </audio>
 
+<!-- AUDIO VOCAL -->
+<audio id="vocal" autoplay loop>
+  <source src="audios/Tienda_Audios/The_Logical_Song_MSI_Vocales.mp3" type="audio/mpeg">
+</audio>
+
+<div class="container">
+  <h1>TIENDA</h1>
+  <p>Transladamos la tienda a Roblox</p>
+
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAccordion(this)">
+      ¿Por qué este cambio?
+    </div>
+    <div class="accordion-content">
+      <p>Ahora la compra es más rápida y directa dentro de Roblox.</p>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAccordion(this)">
+      Manual de compra en la nueva Tienda
+    </div>
+    <div class="accordion-content">
+      <p>Haz clic en entrar → Roblox se abre → compra → disfruta.</p>
+    </div>
+  </div>
+
+  <button class="btn" onclick="irATienda()">ENTRAR A LA TIENDA</button>
+
+  <div class="back-menu">
+    <button onclick="confirmarSalida()">⬅ Regresar al Menu</button>
+  </div>
+</div>
+
+<!-- LOADER -->
+<div class="loader-overlay" id="robloxLoader">
+  <div class="loader-box">
+    <div class="spinner"></div>
+    <h3 id="loaderTitulo">Inicializando Roblox</h3>
+    <p id="loaderTexto">Prepárate para unirte...</p>
+  </div>
+</div>
+
 <script>
-document.title = "Cargando...";
+let loaderActivo = false;
 
-// --- LOGICA DE NOTIFICACIÓN DE BIENVENIDA ---
-function lanzarNotificacion() {
-  const options = {
-    body: "¡Hola de nuevo! Gracias por visitar nuestra página oficial.",
-    icon: "images/IconPage.jpg",
-    vibrate: [200, 100, 200]
-  };
-  new Notification("Bienvenido a NI INC App", options);
+function toggleAccordion(h) {
+  const c = h.nextElementSibling;
+  c.style.maxHeight = c.style.maxHeight ? null : c.scrollHeight + "px";
 }
 
-function gestionarNotificaciones() {
-  if (!("Notification" in window)) return;
+function irATienda() {
+  if (loaderActivo) return;
+  loaderActivo = true;
 
-  // Si ya tenemos permiso, la enviamos al entrar
-  if (Notification.permission === "granted") {
-    lanzarNotificacion();
-  }
-  // Si no hay permiso y no se ha denegado, esperamos al primer clic para pedirlo
-  else if (Notification.permission !== "denied") {
-    document.addEventListener('click', function pedirPermiso() {
-        Notification.requestPermission().then(permission => {
-            if (permission === "granted") {
-                lanzarNotificacion();
-            }
-        });
-        document.removeEventListener('click', pedirPermiso);
-    }, { once: true });
-  }
-}
-// -------------------------------------------
+  const loader = document.getElementById("robloxLoader");
+  const t = document.getElementById("loaderTitulo");
+  const p = document.getElementById("loaderTexto");
 
-window.addEventListener("load", async () => {
-  const loader = document.getElementById("loader");
-  const titulo = document.querySelector("h1");
-  const subtitulo = document.querySelector(".tagline");
-  const mensaje = document.getElementById("mensajeBienvenida");
-  const audio = document.getElementById("audioFondo");
+  loader.style.display = "flex";
+  t.textContent = "Inicializando Roblox";
+  p.textContent = "Prepárate para unirte...";
 
-  const texto = "Bienvenido a NI Inc, por favor elige cualquier botón del menú para acceder a su contenido.";
-
-  /* esperar imágenes */
-  const imgs = document.images;
-  await Promise.all([...imgs].map(img =>
-    img.complete ? Promise.resolve() : new Promise(r => { img.onload = img.onerror = r; })
-  ));
-
-  /* esperar audio */
-  if (audio) {
-    await new Promise(r => {
-      audio.oncanplaythrough = r;
-      audio.onerror = r;
-    });
-  }
-
-  loader.style.opacity = "0";
+  window.location.href = "roblox://placeId=15099460018";
 
   setTimeout(() => {
-    loader.style.display = "none";
-    document.body.classList.add("loaded");
-    document.title = "NI Inc";
-    
-    // Lanzar la notificación de bienvenida
-    gestionarNotificaciones();
+    if (!loaderActivo) return;
+    p.textContent = "Abriendo la experiencia...";
+  }, 1500);
 
-    titulo.style.opacity = 1;
-    titulo.style.animation = "fadeSlideDown 1.2s ease forwards";
+  setTimeout(() => {
+    if (!loaderActivo) return;
+    t.textContent = "¿Problemas al entrar?";
+    p.textContent = "Asegúrate de tener Roblox instalado e inténtalo de nuevo.";
 
-    subtitulo.style.opacity = 1;
-    subtitulo.style.animation = "fadeZoomIn 1.5s ease forwards";
+    setTimeout(() => {
+      loader.style.display = "none";
+      loaderActivo = false;
+    }, 3000);
+  }, 10000);
+}
 
-    mensaje.style.opacity = 1;
-    let i = 0;
-    mensaje.textContent = "";
-    const escribir = () => {
-      if (i < texto.length) {
-        mensaje.textContent += texto.charAt(i++);
-        setTimeout(escribir, 40);
-      }
-    };
-    escribir();
-  }, 500);
-});
+function confirmarSalida() {
+  document.getElementById("videoBg").classList.add("fade-out");
+  document.getElementById("videoOverlay").classList.add("fade-out");
+
+  setTimeout(() => {
+    location.href = "https://holderniinc.github.io/NI_Inc/Menu.html";
+  }, 1000);
+}
+
+/* AUDIO SINCRONIZADO */
+let vocalMuted = false;
+let vocalOriginalVolume = 1;
+
+const musica = document.getElementById("musica");
+const vocal = document.getElementById("vocal");
+const vocalBtn2 = document.getElementById("vocalBtn2");
+
+musica.onplay = () => {
+  vocal.currentTime = musica.currentTime;
+  vocal.play();
+};
+
+setInterval(() => {
+  if (!musica.duration) return;
+  if (Math.abs(musica.currentTime - vocal.currentTime) > 0.15) {
+    vocal.currentTime = musica.currentTime;
+  }
+}, 500);
+
+function toggleVocal() {
+  if (!vocalMuted) {
+    vocalOriginalVolume = vocal.volume;
+    vocal.volume = 0;
+    vocalMuted = true;
+    vocalBtn2.textContent = "▶️ Activar Vocal";
+  } else {
+    vocal.volume = vocalOriginalVolume;
+    vocalMuted = false;
+    vocalBtn2.textContent = "⏸ Pausar Vocal";
+  }
+}
+
+/* PANEL INFO */
+const infoBtn = document.getElementById("infoBtn");
+const infoPanel = document.getElementById("infoPanel");
+const closeInfo = document.getElementById("closeInfo");
+const progressBar = document.getElementById("progressBar");
+
+infoBtn.onclick = () => infoPanel.classList.add("active");
+closeInfo.onclick = () => infoPanel.classList.remove("active");
+
+setInterval(() => {
+  if (!musica.duration) return;
+  progressBar.value = (musica.currentTime / musica.duration) * 100;
+}, 300);
 </script>
 
 </body>
