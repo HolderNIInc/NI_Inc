@@ -5,17 +5,63 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Información</title>
 
+<link rel="icon" href="icon.png">
+
 <style>
 
 body{
 font-family: Arial, sans-serif;
-background:#0f172a;
-color:white;
 margin:0;
 padding:0;
+color:white;
+background-image:url("fondo.jpg");
+background-size:cover;
+background-position:center;
+background-attachment:fixed;
+}
+
+/* Pantalla de carga */
+
+.loader{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#020617;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+z-index:999;
+}
+
+.spinner{
+width:40px;
+height:40px;
+border:4px solid rgba(255,255,255,0.2);
+border-top:4px solid #38bdf8;
+border-radius:50%;
+animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+0%{transform:rotate(0deg);}
+100%{transform:rotate(360deg);}
+}
+
+.loader p{
+margin-top:10px;
+color:#94a3b8;
+}
+
+/* Contenido */
+
+.content{
+display:none;
+min-height:100vh;
 display:flex;
 flex-direction:column;
-min-height:100vh;
 }
 
 .info{
@@ -23,15 +69,8 @@ flex:1;
 padding:40px;
 max-width:800px;
 margin:auto;
-}
-
-h1{
-margin-bottom:20px;
-}
-
-p{
-color:#cbd5f5;
-line-height:1.6;
+background:rgba(0,0,0,0.4);
+border-radius:10px;
 }
 
 .footer{
@@ -58,17 +97,24 @@ background:#0ea5e9;
 
 <body>
 
+<div class="loader" id="loader">
+<div class="spinner"></div>
+<p>Cargando información...</p>
+</div>
+
+<div class="content" id="content">
+
 <div class="info">
 
 <h1>Información</h1>
 
 <p>
-Aquí puedes colocar toda la información de tu aplicación, proyecto o página web.
-Puedes escribir características, detalles del desarrollo o cualquier dato importante.
+Aquí puedes colocar la información de tu aplicación, empresa o proyecto.
+Este apartado sirve para explicar detalles importantes.
 </p>
 
 <p>
-Este apartado funciona como una sección informativa dentro de tu sitio.
+Puedes modificar este texto y agregar más contenido cuando quieras.
 </p>
 
 </div>
@@ -80,6 +126,21 @@ Regresar
 </button>
 
 </div>
+
+</div>
+
+<script>
+
+/* Animación de carga */
+
+window.onload = function(){
+setTimeout(function(){
+document.getElementById("loader").style.display="none";
+document.getElementById("content").style.display="flex";
+},1500);
+}
+
+</script>
 
 </body>
 </html>
