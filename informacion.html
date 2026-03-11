@@ -1,1 +1,260 @@
-Lugarr en creacion...
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Información — NI Inc</title>
+  <link rel="icon" href="images/IconPage.jpg" type="image/x-icon">
+
+  <style>
+    /* 1. DECLARACIÓN DE LA FUENTE CUSTOM */
+    @font-face {
+      font-family: 'BobloxClassic';
+      src: url('BobloxClassic-nRjl4.ttf') format('truetype'); 
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    /* 2. APLICACIÓN GLOBAL */
+    * {
+      box-sizing: border-box;
+      font-family: 'BobloxClassic', sans-serif !important;
+    }
+
+    body {
+      margin: 0;
+      background: #000;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Fondo decorativo opcional para que no sea solo negro */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: url("images/Fondo.jpg") no-repeat center center;
+      background-size: cover;
+      opacity: 0.3;
+      z-index: -1;
+    }
+
+    .info-panel {
+      background: rgba(15, 15, 15, 0.95);
+      backdrop-filter: blur(12px);
+      padding: 25px;
+      border-radius: 16px;
+      border: 2px solid #00a2ff;
+      box-shadow: 0 0 30px rgba(0, 162, 255, 0.2);
+      max-width: 500px;
+      width: 90%;
+      color: white;
+    }
+
+    .info-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      color: #00a2ff;
+      font-size: 14px;
+      text-transform: uppercase;
+    }
+
+    .info-header button {
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .info-body {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    #trackImg {
+      width: 140px;
+      height: 140px;
+      border-radius: 12px;
+      object-fit: cover;
+      border: 3px solid #333;
+    }
+
+    .track-info {
+      flex: 1;
+      min-width: 180px;
+    }
+
+    .track-info h2 {
+      margin: 0 0 8px 0;
+      font-size: 22px;
+      color: #fff;
+    }
+
+    .artist-block {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .artist-block img {
+      width: 45px;
+      height: 45px;
+      object-fit: contain;
+      border-radius: 8px;
+      background: #111;
+    }
+
+    .artist-block p {
+      font-size: 16px;
+      color: #ccc;
+    }
+
+    #progressBar {
+      width: 100%;
+      margin-bottom: 20px;
+      accent-color: #00a2ff;
+      cursor: pointer;
+    }
+
+    .info-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .info-buttons button {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: 14px;
+      transition: transform 0.1s;
+    }
+
+    .info-buttons button:active {
+      transform: scale(0.98);
+    }
+
+    #vocalBtn {
+      background: #ffcc00;
+      color: #000;
+    }
+
+    #lyricsBtn {
+      background: #3a80f4;
+      color: white;
+    }
+
+    /* CURSORES */
+    html, body, * {
+      cursor: url("cursors/Arrow.cur") 0 0, auto !important;
+    }
+    button, a {
+      cursor: url("cursors/Hand.cur") 0 0, pointer !important;
+    }
+
+    @media (max-width: 500px) {
+      .info-body {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      #trackImg {
+        width: 160px;
+        height: 160px;
+      }
+      .artist-block {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="info-panel">
+  <div class="info-header">
+    <span>REPRODUCIENDO AHORA</span>
+    <button onclick="window.location.href='Menu.html'">✖</button>
+  </div>
+
+  <div class="info-body">
+    <img id="trackImg" src="images/The_Logical_Song_MSI_Track.jpeg" alt="Track">
+
+    <div class="track-info">
+      <h2 id="trackName">The Logical Song</h2>
+
+      <div class="artist-block">
+        <img src="images/MSI_Logo.jpeg" alt="Artist Logo">
+        <p id="trackArtist" style="margin:0;">Mindless Self Indulgence</p>
+      </div>
+
+      <input type="range" id="progressBar" min="0" max="100" value="0">
+
+      <div class="info-buttons">
+        <button id="vocalBtn" onclick="toggleVocal()">⏸ PAUSAR VOCAL</button>
+        <button id="lyricsBtn">📜 LYRICS</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<audio id="musica" autoplay loop>
+  <source src="audios/Tienda_Audios/The_Logical_Song_MSI_Audio.mp3" type="audio/mpeg">
+</audio>
+<audio id="vocal" autoplay loop>
+  <source src="audios/Tienda_Audios/The_Logical_Song_MSI_Vocales.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+let vocalMuted = false;
+let vocalOriginalVolume = 1;
+
+const musica = document.getElementById("musica");
+const vocal = document.getElementById("vocal");
+const vocalBtn = document.getElementById("vocalBtn");
+const progressBar = document.getElementById("progressBar");
+
+// Sincronizar vocal con música
+musica.onplay = () => {
+  vocal.currentTime = musica.currentTime;
+  vocal.play();
+};
+
+setInterval(() => {
+  if (!musica.duration) return;
+  if (Math.abs(musica.currentTime - vocal.currentTime) > 0.15) {
+    vocal.currentTime = musica.currentTime;
+  }
+  progressBar.value = (musica.currentTime / musica.duration) * 100;
+}, 500);
+
+// Botón vocal
+function toggleVocal() {
+  if (!vocalMuted) {
+    vocalOriginalVolume = vocal.volume;
+    vocal.volume = 0;
+    vocalMuted = true;
+    vocalBtn.textContent = "▶️ ACTIVAR VOCAL";
+  } else {
+    vocal.volume = vocalOriginalVolume;
+    vocalMuted = false;
+    vocalBtn.textContent = "⏸ PAUSAR VOCAL";
+  }
+}
+</script>
+
+</body>
+</html>
