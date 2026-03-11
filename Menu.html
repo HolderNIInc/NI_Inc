@@ -7,9 +7,22 @@
   <link rel="icon" href="images/IconPage.jpg" type="image/x-icon">
 
   <style>
+    /* 1. DECLARACIÓN DE LA FUENTE CUSTOM */
+    @font-face {
+      font-family: 'BobloxClassic';
+      src: url('BobloxClassic-nRjl4.ttf') format('truetype'); 
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    /* 2. APLICACIÓN GLOBAL A TODO SIN EXCEPCIÓN */
+    * {
+      box-sizing: border-box;
+      font-family: 'BobloxClassic', sans-serif !important;
+    }
+
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
       background: url("images/Fondo.jpg") no-repeat center center fixed;
       background-size: cover;
       color: #fff;
@@ -67,11 +80,12 @@
     }
 
     #mensajeBienvenida {
-      font-family: 'Courier New', monospace;
+      /* Se mantiene el estilo de terminal pero con la fuente Boblox */
       margin-top: 25px;
       border-right: 2px solid #bb86fc;
       animation: blink-caret 0.8s step-end infinite;
       opacity: 0;
+      min-height: 1.2em;
     }
 
     @keyframes blink-caret {
@@ -80,9 +94,10 @@
 
     .menu-label {
       margin-top: 30px;
-      color: navy;
+      color: #00c3ff; /* Ajustado de navy a azul claro para que se vea con la fuente */
       opacity: 0;
       animation: fadeInLabel 1.5s ease forwards;
+      font-size: 1.8em;
     }
 
     @keyframes fadeInLabel {
@@ -114,12 +129,19 @@
       color: #fff;
       text-decoration: none;
       box-shadow: 0 0 10px #3a80f4;
+      font-size: 1.2em;
+      transition: transform 0.2s;
+    }
+
+    .info-button:hover {
+      transform: scale(1.1);
     }
 
     footer {
       background: rgba(0,0,0,.6);
       padding: 20px;
       text-align: center;
+      font-size: 0.9em;
     }
 
     /* Loader */
@@ -135,10 +157,15 @@
       transition: opacity .6s ease;
     }
 
+    #loader p {
+      margin-top: 20px;
+      letter-spacing: 2px;
+    }
+
     .spinner {
       width: 50px;
       height: 50px;
-      border: 5px solid #888;
+      border: 5px solid #333;
       border-top: 5px solid #00c3ff;
       border-radius: 50%;
       animation: spin 1s linear infinite;
@@ -148,17 +175,18 @@
       to { transform: rotate(360deg); }
     }
 
- html, body, * {
-    cursor: url("cursors/Arrow.cur") 0 0, auto !important;
-  }
+    /* CURSORES */
+    html, body, * {
+      cursor: url("cursors/Arrow.cur") 0 0, auto !important;
+    }
 
-  button, a {
-    cursor: url("cursors/Hand.cur") 0 0, pointer !important;
-  }
+    button, a {
+      cursor: url("cursors/Hand.cur") 0 0, pointer !important;
+    }
 
-  input, textarea {
-    cursor: url("cursors/Text.ani") 0 0, text !important;
-  }
+    input, textarea {
+      cursor: url("cursors/Text.ani") 0 0, text !important;
+    }
     
   </style>
 </head>
@@ -167,7 +195,7 @@
 
 <div id="loader">
   <div class="spinner"></div>
-  <p>Cargando NI Inc...</p>
+  <p>CARGANDO NI INC...</p>
 </div>
 
 <header>
@@ -179,7 +207,6 @@
     <a class="info-button" href="informacion.html">Información</a>
     <a class="info-button" href="tienda.html">Tienda de NI Inc</a>
   </div>
-  
 </header>
 
 <footer>
@@ -190,26 +217,16 @@
   <source src="audios/Poppy.mp3" type="audio/mpeg">
 </audio>
 
-
 <script>
 document.title = "Cargando...";
 
-  // Comprueba si la función existe (esto es para que no dé error en navegadores normales)
-if (window.Android && window.Android.showNotification) {  // Llama a la función de la app para mostrar la notificación nativa
-  window.Android.showNotification("Bienvenido a NI INC App", "¡Hola de nuevo! Graacias por usar esta app, te recuerdo que  este mensaje saldra cada vez que estes en el menu pero lo arreglare en un futuro :) ATT:@Holder_NIInc.");
-
-} else {
-
-  // (Opcional) Aquí puedes poner tu código de notificación web antiguo, 
-  // para que siga funcionando si alguien abre tu web en un PC.
-  // new Notification("Este es el título", { body: "Este es el cuerpo..." });
-  
+if (window.Android && window.Android.showNotification) {
+  window.Android.showNotification("Bienvenido a NI INC App", "¡Hola de nuevo! Graacias por usar esta app, te recuerdo que este mensaje saldra cada vez que estes en el menu pero lo arreglare en un futuro :) ATT:@Holder_NIInc.");
 }
 
-// --- LOGICA DE NOTIFICACIÓN DE BIENVENIDA ---
 function lanzarNotificacion() {
   const options = {
-    body: "¡Hola de nuevo! Graacias por usar esta app, te recuerdo que  este mensaje saldra cada vez que estes en el menu pero lo arreglare en un futuro :) ATT:@Holder_NIInc.",
+    body: "¡Hola de nuevo! Graacias por usar esta app, te recuerdo que este mensaje saldra cada vez que estes en el menu pero lo arreglare en un futuro :) ATT:@Holder_NIInc.",
     icon: "images/IconPage.jpg",
     vibrate: [200, 100, 200]
   };
@@ -218,12 +235,9 @@ function lanzarNotificacion() {
 
 function gestionarNotificaciones() {
   if (!("Notification" in window)) return;
-
-  // Si ya tenemos permiso, la enviamos al entrar
   if (Notification.permission === "granted") {
     lanzarNotificacion();
   }
-  // Si no hay permiso y no se ha denegado, esperamos al primer clic para pedirlo
   else if (Notification.permission !== "denied") {
     document.addEventListener('click', function pedirPermiso() {
         Notification.requestPermission().then(permission => {
@@ -235,7 +249,6 @@ function gestionarNotificaciones() {
     }, { once: true });
   }
 }
-// -------------------------------------------
 
 window.addEventListener("load", async () => {
   const loader = document.getElementById("loader");
@@ -246,13 +259,11 @@ window.addEventListener("load", async () => {
 
   const texto = "Bienvenido a NI Inc, por favor elige cualquier botón del menú para acceder a su contenido.";
 
-  /* esperar imágenes */
   const imgs = document.images;
   await Promise.all([...imgs].map(img =>
     img.complete ? Promise.resolve() : new Promise(r => { img.onload = img.onerror = r; })
   ));
 
-  /* esperar audio */
   if (audio) {
     await new Promise(r => {
       audio.oncanplaythrough = r;
@@ -267,7 +278,6 @@ window.addEventListener("load", async () => {
     document.body.classList.add("loaded");
     document.title = "NI Inc";
     
-    // Lanzar la notificación de bienvenida
     gestionarNotificaciones();
 
     titulo.style.opacity = 1;
@@ -289,32 +299,20 @@ window.addEventListener("load", async () => {
   }, 500);
 });
 
-  // Detectar si el dispositivo es PC/Laptop
-    function isDesktop() {
-      const ua = navigator.userAgent.toLowerCase();
-      const isMobile = /mobile|android|iphone|ipad|tablet/.test(ua);
-      return !isMobile;
-    }
+function isDesktop() {
+  const ua = navigator.userAgent.toLowerCase();
+  const isMobile = /mobile|android|iphone|ipad|tablet/.test(ua);
+  return !isMobile;
+}
 
-    // Mostrar el botón solo en PC/Laptop
-    window.onload = () => {
-      if (isDesktop()) {
-        document.getElementById('configBtn').style.display = 'flex';
-      }
-    };
-
+window.onload = () => {
+  // Aseguramos que si existe un botón de config, lo maneje
+  const cfg = document.getElementById('configBtn');
+  if (isDesktop() && cfg) {
+    cfg.style.display = 'flex';
+  }
+};
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
