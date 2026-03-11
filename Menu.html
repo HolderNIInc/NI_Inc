@@ -244,6 +244,18 @@
 <script>
 document.title = "Cargando...";
 
+function ocultarLoader(){
+  const loader = document.getElementById("loader");
+  if(loader){
+    loader.style.opacity = "0";
+    setTimeout(()=>{
+      loader.style.display = "none";
+      document.body.classList.add("loaded");
+      document.title = "NI Inc";
+    },400);
+  }
+}
+
 if (window.Android && window.Android.showNotification) {
   window.Android.showNotification("Bienvenido a NI INC App", "¡Hola de nuevo! Graacias por usar esta app, te recuerdo que este mensaje saldra cada vez que estes en el menu pero lo arreglare en un futuro :) ATT:@Holder_NIInc.");
 }
@@ -275,7 +287,6 @@ function gestionarNotificaciones() {
 }
 
 window.addEventListener("load", async () => {
-  const loader = document.getElementById("loader");
   const titulo = document.querySelector("h1");
   const subtitulo = document.querySelector(".tagline");
   const mensaje = document.getElementById("mensajeBienvenida");
@@ -288,39 +299,44 @@ window.addEventListener("load", async () => {
     img.complete ? Promise.resolve() : new Promise(r => { img.onload = img.onerror = r; })
   ));
 
+  /* límite de espera del audio para que no bloquee */
   if (audio) {
     await new Promise(r => {
       audio.oncanplaythrough = r;
       audio.onerror = r;
+      setTimeout(r,1500); 
     });
   }
 
-  loader.style.opacity = "0";
+  ocultarLoader();
 
-  setTimeout(() => {
-    loader.style.display = "none";
-    document.body.classList.add("loaded");
-    document.title = "NI Inc";
-    
-    gestionarNotificaciones();
+  gestionarNotificaciones();
 
-    titulo.style.opacity = 1;
-    titulo.style.animation = "fadeSlideDown 1.2s ease forwards";
+  titulo.style.opacity = 1;
+  titulo.style.animation = "fadeSlideDown 1.2s ease forwards";
 
-    subtitulo.style.opacity = 1;
-    subtitulo.style.animation = "fadeZoomIn 1.5s ease forwards";
+  subtitulo.style.opacity = 1;
+  subtitulo.style.animation = "fadeZoomIn 1.5s ease forwards";
 
-    mensaje.style.opacity = 1;
-    let i = 0;
-    mensaje.textContent = "";
-    const escribir = () => {
-      if (i < texto.length) {
-        mensaje.textContent += texto.charAt(i++);
-        setTimeout(escribir, 40);
-      }
-    };
-    escribir();
-  }, 500);
+  mensaje.style.opacity = 1;
+  let i = 0;
+  mensaje.textContent = "";
+
+  const escribir = () => {
+    if (i < texto.length) {
+      mensaje.textContent += texto.charAt(i++);
+      setTimeout(escribir, 40);
+    }
+  };
+
+  escribir();
+});
+
+/* arreglo para cuando vuelves con botón atrás */
+window.addEventListener("pageshow", function(event){
+  if(event.persisted){
+    ocultarLoader();
+  }
 });
 
 function isDesktop() {
@@ -336,6 +352,5 @@ window.onload = () => {
   }
 };
 </script>
-
 </body>
 </html>
