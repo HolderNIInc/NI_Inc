@@ -7,16 +7,15 @@
   <title>TIENDA</title>
 
   <style>
-    /* 1. DECLARACIÓN DE LA FUENTE CUSTOM */
+    /* DECLARACIÓN DE LA FUENTE CUSTOM */
     @font-face {
       font-family: 'BobloxClassic';
-      /* Asegúrate de que el archivo esté en la misma carpeta que este HTML */
       src: url('BobloxClassic-nRjl4.ttf') format('truetype'); 
       font-weight: normal;
       font-style: normal;
     }
 
-    /* 2. APLICACIÓN GLOBAL */
+    /* APLICACIÓN GLOBAL ABSOLUTA */
     * { 
       box-sizing: border-box; 
       font-family: 'BobloxClassic', sans-serif !important; 
@@ -27,6 +26,7 @@
       color: #fff;
       background: #000;
       line-height: 1.4;
+      overflow-x: hidden;
     }
 
     /* VIDEO FONDO */
@@ -68,7 +68,6 @@
       margin-bottom: 10px; 
       color: #00a2ff; 
       text-shadow: 3px 3px 0px #000;
-      letter-spacing: 2px;
     }
 
     p { color: #ccc; font-size: 20px; }
@@ -89,7 +88,6 @@
       background: #232323;
       border-radius: 10px;
       font-size: 18px;
-      text-transform: uppercase;
     }
 
     .accordion-content {
@@ -99,7 +97,7 @@
       padding: 0 18px;
     }
 
-    .accordion-content p { margin: 15px 0; font-size: 16px; color: #eee; }
+    .accordion-content p { margin: 15px 0; font-size: 16px; }
 
     /* BOTONES */
     .btn {
@@ -113,7 +111,6 @@
       color: #fff;
       box-shadow: 0 6px 0 #0078bd;
       transition: transform 0.1s, box-shadow 0.1s;
-      text-transform: uppercase;
     }
 
     .btn:active {
@@ -133,7 +130,40 @@
       border: 1px solid #444;
     }
 
-    /* PANEL INFO Y AUDIO */
+    /* LOADER (RESTAURADO) */
+    .loader-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.9);
+      z-index: 999999;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .loader-box {
+      background: #121212;
+      padding: 30px;
+      border-radius: 14px;
+      width: 320px;
+      text-align: center;
+      border: 2px solid #00a2ff;
+      box-shadow: 0 0 20px rgba(0, 162, 255, 0.4);
+    }
+
+    .spinner {
+      width: 42px;
+      height: 42px;
+      border: 4px solid #333;
+      border-top: 4px solid #00a2ff;
+      border-radius: 50%;
+      margin: 10px auto 20px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* PANEL INFO */
     #infoBtn {
       position: fixed;
       bottom: 20px;
@@ -172,28 +202,7 @@
       transform: translate(-50%, -50%) scale(1);
     }
 
-    .info-header {
-      font-size: 14px;
-      color: #00a2ff;
-      margin-bottom: 15px;
-      text-transform: uppercase;
-    }
-
-    .track-info h2 { font-size: 22px; margin: 0; }
-    .track-info p { font-size: 16px; margin: 5px 0; }
-
-    .info-buttons button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 10px;
-      border-radius: 8px;
-      border: none;
-      font-weight: bold;
-      cursor: pointer;
-      text-transform: uppercase;
-    }
-
-    /* CURSORES PERSONALIZADOS */
+    /* CURSORES */
     html, body, * { cursor: url("cursors/Arrow.cur") 0 0, auto !important; }
     button, a { cursor: url("cursors/Hand.cur") 0 0, pointer !important; }
 
@@ -212,24 +221,24 @@
 <button id="infoBtn">ℹ️</button>
 
 <div id="infoPanel">
-  <div class="info-header" style="display:flex; justify-content:space-between;">
-    <span>REPRODUCIENDO</span>
+  <div class="info-header" style="display:flex; justify-content:space-between; margin-bottom: 15px;">
+    <span style="color:#00a2ff;">REPRODUCIENDO</span>
     <button id="closeInfo" style="background:none; border:none; color:white; cursor:pointer; font-size:20px;">✖</button>
   </div>
   
-  <div class="info-body" style="display:flex; gap:15px; flex-direction:column; align-items:center; text-align:center;">
-    <img id="trackImg" src="images/The_Logical_Song_MSI_Track.jpeg" style="width:150px; height:150px; border-radius:12px; border: 3px solid #333;">
+  <div class="info-body" style="display:flex; flex-direction:column; align-items:center; text-align:center;">
+    <img id="trackImg" src="images/The_Logical_Song_MSI_Track.jpeg" style="width:150px; height:150px; border-radius:12px; border: 3px solid #333; margin-bottom: 15px;">
     <div class="track-info">
-      <h2 id="trackName">The Logical Song</h2>
-      <p id="trackArtist">Mindless Self Indulgence</p>
+      <h2 id="trackName" style="font-size: 22px;">The Logical Song</h2>
+      <p id="trackArtist" style="font-size: 16px; margin: 5px 0;">Mindless Self Indulgence</p>
       
       <input type="range" id="progressBar" min="0" max="100" value="0" style="width:100%; margin: 15px 0; accent-color: #00a2ff;">
 
-      <div class="info-buttons">
-        <button id="vocalBtn2" onclick="toggleVocal()" style="background:#ffcc00; color:#000;">
+      <div class="info-buttons" style="display:flex; flex-direction:column; gap:8px; width: 100%;">
+        <button id="vocalBtn2" onclick="toggleVocal()" style="background:#ffcc00; color:#000; padding:12px; border-radius:8px; border:none; cursor:pointer;">
           ⏸ PAUSAR VOCAL
         </button>
-        <button id="lyricsBtn" style="background:#3a80f4; color:white;">
+        <button id="lyricsBtn" style="background:#3a80f4; color:white; padding:12px; border-radius:8px; border:none; cursor:pointer;">
           📜 LYRICS
         </button>
       </div>
@@ -273,42 +282,106 @@
   </div>
 </div>
 
+<div class="loader-overlay" id="robloxLoader">
+  <div class="loader-box">
+    <div class="spinner"></div>
+    <h3 id="loaderTitulo" style="color: #00a2ff; margin: 10px 0;">Inicializando Roblox</h3>
+    <p id="loaderTexto" style="color: #ccc; font-size: 14px;">Prepárate para unirte...</p>
+  </div>
+</div>
+
 <script>
-// Lógica de funcionamiento (Idéntica a la anterior pero manteniendo la sincronización)
 let loaderActivo = false;
+
 function toggleAccordion(h) {
   const c = h.nextElementSibling;
   c.style.maxHeight = c.style.maxHeight ? null : c.scrollHeight + "px";
 }
 
+// LÓGICA DE DIÁLOGOS DEL LOADER RESTAURADA
 function irATienda() {
+  if (loaderActivo) return;
+  loaderActivo = true;
+
+  const loader = document.getElementById("robloxLoader");
+  const t = document.getElementById("loaderTitulo");
+  const p = document.getElementById("loaderTexto");
+
+  loader.style.display = "flex";
+  t.textContent = "Inicializando Roblox";
+  p.textContent = "Prepárate para unirte...";
+
+  // Intento de abrir Roblox
   window.location.href = "roblox://placeId=15099460018";
+
+  setTimeout(() => {
+    if (!loaderActivo) return;
+    p.textContent = "Abriendo la experiencia...";
+  }, 1500);
+
+  setTimeout(() => {
+    if (!loaderActivo) return;
+    t.textContent = "¿Problemas al entrar?";
+    p.textContent = "Asegúrate de tener Roblox instalado e inténtalo de nuevo.";
+
+    setTimeout(() => {
+      loader.style.display = "none";
+      loaderActivo = false;
+    }, 4000);
+  }, 10000);
 }
 
 function confirmarSalida() {
   document.getElementById("videoBg").classList.add("fade-out");
   document.getElementById("videoOverlay").classList.add("fade-out");
-  setTimeout(() => { location.href = "https://holderniinc.github.io/NI_Inc/Menu.html"; }, 1000);
+  setTimeout(() => {
+    location.href = "https://holderniinc.github.io/NI_Inc/Menu.html";
+  }, 1000);
 }
 
+/* SINCRONIZACIÓN DE AUDIO */
 const musica = document.getElementById("musica");
 const vocal = document.getElementById("vocal");
 const vocalBtn2 = document.getElementById("vocalBtn2");
 let vocalMuted = false;
 
-musica.onplay = () => { vocal.currentTime = musica.currentTime; vocal.play(); };
-setInterval(() => { if (musica.duration && Math.abs(musica.currentTime - vocal.currentTime) > 0.15) vocal.currentTime = musica.currentTime; }, 500);
+musica.onplay = () => {
+  vocal.currentTime = musica.currentTime;
+  vocal.play();
+};
+
+setInterval(() => {
+  if (!musica.duration) return;
+  if (Math.abs(musica.currentTime - vocal.currentTime) > 0.15) {
+    vocal.currentTime = musica.currentTime;
+  }
+}, 500);
 
 function toggleVocal() {
-  if (!vocalMuted) { vocal.volume = 0; vocalMuted = true; vocalBtn2.textContent = "▶️ ACTIVAR VOCAL"; }
-  else { vocal.volume = 1; vocalMuted = false; vocalBtn2.textContent = "⏸ PAUSAR VOCAL"; }
+  if (!vocalMuted) {
+    vocal.volume = 0;
+    vocalMuted = true;
+    vocalBtn2.textContent = "▶️ ACTIVAR VOCAL";
+  } else {
+    vocal.volume = 1;
+    vocalMuted = false;
+    vocalBtn2.textContent = "⏸ PAUSAR VOCAL";
+  }
 }
 
+/* PANEL INFO */
 const infoBtn = document.getElementById("infoBtn");
 const infoPanel = document.getElementById("infoPanel");
+const closeInfo = document.getElementById("closeInfo");
+const progressBar = document.getElementById("progressBar");
+
 infoBtn.onclick = () => infoPanel.classList.add("active");
-document.getElementById("closeInfo").onclick = () => infoPanel.classList.remove("active");
-setInterval(() => { if (musica.duration) document.getElementById("progressBar").value = (musica.currentTime / musica.duration) * 100; }, 300);
+closeInfo.onclick = () => infoPanel.classList.remove("active");
+
+setInterval(() => {
+  if (!musica.duration) return;
+  progressBar.value = (musica.currentTime / musica.duration) * 100;
+}, 300);
 </script>
 
 </body>
