@@ -4,21 +4,34 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="images/IconPage.jpg" type="image/x-icon">
+  <link rel="preload" href="fonts/BobloxClassic-nRjl4.ttf" as="font" type="font/ttf" crossorigin>
+
   <title>TIENDA</title>
 
   <style>
-    /* DECLARACIÓN DE LA FUENTE CUSTOM */
-    @font-face {
-      font-family: 'BobloxClassic';
-      src: url('BobloxClassic-nRjl4.ttf') format('truetype'); 
-      font-weight: normal;
-      font-style: normal;
-    }
 
-    /* APLICACIÓN GLOBAL ABSOLUTA */
-    * { 
-      box-sizing: border-box; 
-      font-family: 'BobloxClassic', sans-serif !important; 
+       @font-face {
+  font-family: "BobloxClassic";
+  src: url("fonts/BobloxClassic-nRjl4.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+ html, body, * {
+  font-family: "BobloxClassic" !important;
+}
+
+@font-face {
+  font-family: "BobloxClassic";
+  src: url("fonts/BobloxClassic.woff2") format("woff2"),
+       url("fonts/BobloxClassic-nRjl4.ttf") format("truetype");
+  font-display: swap;
+}
+
+    * {
+      box-sizing: border-box;
+      font-family: 'BobloxClassic', sans-serif !important;
     }
 
     body {
@@ -206,6 +219,13 @@
     html, body, * { cursor: url("cursors/Arrow.cur") 0 0, auto !important; }
     button, a { cursor: url("cursors/Hand.cur") 0 0, pointer !important; }
 
+      /* AJUSTES PARA MOVIL */
+
+@media (max-width: 768px){
+
+  body{
+    background-attachment: scroll; /* evita bugs del fondo en móvil */
+  }
   </style>
 </head>
 
