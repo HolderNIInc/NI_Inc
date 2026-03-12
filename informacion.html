@@ -6,6 +6,8 @@
 <title>Información</title>
 
 <link rel="icon" href="images/IconPage.jpg">
+<link rel="preload" href="fonts/BobloxClassic-nRjl4.ttf" as="font" type="font/ttf" crossorigin>
+
 
 <style>
 
@@ -19,6 +21,30 @@ background-size:cover;
 background-position:center;
 background-attachment:fixed;
 }
+
+   @font-face {
+  font-family: "BobloxClassic";
+  src: url("fonts/BobloxClassic-nRjl4.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+ html, body, * {
+  font-family: "BobloxClassic" !important;
+}
+
+@font-face {
+  font-family: "BobloxClassic";
+  src: url("fonts/BobloxClassic.woff2") format("woff2"),
+       url("fonts/BobloxClassic-nRjl4.ttf") format("truetype");
+  font-display: swap;
+}
+
+    * {
+      box-sizing: border-box;
+      font-family: 'BobloxClassic', sans-serif !important;
+    }
 
 /* Pantalla de carga */
 
@@ -121,6 +147,13 @@ button:hover{
 background:#0ea5e9;
 }
 
+  /* AJUSTES PARA MOVIL */
+
+@media (max-width: 768px){
+
+  body{
+    background-attachment: scroll; /* evita bugs del fondo en móvil */
+  }
 </style>
 </head>
 
