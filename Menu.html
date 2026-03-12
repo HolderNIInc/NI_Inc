@@ -220,6 +220,60 @@
       cursor: url("cursors/Text.ani") 0 0, text !important;
     }
     
+/* AJUSTES PARA MOVIL */
+
+@media (max-width: 768px){
+
+  body{
+    background-attachment: scroll; /* evita bugs del fondo en móvil */
+  }
+
+  header{
+    padding: 40px 20px 20px;
+    width: 100%;
+  }
+
+  h1{
+    font-size: clamp(1.8em, 7vw, 2.5em);
+    text-align: center;
+  }
+
+  .tagline{
+    font-size: 1.1em;
+    text-align: center;
+  }
+
+  #mensajeBienvenida{
+    font-size: 0.95em;
+    padding: 0 10px;
+    text-align: center;
+  }
+
+  .menu-label{
+    font-size: 1.4em;
+  }
+
+  .menu-buttons{
+    width: 100%;
+  }
+
+  .menu-buttons a{
+    width: 85%;
+    text-align: center;
+  }
+
+  .info-button{
+    width: 100%;
+    font-size: 1em;
+    padding: 14px;
+  }
+
+  footer{
+    font-size: 0.8em;
+    padding: 15px;
+  }
+
+}
   </style>
 </head>
 
