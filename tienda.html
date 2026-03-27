@@ -219,54 +219,51 @@
     html, body, * { cursor: url("cursors/Arrow.cur") 0 0, auto !important; }
     button, a { cursor: url("cursors/Hand.cur") 0 0, pointer !important; }
 
-      /* AJUSTES PARA MOVIL */
+    /* PANEL INFO */
+const infoBtn = document.getElementById("infoBtn");
+const infoPanel = document.getElementById("infoPanel");
+const closeInfo = document.getElementById("closeInfo");
+const progressBar = document.getElementById("progressBar");
 
-@media (max-width: 768px){
+infoBtn.onclick = () => infoPanel.classList.add("active");
+closeInfo.onclick = () => infoPanel.classList.remove("active");
 
-  body{
-    background-attachment: scroll; /* evita bugs del fondo en móvil */
+setInterval(() => {
+  if (!musica.duration) return;
+  progressBar.value = (musica.currentTime / musica.duration) * 100;
+}, 300);
+
+/* TOGGLE UI (FIX SIN DUPLICADOS) */
+const toggleBtn = document.getElementById("toggleUIBtn");
+let uiHidden = false;
+
+toggleBtn.onclick = () => {
+  uiHidden = !uiHidden;
+
+  if (uiHidden) {
+    document.body.classList.add("hide-ui");
+    toggleBtn.textContent = "🡽";
+  } else {
+    document.body.classList.remove("hide-ui");
+    toggleBtn.textContent = "⛶";
   }
+};
 
-  /* BOTÓN UI TOGGLE */
-#toggleUIBtn {
-  position: fixed;
-  bottom: 20px;
-  right: 80px;
-  padding: 14px 20px;
-  font-size: 18px;
-  border-radius: 12px;
-  background: #00a2ff;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  z-index: 9999;
-}
+/* CUADRO DE AYUDA (5s) */
+window.addEventListener("load", () => {
+  const help = document.getElementById("helpBox");
 
-/* MODO LIMPIO (oculta TODO menos fondo y botones flotantes) */
-.hide-ui .container {
-  display: none !important;
-}
+  if (!help) return;
 
-/* CUADRO DE AYUDA */
-#helpBox {
-  position: fixed;
-  bottom: 90px;
-  right: 20px;
-  background: rgba(0,0,0,0.9);
-  border: 2px solid #00a2ff;
-  padding: 15px 20px;
-  border-radius: 12px;
-  color: #fff;
-  max-width: 260px;
-  font-size: 14px;
-  z-index: 9999;
-  animation: fadeHelp 0.5s ease;
-}
+  setTimeout(() => {
+    help.style.opacity = "0";
+    help.style.transition = "0.5s";
 
-@keyframes fadeHelp {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+    setTimeout(() => {
+      help.remove();
+    }, 500);
+  }, 5000);
+});
   </style>
 </head>
 
@@ -465,7 +462,23 @@ toggleBtn.onclick = () => {
   }
 };
 
-  /* BOTÓN TOGGLE UI */
+
+
+  /* PANEL INFO */
+const infoBtn = document.getElementById("infoBtn");
+const infoPanel = document.getElementById("infoPanel");
+const closeInfo = document.getElementById("closeInfo");
+const progressBar = document.getElementById("progressBar");
+
+infoBtn.onclick = () => infoPanel.classList.add("active");
+closeInfo.onclick = () => infoPanel.classList.remove("active");
+
+setInterval(() => {
+  if (!musica.duration) return;
+  progressBar.value = (musica.currentTime / musica.duration) * 100;
+}, 300);
+
+/* TOGGLE UI (FIX SIN DUPLICADOS) */
 const toggleBtn = document.getElementById("toggleUIBtn");
 let uiHidden = false;
 
