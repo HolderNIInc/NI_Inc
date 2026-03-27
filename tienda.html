@@ -226,53 +226,6 @@
   body{
     background-attachment: scroll; /* evita bugs del fondo en móvil */
   }
-
-  /* BOTÓN UI TOGGLE */
-#toggleUIBtn {
-  position: fixed;
-  bottom: 20px;
-  right: 70px;
-  padding: 14px 20px;
-  font-size: 18px;
-  border-radius: 12px;
-  background: #00a2ff;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  z-index: 9999;
-}
-
-/* MODO LIMPIO */
-.hide-ui .container,
-.hide-ui .back-menu,
-.hide-ui h1,
-.hide-ui p,
-.hide-ui .accordion,
-.hide-ui .btn {
-  display: none !important;
-}
-
-/* CUADRO DE AYUDA */
-#helpBox {
-  position: fixed;
-  bottom: 90px;
-  right: 20px;
-  background: rgba(0,0,0,0.9);
-  border: 2px solid #00a2ff;
-  padding: 15px 20px;
-  border-radius: 12px;
-  color: #fff;
-  max-width: 250px;
-  font-size: 14px;
-  z-index: 9999;
-  animation: fadeHelp 0.5s ease;
-}
-
-@keyframes fadeHelp {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
   </style>
 </head>
 
@@ -285,12 +238,8 @@
 </div>
 <div class="video-overlay" id="videoOverlay"></div>
 
-  <div id="helpBox">
-  💡 Usa el botón ⛶ para ver la info.
-</div>
-
 <button id="infoBtn"> i </button>
-<button id="toggleUIBtn"> ⛶ </button>
+
 
 <div id="infoPanel">
   <div class="info-header" style="display:flex; justify-content:space-between; margin-bottom: 15px;">
@@ -469,22 +418,7 @@ toggleBtn.onclick = () => {
     toggleBtn.textContent = "⛶";
   }
 };
-
-/* OCULTAR CUADRO DESPUÉS DE 5s */
-window.addEventListener("load", () => {
-  const help = document.getElementById("helpBox");
-
-  setTimeout(() => {
-    help.style.opacity = "0";
-    help.style.transition = "0.5s";
-
-    setTimeout(() => {
-      help.remove();
-    }, 500);
-
-  }, 5000);
-});
-  
+ 
 </script>
 
 </body>
