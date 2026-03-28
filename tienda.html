@@ -1,515 +1,697 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="images/IconPage.jpg" type="image/x-icon">
-  <link rel="preload" href="fonts/BobloxClassic-nRjl4.ttf" as="font" type="font/ttf" crossorigin>
 
-  <title>TIENDA</title>
+<html lang="es"><head>  <meta charset="UTF-8">  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <link rel="icon" href="images/IconPage.jpg" type="image/x-icon">  <link rel="preload" href="fonts/BobloxClassic-nRjl4.ttf" as="font" type="font/ttf" crossorigin>  <title>TIENDA</title>  <style>
+  
 
-  <style>
-
+  
        @font-face {
+  
   font-family: "BobloxClassic";
+  
   src: url("fonts/BobloxClassic-nRjl4.ttf") format("truetype");
+  
   font-weight: normal;
+  
   font-style: normal;
+  
   font-display: swap;
+  
 }
+  
 
+  
  html, body, * {
+  
   font-family: "BobloxClassic" !important;
+  
 }
+  
 
+  
 @font-face {
+  
   font-family: "BobloxClassic";
+  
   src: url("fonts/BobloxClassic.woff2") format("woff2"),
+  
        url("fonts/BobloxClassic-nRjl4.ttf") format("truetype");
+  
   font-display: swap;
+  
 }
+  
 
+  
     * {
+  
       box-sizing: border-box;
+  
       font-family: 'BobloxClassic', sans-serif !important;
+  
     }
+  
 
+  
     body {
+  
       margin: 0;
+  
       color: #fff;
+  
       background: #000;
+  
       line-height: 1.4;
+  
       overflow-x: hidden;
+  
     }
+  
 
+  
     /* VIDEO FONDO */
+  
     .video-bg {
+  
       position: fixed;
+  
       inset: 0;
+  
       z-index: -2;
+  
       transition: opacity 1s ease;
+  
     }
+  
 
+  
     .video-bg.fade-out { opacity: 0; }
+  
 
+  
     .video-bg video {
+  
       width: 100%;
+  
       height: 100%;
+  
       object-fit: cover;
+  
     }
+  
 
+  
     .video-overlay {
+  
       position: fixed;
+  
       inset: 0;
+  
       background: rgba(0,0,0,0.65);
+  
       z-index: -1;
+  
       transition: opacity 1s ease;
+  
     }
+  
 
+  
     .video-overlay.fade-out { opacity: 0; }
+  
 
+  
     /* CONTENEDOR PRINCIPAL */
+  
     .container {
+  
       max-width: 900px;
+  
       margin: auto;
+  
       padding: 40px 20px 120px;
+  
       text-align: center;
+  
     }
+  
 
+  
     h1 { 
+  
       font-size: 55px; 
+  
       margin-bottom: 10px; 
+  
       color: #00a2ff; 
+  
       text-shadow: 3px 3px 0px #000;
+  
     }
+  
 
+  
     p { color: #ccc; font-size: 20px; }
+  
 
+  
     /* ACORDEÓN */
+  
     .accordion {
+  
       background: #1b1b1b;
+  
       border-radius: 10px;
+  
       margin: 20px 0;
+  
       text-align: left;
+  
       border: 1px solid #333;
+  
     }
+  
 
+  
     .accordion-header {
+  
       padding: 18px;
+  
       font-weight: bold;
+  
       cursor: pointer;
+  
       background: #232323;
+  
       border-radius: 10px;
+  
       font-size: 18px;
+  
     }
+  
 
+  
     .accordion-content {
+  
       max-height: 0;
+  
       overflow: hidden;
+  
       transition: max-height .3s ease;
+  
       padding: 0 18px;
+  
     }
+  
 
+  
     .accordion-content p { margin: 15px 0; font-size: 16px; }
+  
 
+  
     /* BOTONES */
+  
     .btn {
+  
       margin-top: 35px;
+  
       padding: 18px 45px;
+  
       font-size: 22px;
+  
       border: none;
+  
       border-radius: 12px;
+  
       cursor: pointer;
+  
       background: #00a2ff;
+  
       color: #fff;
+  
       box-shadow: 0 6px 0 #0078bd;
+  
       transition: transform 0.1s, box-shadow 0.1s;
+  
     }
+  
 
+  
     .btn:active {
+  
       transform: translateY(4px);
+  
       box-shadow: 0 2px 0 #0078bd;
+  
     }
+  
 
+  
     .back-menu button {
+  
       margin-top: 70px;
+  
       padding: 14px 28px;
+  
       font-size: 16px;
+  
       border-radius: 12px;
+  
       border: none;
+  
       cursor: pointer;
+  
       background: #222;
+  
       color: #fff;
+  
       border: 1px solid #444;
+  
     }
+  
 
+  
     /* LOADER (RESTAURADO) */
+  
     .loader-overlay {
+  
       display: none;
+  
       position: fixed;
+  
       inset: 0;
+  
       background: rgba(0,0,0,0.9);
+  
       z-index: 999999;
+  
       justify-content: center;
+  
       align-items: center;
+  
     }
+  
 
+  
     .loader-box {
+  
       background: #121212;
+  
       padding: 30px;
+  
       border-radius: 14px;
+  
       width: 320px;
+  
       text-align: center;
+  
       border: 2px solid #00a2ff;
+  
       box-shadow: 0 0 20px rgba(0, 162, 255, 0.4);
+  
     }
+  
 
+  
     .spinner {
+  
       width: 42px;
+  
       height: 42px;
+  
       border: 4px solid #333;
+  
       border-top: 4px solid #00a2ff;
+  
       border-radius: 50%;
+  
       margin: 10px auto 20px;
+  
       animation: spin 1s linear infinite;
+  
     }
+  
 
+  
     @keyframes spin { to { transform: rotate(360deg); } }
+  
 
+  
     /* PANEL INFO */
+  
     #infoBtn {
+  
       position: fixed;
+  
       bottom: 20px;
+  
       right: 20px;
+  
       padding: 14px 20px;
+  
       font-size: 22px;
+  
       border-radius: 12px;
+  
       background: #00a2ff;
+  
       color: #fff;
+  
       border: none;
+  
       cursor: pointer;
+  
       z-index: 9999;
+  
     }
+  
 
+  
     #infoPanel {
+  
       position: fixed;
+  
       top: 50%;
+  
       left: 50%;
+  
       width: 90%;
+  
       max-width: 420px;
+  
       transform: translate(-50%, -50%) scale(0.7);
+  
       background: rgba(15, 15, 15, 0.98);
+  
       backdrop-filter: blur(15px);
+  
       padding: 25px;
+  
       border-radius: 16px;
+  
       border: 2px solid #00a2ff;
+  
       display: none;
+  
       z-index: 99999;
+  
       transition: transform .3s ease, opacity .3s ease;
+  
       opacity: 0;
+  
     }
+  
 
+  
     #infoPanel.active {
+  
       display: block;
+  
       opacity: 1;
+  
       transform: translate(-50%, -50%) scale(1);
+  
     }
+  
 
+  
     /* CURSORES */
+  
     html, body, * { cursor: url("cursors/Arrow.cur") 0 0, auto !important; }
+  
     button, a { cursor: url("cursors/Hand.cur") 0 0, pointer !important; }
+  
 
-    /* PANEL INFO */
-const infoBtn = document.getElementById("infoBtn");
-const infoPanel = document.getElementById("infoPanel");
-const closeInfo = document.getElementById("closeInfo");
-const progressBar = document.getElementById("progressBar");
+  
+      /* AJUSTES PARA MOVIL */
+  
 
-infoBtn.onclick = () => infoPanel.classList.add("active");
-closeInfo.onclick = () => infoPanel.classList.remove("active");
+  
+@media (max-width: 768px){
+  
 
-setInterval(() => {
-  if (!musica.duration) return;
-  progressBar.value = (musica.currentTime / musica.duration) * 100;
-}, 300);
-
-/* TOGGLE UI (FIX SIN DUPLICADOS) */
-const toggleBtn = document.getElementById("toggleUIBtn");
-let uiHidden = false;
-
-toggleBtn.onclick = () => {
-  uiHidden = !uiHidden;
-
-  if (uiHidden) {
-    document.body.classList.add("hide-ui");
-    toggleBtn.textContent = "🡽";
-  } else {
-    document.body.classList.remove("hide-ui");
-    toggleBtn.textContent = "⛶";
+  
+  body{
+  
+    background-attachment: scroll; /* evita bugs del fondo en móvil */
+  
   }
-};
-
-/* CUADRO DE AYUDA (5s) */
-window.addEventListener("load", () => {
-  const help = document.getElementById("helpBox");
-
-  if (!help) return;
-
-  setTimeout(() => {
-    help.style.opacity = "0";
-    help.style.transition = "0.5s";
-
-    setTimeout(() => {
-      help.remove();
-    }, 500);
-  }, 5000);
-});
-  </style>
-</head>
-
-<body>
-
-<div id="helpBox">
-  💡 Usa el botón ⛶ para ocultar la interfaz  
-  y ver solo el fondo.
-</div>
   
-<div class="video-bg" id="videoBg">
-  <video autoplay muted loop playsinline>
-    <source src="videos/fondo4.mp4" type="video/mp4">
-  </video>
-</div>
-<div class="video-overlay" id="videoOverlay"></div>
+  </style></head><body><div class="video-bg" id="videoBg">  <video autoplay muted loop playsinline><source src="videos/fondo4.mp4" type="video/mp4">
 
-  <button id="infoBtn"> i </button>
-<button id="toggleUIBtn"> ⛶ </button>
+  </video></div><div class="video-overlay" id="videoOverlay"></div><button id="infoBtn"> i </button>
 
-<div id="infoPanel">
-  <div class="info-header" style="display:flex; justify-content:space-between; margin-bottom: 15px;">
-    <span style="color:#00a2ff;">REPRODUCIENDO</span>
-    <button id="closeInfo" style="background:none; border:none; color:white; cursor:pointer; font-size:20px;">✖</button>
+<div id="infoPanel">  <div class="info-header" style="display:flex; justify-content:space-between; margin-bottom: 15px;"><span style="color:#00a2ff;">REPRODUCIENDO</span>
+
+<button id="closeInfo" style="background:none; border:none; color:white; cursor:pointer; font-size:20px;">✖</button>
+
+  </div>  <div class="info-body" style="display:flex; flex-direction:column; align-items:center; text-align:center;"><img id="trackImg" src="images/BIRD_BRAIN_Cover.jpg" style="width:150px; height:150px; border-radius:12px; border: 3px solid #333; margin-bottom: 15px;">
+
+<div class="track-info">
+
+  <h2 id="trackName" style="font-size: 22px;">BIRD BRAIN</h2>
+
+  <p id="trackArtist" style="font-size: 16px; margin: 5px 0;">Jaime Paige & OK Glass</p>
+
+  <input type="range" id="progressBar" min="0" max="100" value="0" style="width:100%; margin: 15px 0; accent-color: #00a2ff;">
+
+
+
+  <div class="info-buttons" style="display:flex; flex-direction:column; gap:8px; width: 100%;">
+
+    <button id="vocalBtn2" onclick="toggleVocal()" style="background:#ffcc00; color:#000; padding:12px; border-radius:8px; border:none; cursor:pointer;">
+
+      ⏸ PAUSAR VOCAL
+
+    </button>
+
+    <button id="lyricsBtn" style="background:#3a80f4; color:white; padding:12px; border-radius:8px; border:none; cursor:pointer;">
+
+      📜 LYRICS
+
+    </button>
+
   </div>
+
+</div>
+
+  </div></div><audio id="musica" autoplay loop>  <source src="audios/Tienda_Audios/BIRDBRAIN_music.mp3" type="audio/mpeg"></audio><audio id="vocal" autoplay loop>  <source src="audios/Tienda_Audios/BIRDBRAIN_vocals.mp3" type="audio/mpeg"></audio><div class="container">  <h1>TIENDA</h1>  <p>TRASLADAMOS LA EXPERIENCIA A ROBLOX</p>  <div class="accordion"><div class="accordion-header" onclick="toggleAccordion(this)">
+
+  ¿POR QUÉ ESTE CAMBIO?
+
+</div>
+
+<div class="accordion-content">
+
+  <p>Ahora la compra es más rápida y directa dentro de la plataforma oficial.</p>
+
+</div>
+
+  </div>  <div class="accordion"><div class="accordion-header" onclick="toggleAccordion(this)">
+
+  MANUAL DE COMPRA
+
+</div>
+
+<div class="accordion-content">
+
+  <p>Entra al juego → Selecciona tu producto → Confirma el pago → ¡Listo!</p>
+
+</div>
+
+  </div><button class="btn" onclick="irATienda()">ENTRAR A LA TIENDA</button>
+
+  <div class="back-menu"><button onclick="confirmarSalida()">⬅ REGRESAR AL MENU</button>
+
+  </div></div><div class="loader-overlay" id="robloxLoader">  <div class="loader-box"><div class="spinner"></div>
+
+<h3 id="loaderTitulo" style="color: #00a2ff; margin: 10px 0;">Inicializando Roblox</h3>
+
+<p id="loaderTexto" style="color: #ccc; font-size: 14px;">Prepárate para unirte...</p>
+
+  </div></div><script>
   
-  <div class="info-body" style="display:flex; flex-direction:column; align-items:center; text-align:center;">
-    <img id="trackImg" src="images/BIRD_BRAIN_Cover.jpg" style="width:150px; height:150px; border-radius:12px; border: 3px solid #333; margin-bottom: 15px;">
-    <div class="track-info">
-      <h2 id="trackName" style="font-size: 22px;">BIRD BRAIN</h2>
-      <p id="trackArtist" style="font-size: 16px; margin: 5px 0;">Jaime Paige & OK Glass</p>
-      <input type="range" id="progressBar" min="0" max="100" value="0" style="width:100%; margin: 15px 0; accent-color: #00a2ff;">
-
-      <div class="info-buttons" style="display:flex; flex-direction:column; gap:8px; width: 100%;">
-        <button id="vocalBtn2" onclick="toggleVocal()" style="background:#ffcc00; color:#000; padding:12px; border-radius:8px; border:none; cursor:pointer;">
-          ⏸ PAUSAR VOCAL
-        </button>
-        <button id="lyricsBtn" style="background:#3a80f4; color:white; padding:12px; border-radius:8px; border:none; cursor:pointer;">
-          📜 LYRICS
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<audio id="musica" autoplay loop>
-  <source src="audios/Tienda_Audios/BIRDBRAIN_music.mp3" type="audio/mpeg">
-</audio>
-<audio id="vocal" autoplay loop>
-  <source src="audios/Tienda_Audios/BIRDBRAIN_vocals.mp3" type="audio/mpeg">
-</audio>
-
-<div class="container">
-  <h1>TIENDA</h1>
-  <p>TRASLADAMOS LA EXPERIENCIA A ROBLOX</p>
-
-  <div class="accordion">
-    <div class="accordion-header" onclick="toggleAccordion(this)">
-      ¿POR QUÉ ESTE CAMBIO?
-    </div>
-    <div class="accordion-content">
-      <p>Ahora la compra es más rápida y directa dentro de la plataforma oficial.</p>
-    </div>
-  </div>
-
-  <div class="accordion">
-    <div class="accordion-header" onclick="toggleAccordion(this)">
-      MANUAL DE COMPRA
-    </div>
-    <div class="accordion-content">
-      <p>Entra al juego → Selecciona tu producto → Confirma el pago → ¡Listo!</p>
-    </div>
-  </div>
-
-  <button class="btn" onclick="irATienda()">ENTRAR A LA TIENDA</button>
-
-  <div class="back-menu">
-    <button onclick="confirmarSalida()">⬅ REGRESAR AL MENU</button>
-  </div>
-</div>
-
-<div class="loader-overlay" id="robloxLoader">
-  <div class="loader-box">
-    <div class="spinner"></div>
-    <h3 id="loaderTitulo" style="color: #00a2ff; margin: 10px 0;">Inicializando Roblox</h3>
-    <p id="loaderTexto" style="color: #ccc; font-size: 14px;">Prepárate para unirte...</p>
-  </div>
-</div>
-
-<script>
 let loaderActivo = false;
+  
 
+  
 function toggleAccordion(h) {
+  
   const c = h.nextElementSibling;
+  
   c.style.maxHeight = c.style.maxHeight ? null : c.scrollHeight + "px";
+  
 }
+  
 
+  
 // LÓGICA DE DIÁLOGOS DEL LOADER RESTAURADA
+  
 function irATienda() {
+  
   if (loaderActivo) return;
+  
   loaderActivo = true;
+  
 
+  
   const loader = document.getElementById("robloxLoader");
+  
   const t = document.getElementById("loaderTitulo");
+  
   const p = document.getElementById("loaderTexto");
+  
 
+  
   loader.style.display = "flex";
+  
   t.textContent = "Inicializando Roblox";
+  
   p.textContent = "Prepárate para unirte...";
+  
 
+  
   // Intento de abrir Roblox
+  
   window.location.href = "roblox://placeId=15099460018";
+  
 
+  
   setTimeout(() => {
+  
     if (!loaderActivo) return;
+  
     p.textContent = "Abriendo la experiencia...";
+  
   }, 1500);
+  
 
+  
   setTimeout(() => {
+  
     if (!loaderActivo) return;
+  
     t.textContent = "¿Problemas al entrar?";
+  
     p.textContent = "Asegúrate de tener Roblox instalado e inténtalo de nuevo.";
+  
 
+  
     setTimeout(() => {
+  
       loader.style.display = "none";
+  
       loaderActivo = false;
+  
     }, 4000);
+  
   }, 10000);
+  
 }
+  
 
+  
 function confirmarSalida() {
+  
   document.getElementById("videoBg").classList.add("fade-out");
+  
   document.getElementById("videoOverlay").classList.add("fade-out");
+  
   setTimeout(() => {
+  
     location.href = "https://holderniinc.github.io/NI_Inc/Menu.html";
+  
   }, 1000);
+  
 }
+  
 
+  
 /* SINCRONIZACIÓN DE AUDIO */
+  
 const musica = document.getElementById("musica");
+  
 const vocal = document.getElementById("vocal");
+  
 const vocalBtn2 = document.getElementById("vocalBtn2");
+  
 let vocalMuted = false;
+  
 
+  
 musica.onplay = () => {
+  
   vocal.currentTime = musica.currentTime;
+  
   vocal.play();
+  
 };
+  
 
+  
 setInterval(() => {
+  
   if (!musica.duration) return;
+  
   if (Math.abs(musica.currentTime - vocal.currentTime) > 0.15) {
+  
     vocal.currentTime = musica.currentTime;
+  
   }
+  
 }, 500);
+  
 
+  
 function toggleVocal() {
+  
   if (!vocalMuted) {
+  
     vocal.volume = 0;
+  
     vocalMuted = true;
+  
     vocalBtn2.textContent = "▶️ ACTIVAR VOCAL";
+  
   } else {
+  
     vocal.volume = 1;
+  
     vocalMuted = false;
+  
     vocalBtn2.textContent = "⏸ PAUSAR VOCAL";
+  
   }
+  
 }
+  
 
+  
 /* PANEL INFO */
+  
 const infoBtn = document.getElementById("infoBtn");
+  
 const infoPanel = document.getElementById("infoPanel");
+  
 const closeInfo = document.getElementById("closeInfo");
+  
 const progressBar = document.getElementById("progressBar");
+  
 
+  
 infoBtn.onclick = () => infoPanel.classList.add("active");
+  
 closeInfo.onclick = () => infoPanel.classList.remove("active");
+  
 
+  
 setInterval(() => {
+  
   if (!musica.duration) return;
+  
   progressBar.value = (musica.currentTime / musica.duration) * 100;
+  
 }, 300);
-
-  const toggleBtn = document.getElementById("toggleUIBtn");
-let uiHidden = false;
-
-/* TOGGLE UI */
-toggleBtn.onclick = () => {
-  uiHidden = !uiHidden;
-
-  if(uiHidden){
-    document.body.classList.add("hide-ui");
-    toggleBtn.textContent = "🡽";
-  }else{
-    document.body.classList.remove("hide-ui");
-    toggleBtn.textContent = "⛶";
-  }
-};
-
-
-
-  /* PANEL INFO */
-const infoBtn = document.getElementById("infoBtn");
-const infoPanel = document.getElementById("infoPanel");
-const closeInfo = document.getElementById("closeInfo");
-const progressBar = document.getElementById("progressBar");
-
-infoBtn.onclick = () => infoPanel.classList.add("active");
-closeInfo.onclick = () => infoPanel.classList.remove("active");
-
-setInterval(() => {
-  if (!musica.duration) return;
-  progressBar.value = (musica.currentTime / musica.duration) * 100;
-}, 300);
-
-/* TOGGLE UI (FIX SIN DUPLICADOS) */
-const toggleBtn = document.getElementById("toggleUIBtn");
-let uiHidden = false;
-
-toggleBtn.onclick = () => {
-  uiHidden = !uiHidden;
-
-  if (uiHidden) {
-    document.body.classList.add("hide-ui");
-    toggleBtn.textContent = "🡽";
-  } else {
-    document.body.classList.remove("hide-ui");
-    toggleBtn.textContent = "⛶";
-  }
-};
-
-/* CUADRO DE AYUDA (5s) */
-window.addEventListener("load", () => {
-  const help = document.getElementById("helpBox");
-
-  if (!help) return;
-
-  setTimeout(() => {
-    help.style.opacity = "0";
-    help.style.transition = "0.5s";
-
-    setTimeout(() => {
-      help.remove();
-    }, 500);
-  }, 5000);
-});
+  
 </script>
-
 </body>
-</html>
+</html> 
