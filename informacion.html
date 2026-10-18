@@ -1,394 +1,522 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Información</title>
+
+<title>Información | NI Inc</title>
 
 <link rel="icon" href="images/IconPage.jpg">
-<link rel="preload" href="fonts/BobloxClassic-nRjl4.ttf" as="font" type="font/ttf" crossorigin>
-
+<link rel="preload" href="fonts/BobloxClassic-nRjl4.ttf"
+      as="font" type="font/ttf" crossorigin>
 
 <style>
 
-body{
-font-family: Arial, sans-serif;
-margin:0;
-padding:0;
-color:white;
-background-image:url("images/Fondo.jpg");
-background-size:cover;
-background-position:center;
-background-attachment:fixed;
-}
-
-   @font-face {
-  font-family: "BobloxClassic";
-  src: url("fonts/BobloxClassic-nRjl4.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
- html, body, * {
-  font-family: "BobloxClassic" !important;
-}
+/* ===== FUENTE ===== */
 
 @font-face {
-  font-family: "BobloxClassic";
-  src: url("fonts/BobloxClassic.woff2") format("woff2"),
-       url("fonts/BobloxClassic-nRjl4.ttf") format("truetype");
-  font-display: swap;
+    font-family: "BobloxClassic";
+    src: url("fonts/BobloxClassic.woff2") format("woff2"),
+         url("fonts/BobloxClassic-nRjl4.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
 
-    * {
-      box-sizing: border-box;
-      font-family: 'BobloxClassic', sans-serif !important;
+* {
+    box-sizing: border-box;
+    font-family: "BobloxClassic", sans-serif;
+}
+
+html {
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    color: white;
+    background-image: url("images/Fondo.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* ===== CONTENIDO PRINCIPAL ===== */
+
+.content {
+    display: none;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.info {
+    flex: 1;
+    width: calc(100% - 40px);
+    max-width: 1000px;
+    margin: 35px auto;
+    padding: 35px;
+    background: rgba(0, 0, 0, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+}
+
+.info h1 {
+    text-align: center;
+    margin-top: 0;
+    font-size: 34px;
+}
+
+.info > p {
+    text-align: center;
+    color: #7dd3fc;
+    font-size: 18px;
+}
+
+/* ===== MENÚ DESPLEGABLE ===== */
+
+.grid-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.grid-box {
+    background: #0284c7;
+    padding: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.grid-box:hover {
+    background: #0ea5e9;
+    transform: translateY(-2px);
+}
+
+.grid-content {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 15px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    transition: max-height 0.5s ease, padding 0.4s ease;
+}
+
+.grid-content.open {
+    max-height: 500px;
+    padding: 15px;
+}
+
+/* ===== CUADRÍCULA DE JUEGOS ===== */
+
+.grid-content.juegos {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 22px;
+    width: 100%;
+}
+
+.grid-content.juegos.open {
+    max-height: 2000px;
+    padding: 20px;
+}
+
+/* ===== TARJETAS ===== */
+
+.game-card {
+    position: relative;
+    min-width: 0;
+    overflow: hidden;
+    border-radius: 14px;
+    background: #101722;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+    transition: transform 0.3s ease,
+                box-shadow 0.3s ease,
+                border-color 0.3s ease;
+}
+
+.game-card:hover {
+    transform: translateY(-5px);
+    border-color: #38bdf8;
+    box-shadow: 0 10px 28px rgba(56, 189, 248, 0.25);
+}
+
+/* ===== IMÁGENES DE JUEGOS ===== */
+
+.game-img {
+    display: block;
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+    filter: brightness(0.85);
+    transition: filter 0.3s ease, transform 0.4s ease;
+}
+
+.game-card:hover .game-img {
+    filter: brightness(1);
+    transform: scale(1.04);
+}
+
+/* ===== INFORMACIÓN DE CADA JUEGO ===== */
+
+.game-info {
+    position: relative;
+    padding: 18px;
+    background: linear-gradient(
+        to bottom,
+        rgba(10, 15, 25, 0.95),
+        rgba(10, 15, 25, 1)
+    );
+}
+
+.game-info h3 {
+    margin: 0 0 10px;
+    font-size: 21px;
+    color: #ffffff;
+}
+
+.game-info p {
+    min-height: 42px;
+    margin: 0 0 16px;
+    color: #cbd5e1;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+/* ===== BOTONES ===== */
+
+button {
+    background: #0284c7;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background: #0ea5e9;
+    transform: translateY(-2px);
+}
+
+.game-info a {
+    display: block;
+    text-decoration: none;
+}
+
+.game-info button {
+    width: 100%;
+    padding: 11px 12px;
+    font-size: 14px;
+}
+
+/* ===== PIE DE PÁGINA ===== */
+
+.footer {
+    text-align: center;
+    padding: 30px 10px 10px;
+}
+
+/* ===== PANTALLA DE CARGA ===== */
+
+.loader {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("images/Fondo.jpg");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.loader-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(8px);
+}
+
+.loader-box {
+    position: relative;
+    padding: 30px 40px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 15px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+}
+
+.spinner {
+    width: 45px;
+    height: 45px;
+    border: 4px solid rgba(255, 255, 255, 0.2);
+    border-top: 4px solid #38bdf8;
+    border-radius: 50%;
+    margin: auto;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loader p {
+    margin-top: 15px;
+    color: #cbd5f5;
+    font-size: 15px;
+    letter-spacing: 1px;
+}
+
+/* ===== TABLETS Y MÓVILES ===== */
+
+@media (max-width: 768px) {
+
+    body {
+        background-attachment: scroll;
     }
 
-   /* GRID INFO */
+    .info {
+        width: calc(100% - 24px);
+        margin: 12px auto;
+        padding: 22px 16px;
+    }
 
-.grid-container{
-margin-top:25px;
-display:flex;
-flex-direction:column;
-gap:15px;
+    .info h1 {
+        font-size: 28px;
+    }
+
+    .grid-content.juegos,
+    .grid-content.juegos.open {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 18px;
+        padding: 0 12px;
+    }
+
+    .grid-content.juegos.open {
+        padding: 15px 12px;
+    }
+
+    .game-img {
+        height: 200px;
+    }
+
+    .game-info {
+        padding: 16px;
+    }
+
+    .game-info h3 {
+        font-size: 19px;
+    }
+
+    .game-info p {
+        min-height: 0;
+        font-size: 14px;
+    }
+
+    .footer {
+        padding-top: 25px;
+    }
 }
 
-.grid-box{
-background:#38bdf8;
-padding:14px;
-border-radius:8px;
-text-align:center;
-cursor:pointer;
-font-size:18px;
-transition:0.2s;
+/* ===== MÓVILES PEQUEÑOS ===== */
+
+@media (max-width: 380px) {
+
+    .info {
+        padding: 18px 12px;
+    }
+
+    .game-img {
+        height: 155px;
+    }
+
+    .grid-content.juegos.open {
+        padding: 12px 8px;
+    }
+
+    .loader-box {
+        padding: 25px;
+    }
 }
 
-.grid-box:hover{
-background:#0ea5e9;
-}
-
-.grid-content{
-max-height:0;
-overflow:hidden;
-transition:max-height 0.5s ease;
-background:rgba(0,0,0,0.3);
-border-radius:8px;
-padding:0 15px;
-}
-
-.grid-content.open{
-max-height:500px;
-padding:15px;
-}
-
-/* juegos */
-
-.juegos{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:20px;
-}
-
-.game-card{
-background:rgba(0,0,0,0.5);
-padding:20px;
-border-radius:10px;
-text-align:center;
-box-shadow:0 0 10px rgba(0,0,0,0.5);
-}
-
-.game-card h3{
-margin-top:0;
-}
-
-/* Pantalla de carga */
-
-.loader{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background-image:url("Fondo.jpg");
-background-size:cover;
-background-position:center;
-display:flex;
-justify-content:center;
-align-items:center;
-z-index:999;
-}
-
-/* Fondo oscuro con blur */
-
-.loader-overlay{
-position:absolute;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.5);
-backdrop-filter:blur(8px);
-}
-
-/* Caja de carga */
-
-.loader-box{
-position:relative;
-background:rgba(255,255,255,0.05);
-border:1px solid rgba(255,255,255,0.1);
-padding:30px 40px;
-border-radius:15px;
-text-align:center;
-backdrop-filter:blur(10px);
-box-shadow:0 0 25px rgba(0,0,0,0.4);
-}
-
-/* Spinner */
-
-.spinner{
-width:45px;
-height:45px;
-border:4px solid rgba(255,255,255,0.2);
-border-top:4px solid #38bdf8;
-border-radius:50%;
-margin:auto;
-animation:spin 1s linear infinite;
-}
-
-@keyframes spin{
-0%{transform:rotate(0deg);}
-100%{transform:rotate(360deg);}
-}
-
-.loader p{
-margin-top:12px;
-color:#cbd5f5;
-font-size:14px;
-letter-spacing:1px;
-}
-
-/* Contenido */
-
-.content{
-display:none;
-min-height:100vh;
-display:flex;
-flex-direction:column;
-}
-
-.info{
-flex:1;
-padding:40px;
-max-width:800px;
-margin:auto;
-background:rgba(0,0,0,0.4);
-border-radius:10px;
-}
-
-.footer{
-text-align:center;
-padding:30px;
-}
-
-button{
-background:#38bdf8;
-border:none;
-padding:12px 30px;
-border-radius:8px;
-font-size:16px;
-cursor:pointer;
-transition:0.2s;
-}
-
-button:hover{
-background:#0ea5e9;
-}
-
-  /* AJUSTES PARA MOVIL */
-
-@media (max-width: 768px){
-
-  body{
-    background-attachment: scroll; /* evita bugs del fondo en móvil */
-  }
-
-   /* GRID JUEGOS PRO */
-
-.juegos{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-gap:20px;
-margin-top:10px;
-}
-
-/* CARD */
-
-.game-card{
-position:relative;
-border-radius:15px;
-overflow:hidden;
-background:#111;
-cursor:pointer;
-transition:transform .3s ease, box-shadow .3s ease;
-box-shadow:0 0 15px rgba(0,0,0,.6);
-}
-
-.game-card:hover{
-transform:translateY(-8px) scale(1.03);
-box-shadow:0 0 25px #38bdf8;
-}
-
-/* IMAGEN */
-
-.game-img{
-width:100%;
-height:160px;
-object-fit:cover;
-filter:brightness(0.7);
-transition:.3s;
-}
-
-.game-card:hover .game-img{
-filter:brightness(1);
-}
-
-/* INFO */
-
-.game-info{
-position:absolute;
-bottom:0;
-width:100%;
-padding:15px;
-background:linear-gradient(to top, rgba(0,0,0,.9), transparent);
-}
-
-.game-info h3{
-margin:0;
-font-size:18px;
-}
-
-.game-info p{
-font-size:13px;
-color:#ccc;
-margin:5px 0 10px;
-}
-
-/* BOTÓN */
-
-.game-info button{
-background:#38bdf8;
-border:none;
-padding:8px 15px;
-border-radius:6px;
-cursor:pointer;
-font-size:13px;
-transition:.2s;
-}
-
-.game-info button:hover{
-background:#0ea5e9;
-}
-
-/* MOBILE FIX */
-
-@media (max-width:768px){
-.game-img{
-height:140px;
-}
-}
-   
 </style>
 </head>
 
 <body>
 
+<!-- ===== PANTALLA DE CARGA ===== -->
+
 <div class="loader" id="loader">
+    <div class="loader-overlay"></div>
 
-<div class="loader-overlay"></div>
-
-<div class="loader-box">
-<div class="spinner"></div>
-<p>Cargando información...</p>
+    <div class="loader-box">
+        <div class="spinner"></div>
+        <p>Cargando información...</p>
+    </div>
 </div>
 
-</div>
+<!-- ===== CONTENIDO ===== -->
 
 <div class="content" id="content">
 
-<div class="info">
+    <main class="info">
 
-<h1>Información</h1>
+        <h1>Información</h1>
 
-<p>
-v2.0.2 [BETA]
-</p>
+        <p>v2.0.2 [BETA]</p>
 
-<div class="grid-container">
+        <!-- MENÚS DESPLEGABLES -->
 
-<div class="grid-box" onclick="toggleGrid('masInfo')">
-Más Info.
+        <div class="grid-container">
+
+            <div class="grid-box"
+                 onclick="toggleGrid('masInfo')">
+                Más Info.
+            </div>
+
+            <div class="grid-content" id="masInfo">
+
+                <p>
+                    Esta es una app en desarrollo, así que algunas
+                    cosas pueden cambiar y otras estarán sujetas a
+                    no funcionar.
+                    Recuerda que actualmente se encuentra en su fase
+                    <b>[BETA]</b>.
+                    Gracias por probar NI Inc.
+                </p>
+
+            </div>
+
+            <div class="grid-box"
+                 onclick="toggleGrid('juegosNI')">
+                Juegos de NI Inc
+            </div>
+
+            <!-- TARJETAS DE JUEGOS -->
+
+            <div class="grid-content juegos" id="juegosNI">
+
+                <!-- BLOXMON GO -->
+
+                <div class="game-card">
+
+                    <img
+                        src="images/BloxmonGOIcon.png"
+                        class="game-img"
+                        alt="Bloxmon Go"
+                    >
+
+                    <div class="game-info">
+
+                        <h3>Bloxmon Go</h3>
+
+                        <p>
+                            Aventura y criaturas en Roblox.
+                        </p>
+
+                        <a href="https://holderniinc.github.io/NI_Inc/Bloxmon_go.html">
+                            <button type="button">
+                                Ver Info. detallada
+                            </button>
+                        </a>
+
+                    </div>
+                </div>
+
+                <!-- NI INC GAME -->
+
+                <div class="game-card">
+
+                    <img
+                        src="images/MinecraftServer.jpg"
+                        class="game-img"
+                        alt="Servidor de Minecraft de NI Inc"
+                    >
+
+                    <div class="game-info">
+
+                        <h3>NI Inc Game</h3>
+
+                        <p>
+                            Servidor oficial de Minecraft.
+                        </p>
+
+                        <a href="https://holderniinc.github.io/NI_Inc/minecraft.html">
+                            <button type="button">
+                                Ver Info. detallada
+                            </button>
+                        </a>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- BOTÓN REGRESAR -->
+
+        <div class="footer">
+
+            <button
+                type="button"
+                onclick="window.location.href='https://holderniinc.github.io/NI_Inc/Menu.html'">
+                Regresar
+            </button>
+
+        </div>
+
+    </main>
+
 </div>
 
-<div class="grid-content" id="masInfo">
-<p>
-Esta es una app en desarrollo, así que algunas cosas pueden cambiar y otras estarán sujetas a no funcionar.
-Recuerda que actualmente se encuentra en su fase <b>[BETA]</b>.  
-Gracias por probar NI Inc.
-</p>
-</div>
-
-<div class="grid-box" onclick="toggleGrid('juegosNI')">
-Juegos de NI Inc
-</div>
-
-<div class="grid-content juegos" id="juegosNI">
-
-<div class="game-card">
-<img src="images/BloxmonGOIcon.png" class="game-img">
-<div class="game-info">
-<h3>Bloxmon Go</h3>
-<p>Aventura y criaturas en Roblox.</p>
-<a href="https://holderniinc.github.io/NI_Inc/Bloxmon_go.html">
-  <button>Ver Info. detallada</button>
-</a>
-</div>
-</div>
-
-<div class="game-card">
-<img src="images/MinecraftServer.jpg" class="game-img">
-<div class="game-info">
-<h3>NI Inc Game</h3>
-<p>Servidor oficial de Minecraft.</p>
-<a href="https://holderniinc.github.io/NI_Inc/minecraft.html">
-  <button>Ver Info. detallada</button>
-</a>
-</div>
-</div>
-
-</div>
-   
-<div class="footer">
-
-<button onclick="window.location.href='https://holderniinc.github.io/NI_Inc/Menu.html'">
-Regresar
-</button>
-
-</div>
-
-</div>
+<!-- ===== JAVASCRIPT ===== -->
 
 <script>
 
-window.onload = function(){
-setTimeout(function(){
-document.getElementById("loader").style.display="none";
-document.getElementById("content").style.display="flex";
-},1500);
-};
+// Pantalla de carga
+window.addEventListener("load", function() {
 
-   function toggleGrid(id){
-const element = document.getElementById(id);
-element.classList.toggle("open");
+    setTimeout(function() {
+
+        document.getElementById("loader").style.display = "none";
+        document.getElementById("content").style.display = "flex";
+
+    }, 1500);
+
+});
+
+// Abrir y cerrar apartados
+function toggleGrid(id) {
+
+    const element = document.getElementById(id);
+
+    if (element) {
+        element.classList.toggle("open");
+    }
+
 }
 
 </script>
